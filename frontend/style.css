@@ -3,16 +3,20 @@
     src:url('police/B612-Regular.ttf');  
 }
 
+/* ---- Mise en page des pages d'inscriptions ---- */
 body{
+    margin: 0;
     font-family: '612';
     display: flex;
     flex-direction: column;
 }
 
+.logo-login{
+    height: 25em;
+}
 .principal-title{
     margin : auto;
     margin-bottom: 1em;
-    margin-top : 5em;
 }
 
 .inscription-form{
@@ -21,4 +25,42 @@ body{
     margin-bottom: 0.8em;
     padding: 0.5em;
     width: 12em;
+}
+
+/* ---- Mise en page de la page d'accueil ---- */
+header{
+    display: flex;
+    height: 7em;
+    background-color: #ffd7d7;
+    border-bottom: 0.5em solid #fd2d01;
+    justify-content: space-between;
+}
+
+.logo-header{
+    padding: 1em;
+    height: 5em;
+}
+
+.ul-home{
+    display: flex;
+    list-style: none;
+    padding: 1.5em;
+    margin-right: 4em;
+}
+
+.li-home{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-left: 5em;
+}
+
+.publication-home{
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.textarea-publi{
+    width: 35%;
+    resize: none;
 }

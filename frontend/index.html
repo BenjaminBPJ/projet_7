@@ -5,25 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kit.fontawesome.com/610b914518.js" crossorigin="anonymous"></script>
     <title>Page d'accueil réseau Groupomania</title>
 </head>
 <body>
-    <h1 class="principal-title">Bienvenue dans votre réseau d'entreprise Groupomania</h1>
+    <img src="logos/icon-above-font.svg" alt="logo deGroupomania" class="logo-login" />
+    <h1 class="principal-title">Bienvenue dans votre réseau social d'entreprise Groupomania</h1>
     <article class="inscription-form">
         <h3>Connectez-vous</h3>
         <form class="sign-up-form">
             <label for="email"></label>
-            <input type="email" placeholder="Email ..." class="value-input-inscription"></input><br>
+            <input id="email" type="email" placeholder="Email ..." class="value-input-inscription"/><br>
             <small id="small-email"></small><br>
             <label for="password"></label>
-            <input type="text" placeholder="Mot de passe ..." class="value-input-inscription"></input><br>
+            <input id="password" type="text" placeholder="Mot de passe ..." class="value-input-inscription"/><br>
             <small id="small-password"></small><br>
-            <button type="submit">Connexion</button>
+            <button href="reseau.html" id="go-to-network"><a href="reseau.html">Connexion</a></button>
         </form>
     </article>
     <article class="inscription-form">
         <h4>Vous n'avez pas de compte ?</h4>
         <a href="inscription.html">Inscrivez-vous</a>
     </article>
+
+    <script src="javascript/index.js"></script>
 </body>
 </html>
