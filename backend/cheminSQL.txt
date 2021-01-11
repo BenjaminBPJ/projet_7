@@ -1,0 +1,11 @@
+set PATH=%PATH%;C:\"Program Files"\MySQL\"MySQL Server 8.0"\bin
+
+mysql -h localhost -u root -p
+
+user : {
+    "email" : "pj@hot.fr",
+    "firstname" : "ben",
+    "lastname" : "pj",
+    "pseudo" : "bpj",
+    "password" : "0000"
+}
