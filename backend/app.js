@@ -13,6 +13,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use('/api', userRoutes);
+app.use('*',(req, res) => { res.status(400).json({error:`Cette route n'existe pas`})});
 
 
 module.exports = app;
