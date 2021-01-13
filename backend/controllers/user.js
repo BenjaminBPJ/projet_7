@@ -1,6 +1,7 @@
 const connectionDb = require('../middleware/connect')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 exports.signup = (req, res, next) => {
     bcrypt
@@ -96,7 +97,7 @@ exports.updateUser = (req, res, next) => {
             const pseudo = req.body.pseudo;
             const password = hash;
             const description = req.body.description;
-            const imageUrl = req.body.imageUrl;
+            const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
             const id = req.params.id;
 
             const sql = `UPDATE Users SET firstName='${firstName}', lastName='${lastName}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}', imageUrl='${imageUrl}' WHERE id=${id};`
