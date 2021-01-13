@@ -7,14 +7,14 @@ exports.signup = (req, res, next) => {
         .hash(req.body.password, 10)
         .then((hash) => {
             const email = req.body.email;
-            const firstname = req.body.firstname;
-            const lastname = req.body.lastname;
+            const firstName = req.body.firstName;
+            const lastName = req.body.lastName;
             const pseudo = req.body.pseudo;
             const password = hash;
             const user = `
                     ('${email}',
-                    '${firstname}',
-                    '${lastname}',
+                    '${firstName}',
+                    '${lastName}',
                     '${pseudo}',
                     '${password}'
                     )`;
@@ -91,19 +91,20 @@ exports.updateUser = (req, res, next) => {
         .hash(req.body.password, 10)
         .then((hash) => {
             const email = req.body.email;
-            const firstname = req.body.firstname;
-            const lastname = req.body.lastname;
+            const firstName = req.body.firstName;
+            const lastName = req.body.lastName;
             const pseudo = req.body.pseudo;
             const password = hash;
             const description = req.body.description;
+            const imageUrl = req.body.imageUrl;
             const id = req.params.id;
 
-            const sql = `UPDATE Users SET firstName='${firstname}', lastName='${lastname}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}' WHERE id=${id};`
+            const sql = `UPDATE Users SET firstName='${firstName}', lastName='${lastName}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}', imageUrl='${imageUrl}' WHERE id=${id};`
 
             connectionDb.query(sql, (error, result) => {
                 if (error) {
                     return res.status(403).json({
-                        error: `Veuillez à modifier un utilisateur existant.`
+                        error: `Cet utilisateur n'existe pas.`
                     })
                 };
                 return res.status(201).json({
@@ -114,3 +115,11 @@ exports.updateUser = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
+exports.getUser = (req, res, next) => {
+    connectionDb.query(`SELECT * FROM users WHERE id=?`, req.params.id, (error, result, fields)=> {
+        if(error) {
+            return res.status(400).json({ error : 'Utilisateur non trouvé.'});
+        }
+        return res.status(200).json(result)
+    });
+};

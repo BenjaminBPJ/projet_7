@@ -4,8 +4,8 @@ mysql -h localhost -u root -p
 
 user : {
     "email" : "pj@hot.fr",
-    "firstname" : "ben",
-    "lastname" : "pj",
+    "firstName" : "ben",
+    "lastName" : "pj",
     "pseudo" : "bpj",
     "password" : "0000"
 }
