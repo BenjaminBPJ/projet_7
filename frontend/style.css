@@ -85,3 +85,54 @@ header{
         transform: scale(1.5);            
     }
 }
+
+/* ---- Mise en page de la page de profil ---- */
+.profil{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 5em;
+    width: 30%;
+    border: solid 0.3em #fd2d01 ;
+    border-radius: 2em;
+    padding: 2em;
+}
+
+.profil-title{
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: #1A237E;
+}
+.photo-description{
+    display: flex;
+}
+.photo-profil{
+    border : solid 0.2em #1A237E;
+    border-radius: 2em;
+    padding: 3em;
+    text-align: center;
+}
+.pen-photo{
+    color: #1A237E;
+}
+.pseudo-user{
+    font-size: 1.5em;
+    color: #1A237E;
+    text-align: center;
+}
+
+.photo-pseudo{
+    text-align: center;
+    margin-right: 4em;
+}
+.profil-description{
+    margin: auto;
+    margin-bottom: 2em;
+    color: #fd2d01;
+}
+
+.pen-description{
+    color: #fd2d01;
+    margin-bottom: 0.5em;
+}
+

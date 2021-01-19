@@ -1,7 +1,7 @@
 function createOnePost(value) {
     let article = document.createElement(`div`)
     document.querySelector("publication-home").appendChild(article)
-    division.classList.add("publication")
+    article.classList.add("publication")
 
     article.innerHTML = `<h3>${value.userPseudo}</h3>
                          <h4>${value.datePublication}</h4>
@@ -12,14 +12,24 @@ function createOnePost(value) {
 function userProfil(value) {
     let article = document.createElement(`article`); 
     document.querySelector("main").appendChild(article);
-    console.log(value)
+    article.classList.add("profil")
 
-    article.innerHTML = `<h2>${value[0].firstName}</h2> 
-                         <h3>${value[0].lastName}</h3> 
-                         <img src= ${value[0].imageUrl} class="teddy"/>
-                         <textarea class="profil-description">${value[0].description}</textarea>
-                         <button class="back-network">retour</button>
-                         <button class="delete-account">Suppression du compte</button>`
+    article.innerHTML = `<h2 class="profil-title"> Bienvenue sur votre profil <br>
+                         ${value[0].firstName} ${value[0].lastName}</h2>
+                         <div class="photo-description">
+                            <div class="photo-pseudo">
+                                <i class="fas fa-pen pen-photo"></i>
+                                <img src= ${value[0].imageUrl} class="photo-profil"/>
+                                <p class="pseudo-user">pseudo : ${value[0].pseudo}</p>
+                            </div>
+                            <div>
+                            <i class="fas fa-pen pen-description"></i>
+                            <p class="profil-description"> Description : </p>
+                            <p class="profil-description" rows="5">${value[0].description}</p>
+                            </div>
+                        </div>
+                        <input placeholder="Merci de valider votre mot de passe pour supprimer votre compte"/><button class="delete-account">Suppression du compte</button>
+                        `
 }
 
 function serverDown() {
