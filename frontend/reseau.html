@@ -12,19 +12,21 @@
 
 <body>
     <header>
-        <a href="index.html">
+        <a href="reseau.html">
         <img src="logos/icon-left-font-monochrome-black.svg" class="logo-header"
             alt="logo de l'entreprise groupomania" />
         </a>    
         <nav>
             <ul class="ul-home">
                 <li class="li-home">
-                    <i class="fas fa-user-tie fa-2x"></i>
+                    <i id="emote-profil" class="fas fa-user-tie fa-2x emote-nav-home"></i>
                     <p>Profil</p>
                 </li>
                 <li class="li-home">
-                    <i class="fas fa-power-off fa-2x"></i>
+                    <a href="index.html" class="lien-deco">
+                    <i class="fas fa-power-off fa-2x emote-nav-home"></i>
                     <p>Déconnexion</p>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -43,7 +45,9 @@
         </article>
     </main>
 
-    <script src="javascript/index.js"></script>
+    <script src="javascript/request.js"></script>
+    <script src="javascript/reseau.js"></script>
+    <script src="javascript/view.js"></script>
 </body>
 
 </html>

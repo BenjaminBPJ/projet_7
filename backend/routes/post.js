@@ -5,8 +5,8 @@ const multer = require('../middleware/multer-config');
 
 const userCtrl = require('../controllers/post');
 
-router.post('/:id', userCtrl.createPost);
-router.delete('/:id', userCtrl.deletePost);
-router.get('/', userCtrl.getAllPosts);
+router.post('/home/:pseudo', userCtrl.createPost);
+router.delete('/home/:pseudo', userCtrl.deletePost);
+router.get('/home/:pseudo', userCtrl.getAllPosts);
 
 module.exports = router;

@@ -46,12 +46,14 @@ exports.deletePost = (req, res, next) => {
 
 
 exports.getAllPosts = (req, res, next) => {
-    connectionDb.query(`SELECT * FROM Post`, (error, result, fields) => {
+    connectionDb.query(`SELECT * FROM post`, (error, result, fields) => {
         if (error) {
+            console.log(result)
             res.status(404).json({
                 error: `Impossible de charger les publications.`
             })
         }
+        console.log(result)
         res.status(200).json({result})
     });
 };

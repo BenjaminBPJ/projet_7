@@ -71,9 +71,9 @@ exports.login = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    const userId = req.params.id;
+    const user = req.params.pseudo;
 
-    connectionDb.query(`DELETE FROM users WHERE id=${userId}`, (error, results, fields) => {
+    connectionDb.query(`DELETE FROM users WHERE pseudo=${user}`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({
                 message: `Cet utilisateur n'existe pas.`
@@ -98,9 +98,9 @@ exports.updateUser = (req, res, next) => {
             const password = hash;
             const description = req.body.description;
             const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-            const id = req.params.id;
+            const id = req.params.pseudo;
 
-            const sql = `UPDATE Users SET firstName='${firstName}', lastName='${lastName}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}', imageUrl='${imageUrl}' WHERE id=${id};`
+            const sql = `UPDATE Users SET firstName='${firstName}', lastName='${lastName}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}', imageUrl='${imageUrl}' WHERE pseudo=${pseudo};`
 
             connectionDb.query(sql, (error, result) => {
                 if (error) {
@@ -117,10 +117,14 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-    connectionDb.query(`SELECT * FROM users WHERE id=?`, req.params.id, (error, result, fields)=> {
+    let pseudo = req.params.pseudo;
+    connectionDb.query(`SELECT * FROM users WHERE pseudo='${pseudo}'`, (error, result, fields)=> {
         if(error) {
-            return res.status(400).json({ error : 'Utilisateur non trouvé.'});
+            console.log(pseudo)
+            return res.status(400).json({ error : 'Utilisateur non trouvé.'});           
         }
+        console.log(pseudo)
+        console.log(result)
         return res.status(200).json(result)
     });
 };

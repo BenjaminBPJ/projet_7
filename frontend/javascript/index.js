@@ -15,12 +15,20 @@ function login(form){
     let data = send(`http://localhost:3000/api/login`,form)
     data.then (user =>{
         let pseudo = user.userPseudo;
-        window.location = `reseau.html?pseudo=${pseudo}`
+        window.location = `reseau.html?/home/pseudo=${pseudo}`
         console.log(pseudo)
-        console.log(user)
+
+        // insertion du pseudo et du token dans le localstorage à la connexion
+        pseudo = localStorage.setItem('userPseudo', pseudo)
+        pseudo = JSON.stringify(pseudo)
+        let token = user.token
+        console.log(token)
+        token = localStorage.setItem('token', token)
+        token = JSON.stringify(token)
     })
     .catch((error) => ({ error }));
 }
+
 
 function goNetwork(){
     let button = document.getElementById("go-to-network")

@@ -14,16 +14,13 @@ function getUserSignup(){
         password : password
     }
     console.log(user)
-    login(user)
+    signup(user)
 }
 
-function login(form){
+function signup(form){
     let data = send(`http://localhost:3000/api/signup`,form)
-    data.then (user =>{
-        let pseudo = user.pseudo;
-        window.location = `reseau.html?pseudo=${pseudo}`
-        console.log(pseudo)
-        console.log(user)
+    data.then (user => {
+        window.location = `index.html`
     })
     .catch((error) => ({ error }));
 }

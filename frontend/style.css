@@ -55,6 +55,11 @@ header{
     padding-left: 5em;
 }
 
+.lien-deco{
+    text-decoration: none;
+    color: black;
+}
+
 .publication-home{
     font-size: 1.5em;
     text-align: center;
@@ -63,4 +68,20 @@ header{
 .textarea-publi{
     width: 35%;
     resize: none;
+}
+
+.emote-nav-home:hover {
+    animation-name : zoom;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+    transform: scale(1);
+}
+
+@keyframes zoom{
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.5);            
+    }
 }
