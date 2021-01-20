@@ -47,33 +47,34 @@ exports.login = (req, res, next) => {
         if (err) throw err;
         console.log(result);
         bcrypt
-        .compare(password, result[0].password)
-        .then((valid) => {
-            if (!valid) {
-                return res.status(401).json({
-                    error: 'Mot de passe incorrect.'
-                });
-            }
-            res.status(200).json({
-                userPseudo: result[0].pseudo,
-                userId: result[0].id,
-                token: jwt.sign({
-                    userId: result[0].id
-                }, 'RANDOM_TOKEN_SECRET', {
-                    expiresIn: '24h'
+            .compare(password, result[0].password)
+            .then((valid) => {
+                if (!valid) {
+                    return res.status(401).json({
+                        error: 'Mot de passe incorrect.'
+                    });
+                }
+                res.status(200).json({
+                    userPseudo: result[0].pseudo,
+                    userId: result[0].id,
+                    token: jwt.sign({
+                        userId: result[0].id
+                    }, 'RANDOM_TOKEN_SECRET', {
+                        expiresIn: '24h'
+                    })
                 })
             })
-        })
-        .catch(error => res.status(401).json({
-            error: 'Utilisateur non trouvé.'
-        }))
-});
+            .catch(error => res.status(401).json({
+                error: 'Utilisateur non trouvé.'
+            }))
+    });
 };
 
 exports.deleteUser = (req, res, next) => {
     const user = req.params.pseudo;
+    console.log(user)
 
-    connectionDb.query(`DELETE FROM users WHERE pseudo=${user}`, (error, results, fields) => {
+    connectionDb.query(`DELETE FROM users WHERE pseudo='${user}'`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({
                 message: `Cet utilisateur n'existe pas.`
@@ -118,13 +119,10 @@ exports.updateUser = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
     let pseudo = req.params.pseudo;
-    connectionDb.query(`SELECT * FROM users WHERE pseudo='${pseudo}'`, (error, result, fields)=> {
-        if(error) {
-            console.log(pseudo)
-            return res.status(400).json({ error : 'Utilisateur non trouvé.'});           
+    connectionDb.query(`SELECT * FROM users WHERE pseudo='${pseudo}'`, (error, result, fields) => {
+        if (error) {
+            return res.status(400).json({ error: 'Utilisateur non trouvé.' });
         }
-        console.log(pseudo)
-        console.log(result)
         return res.status(200).json(result)
     });
 };

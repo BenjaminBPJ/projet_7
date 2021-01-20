@@ -14,7 +14,7 @@ function userProfil(value) {
     document.querySelector("main").appendChild(article);
     article.classList.add("profil")
 
-    article.innerHTML = `<h2 class="profil-title"> Bienvenue sur votre profil <br>
+    article.innerHTML = `<h2 class="profil-title"> Profil de <br>
                          ${value[0].firstName} ${value[0].lastName}</h2>
                          <div class="photo-description">
                             <div class="photo-pseudo">
@@ -28,8 +28,18 @@ function userProfil(value) {
                             <p class="profil-description" rows="5">${value[0].description}</p>
                             </div>
                         </div>
-                        <input placeholder="Merci de valider votre mot de passe pour supprimer votre compte"/><button class="delete-account">Suppression du compte</button>
+                        <input id="input-delete-account" placeholder="Merci de valider votre mot de passe pour supprimer votre compte"/>
+                        <small id="small-delete-account"></small>
+                        <button id="delete-account" class="delete-account">Suppression du compte</button>
                         `
+    let backNetwork = document.createElement(`button`); 
+    document.querySelector("main").appendChild(backNetwork);
+    backNetwork.classList.add("back-network");
+    backNetwork.setAttribute("id", 'back-to-network');
+
+    backNetwork.innerHTML = 'Retour'
+
+
 }
 
 function serverDown() {

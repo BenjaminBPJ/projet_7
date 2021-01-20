@@ -87,21 +87,27 @@ header{
 }
 
 /* ---- Mise en page de la page de profil ---- */
+.main-profil{
+    display: flex;
+    flex-direction: column;
+}
 .profil{
     display: flex;
     flex-direction: column;
     margin: auto;
     margin-top: 5em;
-    width: 30%;
+    margin-bottom: 5em;
+    width: 35%;
     border: solid 0.3em #fd2d01 ;
     border-radius: 2em;
-    padding: 2em;
+    padding: 1em;
 }
 
 .profil-title{
     font-size: 2.5em;
     margin-bottom: 1em;
     color: #1A237E;
+    text-align: center;
 }
 .photo-description{
     display: flex;
@@ -134,5 +140,10 @@ header{
 .pen-description{
     color: #fd2d01;
     margin-bottom: 0.5em;
+}
+
+.back-network{
+    margin: auto;
+    font-size: 1.1em;
 }
 

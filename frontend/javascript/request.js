@@ -18,3 +18,9 @@ async function send(url, data) {
     let res = await response.json()
     return res
 }
+
+async function deleteMethod (url) {
+    let response = await fetch(url, { method: "DELETE" })
+    let res = await response.json()
+    return res
+}
