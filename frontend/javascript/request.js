@@ -24,3 +24,15 @@ async function deleteMethod (url) {
     let res = await response.json()
     return res
 }
+
+async function update(url, data) {
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    let res = await response.json()
+    return res
+}

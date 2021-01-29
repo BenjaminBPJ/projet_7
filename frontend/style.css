@@ -97,7 +97,7 @@ header{
     margin: auto;
     margin-top: 5em;
     margin-bottom: 5em;
-    width: 35%;
+    width: 45%;
     border: solid 0.3em #fd2d01 ;
     border-radius: 2em;
     padding: 1em;
@@ -122,7 +122,7 @@ header{
     color: #1A237E;
 }
 .pseudo-user{
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #1A237E;
     text-align: center;
 }
@@ -142,8 +142,20 @@ header{
     margin-bottom: 0.5em;
 }
 
+.hidden{
+  display:none  
+}
+
 .back-network{
     margin: auto;
     font-size: 1.1em;
+    margin-bottom: 2em;
+}
+
+.delete-account{
+    width: 10em;
+    margin: auto;
+    margin-bottom: 3em;
+    margin-top: 2em;
 }
 

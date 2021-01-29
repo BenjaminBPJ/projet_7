@@ -14,36 +14,33 @@ function userProfil(value) {
     document.querySelector("main").appendChild(article);
     article.classList.add("profil")
 
-    article.innerHTML = `<h2 class="profil-title"> Profil de <br>
-                         ${value[0].firstName} ${value[0].lastName}</h2>
-                         <div class="photo-description">
-                            <div class="photo-pseudo">
-                                <i class="fas fa-pen pen-photo"></i>
-                                <img src= ${value[0].imageUrl} class="photo-profil"/>
-                                <p class="pseudo-user">pseudo : ${value[0].pseudo}</p>
-                            </div>
-                            <div>
-                            <i class="fas fa-pen pen-description"></i>
-                            <p class="profil-description"> Description : </p>
-                            <p class="profil-description" rows="5">${value[0].description}</p>
-                            </div>
+    article.innerHTML = `<div class="photo-nom">
+                            <h2 class="profil-title"> Profil de <br>
+                            ${value[0].firstName} ${value[0].lastName}
+                            </h2>
+                                <div class="photo-pseudo">
+                                    <i class="fas fa-pen pen-photo"></i>
+                                    <img src= ${value[0].imageUrl} class="photo-profil"/>
+                                    <p class="pseudo-user">Votre pseudo :<br> ${value[0].pseudo}</p>
+                                </div>
                         </div>
-                        <input id="input-delete-account" placeholder="Merci de valider votre mot de passe pour supprimer votre compte"/>
-                        <small id="small-delete-account"></small>
-                        <button id="delete-account" class="delete-account">Suppression du compte</button>
+                            <i id="pen-d" class="fas fa-pen pen-description"></i>
+                            <p class="profil-description"> Description : </p>
+                            <p id="text-description" class="profil-description" rows="5">${value[0].description}</p><br>
+                            <textarea id="area-description" class="hidden" rows="5" placeholder="Ecrivez ici, pour modifier ou créer votre description"></textarea>
+                            <button type="submit" id="b-s" class="hidden" send-description">modifier</button>
+                            <button id="delete-account" class="delete-account">Suppression du compte</button>
                         `
     let backNetwork = document.createElement(`button`); 
     document.querySelector("main").appendChild(backNetwork);
     backNetwork.classList.add("back-network");
     backNetwork.setAttribute("id", 'back-to-network');
 
-    backNetwork.innerHTML = 'Retour'
-
-
+    backNetwork.textContent = 'Retour'
 }
 
 function serverDown() {
-    let article = document.createElement(`article`) // création de l'article principal
+    let article = document.createElement(`article`) 
     document.querySelector("main").appendChild(article)
     article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser`
 }

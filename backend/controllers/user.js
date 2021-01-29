@@ -88,41 +88,66 @@ exports.deleteUser = (req, res, next) => {
 
 
 
-exports.updateUser = (req, res, next) => {
-    bcrypt
-        .hash(req.body.password, 10)
-        .then((hash) => {
-            const email = req.body.email;
-            const firstName = req.body.firstName;
-            const lastName = req.body.lastName;
-            const pseudo = req.body.pseudo;
-            const password = hash;
-            const description = req.body.description;
-            const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-            const id = req.params.pseudo;
+exports.updateDescription = (req, res, next) => {
+    const description = req.body.description;
+    const pseudo = req.params.pseudo;
 
-            const sql = `UPDATE Users SET firstName='${firstName}', lastName='${lastName}', pseudo='${pseudo}', password='${password}', email='${email}', description='${description}', imageUrl='${imageUrl}' WHERE pseudo=${pseudo};`
+    const sql = `UPDATE users SET description='${description}' WHERE pseudo='${pseudo}'`
 
-            connectionDb.query(sql, (error, result) => {
-                if (error) {
-                    return res.status(403).json({
-                        error: `Cet utilisateur n'existe pas.`
-                    })
-                };
-                return res.status(201).json({
-                    message: `L'utilisateur a été modifié.`
-                })
-            });
+    connectionDb.query(sql, (error, result) => {
+        if (error) {
+            return res.status(403).json({
+                error: `Impossible de modifier votre description.`
+            })
+        };
+        return res.status(201).json({
+            message: `Votre description a été modifiée.`
         })
-        .catch((error) => res.status(500).json({ error }));
+    });
+};
+
+exports.updatePhoto = (req, res, next) => {
+    const pseudo = req.params.pseudo;
+    const sql = `SELECT imageUrl from users WHERE pseudo='${pseudo}'`;
+
+    connectionDb.query(sql, (error, result) => {
+        const oldImage = result[0].imageUrl;
+        if (oldImage) {
+            if (error) {
+                return res.status(403).json({
+                    error: `Impossible de trouver cette photo.`
+                });
+            };
+            console.log(oldImage);
+            fs.unlink(`images/${oldImage}`, (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const url = req.file.filename;
+                    console.log(url);
+                    const sql = `UPDATE users SET imageUrl='${url}' WHERE pseudo='${pseudo}'`
+                    connectionDb.query(sql, (error, result) => {
+                        if (error) {
+                            return res.status(403).json({
+                                error: `Impossible de télécharger votre image.`
+                            });
+                        };
+                        return res.status(201).json({
+                            message: `Votre image a été modifiée, et l'ancienne supprimée.`
+                        });
+                    });
+                };
+            });
+        };
+    });
 };
 
 exports.getUser = (req, res, next) => {
-    let pseudo = req.params.pseudo;
+    const pseudo = req.params.pseudo;
     connectionDb.query(`SELECT * FROM users WHERE pseudo='${pseudo}'`, (error, result, fields) => {
         if (error) {
             return res.status(400).json({ error: 'Utilisateur non trouvé.' });
-        }
+        };
         return res.status(200).json(result)
     });
 };
