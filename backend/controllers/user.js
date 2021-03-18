@@ -27,14 +27,28 @@ exports.signup = (req, res, next) => {
                         message: error
                     })
                 };
-                return res.status(201).json({
-                    message: `L'utilisateur ${pseudo} vient d'être ajouté aux profils.`
-                })
+
+                const sql2 = `SELECT * FROM users WHERE email='${email}'`;
+
+                connectionDb.query(sql2, email, (err, result) => {
+                    if (error) {
+                        return res.status(403).json({
+                            message: error
+                        });
+                    };
+                    res.status(200).json({
+                        userPseudo: result[0].pseudo,
+                        userId: result[0].id,
+                        token: jwt.sign({
+                            userId: result[0].id
+                        }, 'RANDOM_TOKEN_SECRET', {
+                            expiresIn: '24h'
+                        })
+                    });
+                });
             });
         })
-        .catch((error) => res.status(403).json({
-            error: `Impossible de créer un utilisateur`
-        }))
+        .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))        
 };
 
 exports.login = (req, res, next) => {
