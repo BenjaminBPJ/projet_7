@@ -2,12 +2,14 @@ function getPosts(){
     let data = request(`http://localhost:3000/api/home/pseudo`)
     data.then(posts => {
         posts.forEach(post => {
-            createOnePost(post)                                  
+            console.log(posts) 
+            createOnePost(post) 
+                                          
         })
     })
-        .catch((error) => {
+        /*.catch((error) => {
             error
-        })
+        })*/
 }
 
 getPosts()

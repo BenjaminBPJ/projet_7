@@ -1,12 +1,14 @@
-function createOnePost(value) {
+function createOnePost(t) {
+    console.log(t)
     let article = document.createElement(`div`)
-    document.querySelector("publication-home").appendChild(article)
+    document.querySelector("main").appendChild(article)
     article.classList.add("publication")
 
-    article.innerHTML = `<h3>${value.userPseudo}</h3>
-                         <h4>${value.datePublication}</h4>
-                        <img de la publication si il y a />
-                        <p>${value.publication}</p>`
+    article.innerHTML = `<h3>${result.t[0].userPseudo}</h3>
+                         <h4>${value[0].datePublication}</h4>
+                        <p>${value[0].publication}</p>`
+
+                        console.log(value)
 }
 
 function userProfil(value) {

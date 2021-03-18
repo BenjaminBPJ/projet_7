@@ -6,7 +6,7 @@ exports.createPost = (req, res, next) => {
     const userPseudo = req.params.id;
     const datePublication = datePubli;
     const publication = req.body.publication;
-    const imageUrl = req.body.imageUrl;
+    const imageUrl = req.file.filename;
     const publi = `
     ('${userPseudo}',
     '${datePublication}',

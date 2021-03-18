@@ -17,6 +17,7 @@ function login(form){
         let pseudo = user.userPseudo;
         window.location = `reseau.html?/home/pseudo=${pseudo}`
         console.log(pseudo)
+        
 
         // insertion du pseudo et du token dans le localstorage à la connexion
         pseudo = localStorage.setItem('userPseudo', pseudo)

@@ -86,8 +86,6 @@ exports.deleteUser = (req, res, next) => {
     });
 };
 
-
-
 exports.updateDescription = (req, res, next) => {
     const description = req.body.description;
     const pseudo = req.params.pseudo;
