@@ -3,10 +3,10 @@ const datePubli = require('../middleware/date')
 //const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
-    const userPseudo = req.params.id;
+    const userPseudo = req.params.pseudo;
     const datePublication = datePubli;
     const publication = req.body.publication;
-    const imageUrl = req.file.filename;
+    const imageUrl = req.body.imageUrl;
     const publi = `
     ('${userPseudo}',
     '${datePublication}',

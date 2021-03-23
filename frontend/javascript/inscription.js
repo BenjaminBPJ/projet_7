@@ -20,7 +20,8 @@ function getUserSignup(){
 function signup(form){
     let data = send(`http://localhost:3000/api/signup`,form)
     data.then (user => {
-        window.location = `index.html`
+        let pseudo = user.userPseudo;
+        window.location = `reseau.html?/home/pseudo=${pseudo}`
     })
     .catch((error) => ({ error }));
 }

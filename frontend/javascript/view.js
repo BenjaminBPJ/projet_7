@@ -1,20 +1,21 @@
-function createOnePost(t) {
-    console.log(t)
+function createOnePost(value) {
+    console.log(value)
     let article = document.createElement(`div`)
-    document.querySelector("main").appendChild(article)
+    document.querySelector("h4").appendChild(article)
     article.classList.add("publication")
 
-    article.innerHTML = `<h3>${result.t[0].userPseudo}</h3>
-                         <h4>${value[0].datePublication}</h4>
-                        <p>${value[0].publication}</p>`
+    article.innerHTML = `<h3>${value.userPseudo}</h3>
+                         <h4>${value.datePublication}</h4>
+                        <p>${value.publication}</p>`
 
-                        console.log(value)
+                        
 }
 
 function userProfil(value) {
     let article = document.createElement(`article`); 
     document.querySelector("main").appendChild(article);
     article.classList.add("profil")
+    console.log(value)
 
     article.innerHTML = `<div class="photo-nom">
                             <h2 class="profil-title"> Profil de <br>

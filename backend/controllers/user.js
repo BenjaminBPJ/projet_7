@@ -118,7 +118,7 @@ exports.updateDescription = (req, res, next) => {
     });
 };
 
-exports.updatePhoto = (req, res, next) => {
+/*exports.updatePhoto = (req, res, next) => {
     const pseudo = req.params.pseudo;
     const sql = `SELECT imageUrl from users WHERE pseudo='${pseudo}'`;
 
@@ -152,7 +152,7 @@ exports.updatePhoto = (req, res, next) => {
             });
         };
     });
-};
+};*/
 
 exports.getUser = (req, res, next) => {
     const pseudo = req.params.pseudo;
