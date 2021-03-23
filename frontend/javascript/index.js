@@ -1,5 +1,6 @@
 goNetwork()
-
+let mail = document.getElementById('email').value
+console.log(mail)
 function getUserLogin(){
     let mail = document.getElementById('email').value
     let password = document.getElementById('password').value
@@ -9,6 +10,7 @@ function getUserLogin(){
     }
     console.log(user)
     login(user)
+    
 }
 
 function login(form){
@@ -26,6 +28,7 @@ function login(form){
         console.log(token)
         token = localStorage.setItem('token', token)
         token = JSON.stringify(token)
+  
     })
     .catch((error) => ({ error }));
 }

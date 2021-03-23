@@ -101,8 +101,9 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.updateDescription = (req, res, next) => {
-    const description = req.body.description;
+    const description = req.body.newDescription;
     const pseudo = req.params.pseudo;
+    console.log(description)
 
     const sql = `UPDATE users SET description='${description}' WHERE pseudo='${pseudo}'`
 

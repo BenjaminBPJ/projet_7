@@ -53,23 +53,23 @@ function getDescriptionScreen() {
 function sendDescription(){
     let newDescription = document.getElementById("area-description").value;
     let sendDescription = document.getElementById('b-s');
-    let descriptionInput = {
-        description: newDescription
-    };
-    console.log(descriptionInput);
+    let description = {
+        description : newDescription
+    }
+    console.log(description)
 
     sendDescription.addEventListener('click', function(e){
         e.preventDefault()
-        modifyDescription(descriptionInput);
-        window.location.reload()
+        modifyDescription(newDescription);
+        //window.location.reload()
     });
 };
 
-function modifyDescription(description) {
+function modifyDescription(newDescription) {
     let urlParam = (new URL(window.location.href)).searchParams.get('/pseudo');
-    let data = update(`http://localhost:3000/api/` + urlParam, description);
+    let data = update(`http://localhost:3000/api/` + urlParam, newDescription);
     data.then(descri => {
         console.log(descri);
     })
-    .catch((error) => ({ error }));
+    //.catch((error) => ({ error }));
 };
