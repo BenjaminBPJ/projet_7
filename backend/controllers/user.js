@@ -48,7 +48,7 @@ exports.signup = (req, res, next) => {
                 });
             });
         })
-        .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))        
+        .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))
 };
 
 exports.login = (req, res, next) => {
