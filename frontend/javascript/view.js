@@ -24,7 +24,6 @@ function userProfil(value) {
                                 <div class="photo-pseudo">
                                     <i class="fas fa-pen pen-photo"></i>
                                     <img src= ${value[0].imageUrl} class="photo-profil"/>
-                                    <p class="pseudo-user">Votre pseudo :<br> ${value[0].pseudo}</p>
                                 </div>
                         </div>
                             <i id="pen-d" class="fas fa-pen pen-description"></i>

@@ -15,10 +15,9 @@ getPosts()
 goToProfil() 
 function goToProfil(){
     let profil = document.getElementById('emote-profil')
-    let searchParam = new URLSearchParams(window.location.search)
-    let pseudo = searchParam.get('/home/pseudo')
-    console.log(pseudo)
+    let id = JSON.parse(localStorage.getItem('userId'))
+    console.log(id)
     profil.addEventListener('click', function (){
-        window.location = `profil.html?/pseudo=${pseudo}`
+        window.location = `profil.html?/id=${id}`
     })
 }

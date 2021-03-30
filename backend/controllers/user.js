@@ -56,7 +56,6 @@ exports.login = (req, res, next) => {
 
     connectionDb.query(sql, (err, result) => {
         if (err) throw err;
-        console.log(result);
         bcrypt
             .compare(password, result[0].password)
             .then((valid) => {
@@ -152,8 +151,8 @@ exports.updateDescription = (req, res, next) => {
 };*/
 
 exports.getUser = (req, res, next) => {
-    const pseudo = req.params.pseudo;
-    connectionDb.query(`SELECT * FROM users WHERE pseudo='${pseudo}'`, (error, result, fields) => {
+    const id = req.params.id;
+    connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
         if (error) {
             return res.status(400).json({ error: 'Utilisateur non trouvé.' });
         };

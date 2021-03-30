@@ -1,5 +1,19 @@
-goNetwork()
-let mail = document.getElementById('email').value
+function login(form){
+    let data = send(`http://localhost:3000/api/login`,form)
+    data.then (user =>{
+        window.location = `reseau.html`
+        
+        // insertion du pseudo et du token dans le localstorage à la connexion
+        let userId = user.userId;
+        userId = localStorage.setItem('userId', userId);
+        userId = JSON.parse(userdId);
+        let token = user.token;
+        token = localStorage.setItem('token', token);
+        token = JSON.stringify(token);
+    })
+    .catch((error) => ({ error }));
+}
+
 function getUserLogin(){
     let mail = document.getElementById('email').value
     let password = document.getElementById('password').value
@@ -7,25 +21,7 @@ function getUserLogin(){
         email : mail,
         password : password
     }
-    console.log(user)
-    login(user)
-    
-}
-
-function login(form){
-    let data = send(`http://localhost:3000/api/login`,form)
-    data.then (user =>{
-        window.location = `reseau.html`
-        
-        // insertion du pseudo et du token dans le localstorage à la connexion
-        pseudo = localStorage.setItem('userPseudo', pseudo)
-        pseudo = JSON.stringify(pseudo)
-        let token = user.token
-        console.log(token)
-        token = localStorage.setItem('token', token)
-        token = JSON.stringify(token)  
-    })
-    .catch((error) => ({ error }));
+    login(user)   
 }
 
 function goNetwork(){
@@ -36,3 +32,4 @@ function goNetwork(){
     })
 }
 
+goNetwork()
