@@ -10,17 +10,15 @@ exports.signup = (req, res, next) => {
             const email = req.body.email;
             const firstName = req.body.firstName;
             const lastName = req.body.lastName;
-            const pseudo = req.body.pseudo;
             const password = hash;
             const user = `
                     ('${email}',
                     '${firstName}',
                     '${lastName}',
-                    '${pseudo}',
                     '${password}'
                     )`;
 
-            const sql = `INSERT INTO users (email, lastName, firstName, pseudo, password) VALUES ${user} `;
+            const sql = `INSERT INTO users (email, lastName, firstName, password) VALUES ${user} `;
             connectionDb.query(sql, user, (error, result, fields) => {
                 if (error) {
                     return res.status(403).json({
@@ -37,7 +35,6 @@ exports.signup = (req, res, next) => {
                         });
                     };
                     res.status(200).json({
-                        userPseudo: result[0].pseudo,
                         userId: result[0].id,
                         token: jwt.sign({
                             userId: result[0].id
@@ -69,7 +66,6 @@ exports.login = (req, res, next) => {
                     });
                 }
                 res.status(200).json({
-                    userPseudo: result[0].pseudo,
                     userId: result[0].id,
                     token: jwt.sign({
                         userId: result[0].id
@@ -88,7 +84,7 @@ exports.deleteUser = (req, res, next) => {
     const user = req.params.pseudo;
     console.log(user)
 
-    connectionDb.query(`DELETE FROM users WHERE pseudo='${user}'`, (error, results, fields) => {
+    connectionDb.query(`DELETE FROM users WHERE id='${user}'`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({
                 message: `Cet utilisateur n'existe pas.`
