@@ -91,6 +91,7 @@ header{
     display: flex;
     flex-direction: column;
 }
+
 .profil{
     display: flex;
     flex-direction: column;
@@ -109,23 +110,11 @@ header{
     color: #1A237E;
     text-align: center;
 }
-.photo-description{
-    display: flex;
-}
-.photo-profil{
-    border : solid 0.2em #1A237E;
-    border-radius: 2em;
-    padding: 3em;
-    text-align: center;
-}
+
 .pen-photo{
     color: #1A237E;
 }
 
-.photo-pseudo{
-    text-align: center;
-    margin-right: 4em;
-}
 .profil-description{
     margin: auto;
     margin-bottom: 2em;

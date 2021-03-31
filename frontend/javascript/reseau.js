@@ -12,7 +12,7 @@ function getPosts(){
 };
 
 getPosts();
-goToProfil();
+
 function goToProfil(){
     let profil = document.getElementById('emote-profil');
     let id = JSON.parse(localStorage.getItem('userId'));
@@ -21,3 +21,5 @@ function goToProfil(){
         window.location = `profil.html?/id=${id}`
     });
 };
+
+goToProfil();
