@@ -5,6 +5,7 @@ const connectToSql = require ('./middleware/connect')
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'null');
@@ -15,6 +16,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/avatars', express.static(path.join(__dirname, 'upload')));
+app.use(fileUpload());
 app.use('/api', userRoutes);
 app.use('/api', postRoutes);
 app.use('*',(req, res) => { res.status(400).json({error:`Cette route n'existe pas`})});

@@ -2,6 +2,8 @@ const connectionDb = require('../middleware/connect')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const fileUpload = require('express-fileupload');
+
 
 exports.signup = (req, res, next) => {
     bcrypt
@@ -113,48 +115,41 @@ exports.updateDescription = (req, res, next) => {
     });
 };
 
-/*exports.updatePhoto = (req, res, next) => {
-    const pseudo = req.params.pseudo;
-    const sql = `SELECT imageUrl from users WHERE pseudo='${pseudo}'`;
+exports.updatePhoto = (req, res, next) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('Aucun fichier téléchargé.');
+    };
 
-    connectionDb.query(sql, (error, result) => {
-        const oldImage = result[0].imageUrl;
-        if (oldImage) {
+    const sampleFile = req.files;
+    console.log(sampleFile);
+    const uploadPath  = __dirname + '/upload/' + sampleFile.name;
+ 
+
+    // Utilisation de mv() de la reponse pour placer le fichier sur le serveur
+    sampleFile.mv(uploadPath, function (err) {
+        if (err) return res.status(500).send(err);
+
+        const id = req.params.id;
+        const sql = `UPDATE users SET imageUrl = ? WHERE id='${id}'`
+        connectionDb.query(sql, (error, result) => {
             if (error) {
                 return res.status(403).json({
-                    error: `Impossible de trouver cette photo.`
+                    error: `Impossible de télécharger votre image.`
                 });
             };
-            console.log(oldImage);
-            fs.unlink(`images/${oldImage}`, (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    const url = req.file.filename;
-                    console.log(url);
-                    const sql = `UPDATE users SET imageUrl='${url}' WHERE pseudo='${pseudo}'`
-                    connectionDb.query(sql, (error, result) => {
-                        if (error) {
-                            return res.status(403).json({
-                                error: `Impossible de télécharger votre image.`
-                            });
-                        };
-                        return res.status(201).json({
-                            message: `Votre image a été modifiée, et l'ancienne supprimée.`
-                        });
-                    });
-                };
+            return res.status(201).json({
+                message: `Votre image a été modifiée.`
             });
-        };
-    });
-};*/
-
-exports.getUser = (req, res, next) => {
-    const id = req.params.id;
-    connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
-        if (error) {
-            return res.status(400).json({ error: 'Utilisateur non trouvé.' });
-        };
-        return res.status(200).json(result)
+        });
     });
 };
+
+    exports.getUser = (req, res, next) => {
+        const id = req.params.id;
+        connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
+            if (error) {
+                return res.status(400).json({ error: 'Utilisateur non trouvé.' });
+            };
+            return res.status(200).json(result)
+        });
+    };
