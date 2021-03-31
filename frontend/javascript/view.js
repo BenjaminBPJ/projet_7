@@ -38,12 +38,12 @@ function userProfil(value) {
     backNetwork.classList.add("back-network");
     backNetwork.setAttribute("id", 'back-to-network');
 
-    backNetwork.textContent = 'Retour'
-}
+    backNetwork.textContent = 'Retour';
+};
 
 function serverDown() {
-    let article = document.createElement(`article`) 
-    document.querySelector("main").appendChild(article)
-    article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser`
-}
+    let article = document.createElement(`article`);
+    document.querySelector("main").appendChild(article);
+    article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser`;
+};
 

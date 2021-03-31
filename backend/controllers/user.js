@@ -80,8 +80,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    const user = req.params.pseudo;
-    console.log(user)
+    const user = req.params.id;
 
     connectionDb.query(`DELETE FROM users WHERE id='${user}'`, (error, results, fields) => {
         if (error) {
@@ -97,10 +96,10 @@ exports.deleteUser = (req, res, next) => {
 
 exports.updateDescription = (req, res, next) => {
     const description = req.body.newDescription;
-    const pseudo = req.params.pseudo;
+    const id = req.params.id;
     console.log(description)
 
-    const sql = `UPDATE users SET description='${description}' WHERE pseudo='${pseudo}'`
+    const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`
 
     connectionDb.query(sql, (error, result) => {
         if (error) {

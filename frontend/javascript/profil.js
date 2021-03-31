@@ -1,6 +1,5 @@
 function profilPage() {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
-    console.log(urlParam);
     let data = request(`http://localhost:3000/api/` + urlParam);
     data.then(user => {
         userProfil(user);
@@ -24,11 +23,10 @@ function backNetwork(user) {
     });
 };
 
-
 function deleteUser() {
     let button = document.getElementById('delete-account');
     button.addEventListener('click', function () {
-        let urlParam = (new URL(window.location.href)).searchParams.get('/pseudo');
+        let urlParam = (new URL(window.location.href)).searchParams.get('/id');
 
         alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
 
