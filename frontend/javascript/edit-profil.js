@@ -1,17 +1,19 @@
-function profilPage() {
+function editProfilPage() {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
     let data = request(`http://localhost:3000/api/` + urlParam);
     data.then(user => {
         userEditProfil(user);
         backNetwork(user);
         deleteUser(user);
-        getDescriptionScreen(user);
-        sendDescription(user);
+        //getDescriptionScreen(user);
+        //sendDescription(user);
     })
     /*.catch(() => {
         serverDown();
     })*/
 };
+
+editProfilPage();
 
 function deleteUser() {
     let button = document.getElementById('delete-account');

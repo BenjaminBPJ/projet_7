@@ -34,11 +34,20 @@ function userEditProfil(value) {
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
     
-    article.innerHTML = `   <img src= ${value[0].imageUrl} class="photo-profil"/>
+    article.innerHTML = `   <form> 
+                                <img src= ${value[0].imageUrl} class="photo-profil"/>
+                                <input type="file" name="sampleFile" accept="image/*"/>
+                                <small id="small-edit-photo"></small>
+                                <input type="submit"/>
+                            </form>
                             <h2 class="profil-title">${value[0].firstName} ${value[0].lastName}</h2>
+                            <form>
                             <p class="profil-description"> Description : </p>
-                            <p id="text-description" class="profil-description" rows="5">${value[0].description}</p><br>
-                            <button id="goToEdit">Modification de votre profil</buttton>
+                            <label for="description"></label>
+                            <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea>
+                            <input type="submit"/>
+                            </form>
+                            <button id="delete-account" class="delete-account">Suppression du compte</button>
                         `;
 
     let backNetwork = document.createElement(`button`);
