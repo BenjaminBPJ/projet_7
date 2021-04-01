@@ -2,8 +2,6 @@ const connectionDb = require('../middleware/connect')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const fileUpload = require('express-fileupload');
-
 
 exports.signup = (req, res, next) => {
     bcrypt
@@ -122,8 +120,8 @@ exports.updatePhoto = (req, res, next) => {
 
     const sampleFile = req.files;
     console.log(sampleFile);
-    const uploadPath  = __dirname + '/upload/' + sampleFile.name;
- 
+    const uploadPath = __dirname + '/upload/' + sampleFile.name;
+
 
     // Utilisation de mv() de la reponse pour placer le fichier sur le serveur
     sampleFile.mv(uploadPath, function (err) {
@@ -144,12 +142,12 @@ exports.updatePhoto = (req, res, next) => {
     });
 };
 
-    exports.getUser = (req, res, next) => {
-        const id = req.params.id;
-        connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
-            if (error) {
-                return res.status(400).json({ error: 'Utilisateur non trouvé.' });
-            };
-            return res.status(200).json(result)
-        });
-    };
+exports.getUser = (req, res, next) => {
+    const id = req.params.id;
+    connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
+        if (error) {
+            return res.status(400).json({ error: 'Utilisateur non trouvé.' });
+        };
+        return res.status(200).json(result)
+    });
+};

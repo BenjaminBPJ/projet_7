@@ -32,7 +32,8 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-    connectionDb.query(`DELETE FROM post`, (error, results, fields) => {
+    const id = req.params.id;
+    connectionDb.query(`DELETE FROM post WHERE id='${id}'`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({
                 message: `Cet utilisateur n'existe pas.`
@@ -55,5 +56,15 @@ exports.getAllPosts = (req, res, next) => {
         }
         console.log(result)
         res.status(200).json({result})
+    });
+};
+
+exports.getPost = (req, res, next) => {
+    const id = req.params.id;
+    connectionDb.query(`SELECT * FROM post WHERE id='${id}'`, (error, result, fields) => {
+        if (error) {
+            return res.status(400).json({ error: 'Publication non trouvée.' });
+        };
+        return res.status(200).json(result)
     });
 };

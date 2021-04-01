@@ -3,9 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    console.log(token);
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-    console.log(decodedToken)
     const userId = decodedToken.userId;   
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
@@ -13,7 +11,7 @@ module.exports = (req, res, next) => {
       next();
     }
   } catch(error) {
-    console.log(error);
-    res.status(401).json({ error });
+    console.log('token invalide');
+    res.status(401).json({ error : 'Token invalide.' });
   };
 };
