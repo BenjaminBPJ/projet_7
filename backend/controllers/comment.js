@@ -1,18 +1,19 @@
 const connectionDb = require('../middleware/connect')
+const datePubli = require('../middleware/date')
 //const fs = require('fs');
 
 exports.createComment = (req, res, next) => {
-    const userId = req.params.userId;
+    const publiId = req.params.id;
     const content = req.body.comments;
-    const publiAt = Date.now();
+    const publiAt = datePubli;
     const commentaire = `
-    ('${userId}',
+    ('${publiId}',
     '${content}',
     '${publiAt}'
     )`;
-
-    const sql = `INSERT INTO commentaires (userId, content, publiAt) VALUES ${commentaire} `;
-    connectionDb.query(sql, publi, (error, result, fields) => {
+    
+    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) SELECT '${publiId}','${content}','${publiAt}', userId FROM posts WHERE id='${publiId}' `;
+    connectionDb.query(sql, (error, result, fields) => {
         if (error) {
             return res.status(403).json({
                 message: error
