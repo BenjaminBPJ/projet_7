@@ -1,10 +1,10 @@
 function login(form){
     let data = send(`http://localhost:3000/api/login`,form)
     data.then (user =>{
-        window.location = `reseau.html`
+        let userId = user.userId
+        window.location = `reseau.html/userId=${userId}`
         
         // insertion du pseudo et du token dans le localstorage à la connexion
-        let userId = user.userId;
         userId = localStorage.setItem('userId', userId);
         userId = JSON.parse(userdId);
         let token = user.token;

@@ -18,15 +18,15 @@ function getUserSignup(){
 function signup(form){
     let data = send(`http://localhost:3000/api/signup`,form)
     data.then (user => {
-        window.location = `reseau.html`
-
-        /*let userId = user.userId
+        let userId = user.userId
+        window.location = `reseau.html/userId=${userId}`
+     
         userId = localStorage.setItem('userId', userId)
         userId = JSON.stringify(userdId)
         let token = user.token
         console.log(token)
         token = localStorage.setItem('token', token)
-        token = JSON.stringify(token) */
+        token = JSON.stringify(token) 
     })
     .catch((error) => ({ error }));
 }
