@@ -1,9 +1,20 @@
 const connectionDb = require('../middleware/connect')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passwordIsValide = require('../middleware/goodpassword')
+const emailIsValide = require('../middleware/goodemail');
 const fs = require('fs');
 
 exports.signup = (req, res, next) => {
+    if (!emailIsValide.goodEmail(req.body.email) && !passwordIsValide.goodPassword(req.body.password)) {
+        return res.status(401).json({ message: 'Votre adresse mail doit être correcte et votre mot de passe doit contenir au moins un chiffre, une minuscule, une majuscule et être composé de 8 caractères minimum !  ' });
+      }
+      if (!emailIsValide.goodEmail(req.body.email)) {
+        return res.status(401).json({ message: 'Votre adresse mail doit être correcte ' });
+      }
+      if (!passwordIsValide.goodPassword(req.body.password)) {
+        return res.status(401).json({ message: 'Votre mot de passe doit contenir au moins un chiffre, une minuscule, une majuscule et être composé de 8 caractères minimum !' });
+      }
     bcrypt
         .hash(req.body.password, 10)
         .then((hash) => {
