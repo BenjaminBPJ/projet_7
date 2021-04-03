@@ -32,11 +32,11 @@ exports.deletePost = (req, res, next) => {
     connectionDb.query(`DELETE FROM posts WHERE id='${id}'`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({
-                message: `Cet utilisateur n'existe pas.`
+                message: `Cette publication n'existe pas.`
             });
         };
         return res.status(204).json({
-            message: `Vous avez supprimé votre profil.`
+            message: `Vous avez supprimé votre publication.`
         });
     });
 };
@@ -53,9 +53,9 @@ exports.getAllPosts = (req, res, next) => {
     });
 };
 
-exports.getPost = (req, res, next) => {
+exports.getAllCommentsFromOnePubliPost = (req, res, next) => {
     const id = req.params.id;
-    connectionDb.query(`SELECT * FROM posts WHERE id='${id}'`, (error, result, fields) => {
+    connectionDb.query(`SELECT * FROM commentaires WHERE publiId='${id}'`, (error, result, fields) => {
         if (error) {
             return res.status(400).json({ error: 'Publication non trouvée.' });
         };

@@ -24,3 +24,28 @@ exports.createComment = (req, res, next) => {
         });
     });
 };
+
+exports.deletePost = (req, res, next) => {
+    const id = req.body.id;
+    connectionDb.query(`DELETE FROM commentaires WHERE id='${id}'`, (error, results, fields) => {
+        if (error) {
+            return res.status(404).json({
+                message: `Ce commentaire n'existe pas.`
+            });
+        };
+        return res.status(204).json({
+            message: `Vous avez supprimé votre commentaire.`
+        });
+    });
+};
+
+exports.getAllPosts = (req, res, next) => {
+    connectionDb.query(`SELECT * FROM posts`, (error, result, fields) => {
+        if (error) {
+            res.status(404).json({
+                error: `Impossible de charger les publications.`
+            });
+        };
+        res.status(200).json({result});
+    });
+};
