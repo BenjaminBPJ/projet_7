@@ -49,7 +49,26 @@ exports.getAllPosts = (req, res, next) => {
                 error: `Impossible de charger les publications.`
             });
         };
-        res.status(200).json({result});
+        res.status(200).json({ result });
     });
 };
 
+exports.getPost = (req, res, next) => {
+    const id = req.params.id;
+    connectionDb.query(`SELECT * FROM posts WHERE id='${id}'`, (error, result, fields) => {
+        if (error) {
+            res.status(404).json({
+                error: `Impossible de charger les publications.`
+            });
+        };
+        res.status(200).json({ result });
+    });
+};
+
+
+// requete sql a realiser pour vérifier le bon id et rajouter une couche d'authentification
+/*const userId = `SELECT userId FROM posts WHERE id='${id}'`
+if (userId === req.userIdAuth) {
+} else {
+    res.status(403).json({ message: `Vous n'avez pas les droits pour modifier cette sauce` });
+};*/

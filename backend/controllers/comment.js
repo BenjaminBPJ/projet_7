@@ -6,11 +6,6 @@ exports.createComment = (req, res, next) => {
     const publiId = req.params.id;
     const content = req.body.comments;
     const publiAt = datePubli;
-    const commentaire = `
-    ('${publiId}',
-    '${content}',
-    '${publiAt}'
-    )`;
     
     const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) SELECT '${publiId}','${content}','${publiAt}', userId FROM posts WHERE id='${publiId}' `;
     connectionDb.query(sql, (error, result, fields) => {
@@ -39,7 +34,7 @@ exports.deleteComment = (req, res, next) => {
     });
 };
 
-exports.getAllCommentsFromOnePubliPost = (req, res, next) => {
+exports.getAllCommentsFromOnePubli = (req, res, next) => {
     const id = req.params.id;
     connectionDb.query(`SELECT * FROM commentaires WHERE publiId='${id}'`, (error, result, fields) => {
         if (error) {
