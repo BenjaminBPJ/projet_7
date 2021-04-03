@@ -25,7 +25,7 @@ exports.createComment = (req, res, next) => {
     });
 };
 
-exports.deletePost = (req, res, next) => {
+exports.deleteComment = (req, res, next) => {
     const id = req.body.id;
     connectionDb.query(`DELETE FROM commentaires WHERE id='${id}'`, (error, results, fields) => {
         if (error) {
@@ -39,13 +39,12 @@ exports.deletePost = (req, res, next) => {
     });
 };
 
-exports.getAllPosts = (req, res, next) => {
-    connectionDb.query(`SELECT * FROM posts`, (error, result, fields) => {
+exports.getAllCommentsFromOnePubliPost = (req, res, next) => {
+    const id = req.params.id;
+    connectionDb.query(`SELECT * FROM commentaires WHERE publiId='${id}'`, (error, result, fields) => {
         if (error) {
-            res.status(404).json({
-                error: `Impossible de charger les publications.`
-            });
+            return res.status(400).json({ error: 'Publication non trouvée.' });
         };
-        res.status(200).json({result});
+        return res.status(200).json(result);
     });
 };

@@ -49,7 +49,7 @@ exports.signup = (req, res, next) => {
                         userId: result[0].id,
                         token: jwt.sign({
                             userId: result[0].id
-                        }, 'RANDOM_TOKEN_SECRET', {
+                        }, 'LgK33h4Rn', {
                             expiresIn: '24h'
                         })
                     });
@@ -79,7 +79,7 @@ exports.login = (req, res, next) => {
                     userId: result[0].id,
                     token: jwt.sign({
                         userId: result[0].id
-                    }, 'RANDOM_TOKEN_SECRET', {
+                    }, 'LgK33h4Rn', {
                         expiresIn: '24h'
                     })
                 })
@@ -108,7 +108,6 @@ exports.deleteUser = (req, res, next) => {
 exports.updateDescription = (req, res, next) => {
     const description = req.body.newDescription;
     const id = req.params.id;
-    console.log(description)
 
     const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`
 
