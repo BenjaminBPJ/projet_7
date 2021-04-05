@@ -84,7 +84,7 @@ exports.login = (req, res, next) => {
                     })
                 })
             })
-            .catch(error => res.status(401).json({
+            .catch(error => res.status(404).json({
                 error: 'Utilisateur non trouvé.'
             }))
     });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,38 +9,44 @@
     <script src="https://kit.fontawesome.com/610b914518.js" crossorigin="anonymous"></script>
     <title>Page d'inscription réseau Groupomania</title>
 </head>
+
 <body>
     <img src="logos/icon-above-font.svg" alt="logo deGroupomania" class="logo-login" />
-    <h1 class="principal-title">Bienvenue dans votre réseau social d'entreprise Groupomania</h1>
-    <article class="inscription-form">
-        <h3>Inscrivez-vous</h3>
-        <form id="sign-up-form" class="sign-up-form">
-            <label for="email"></label>
-            <input id="email" type="email" placeholder="Email ..." class="value-input-inscription"/><br>
-            <small id="small-email"></small><br>
-            <label for="lastName"></label>
-            <input id="lastName" type="text" placeholder="Nom ..." class="value-input-inscription"/><br>
-            <small id="small-lastName"></small><br>
-            <label for="firstName"></label>
-            <input id="firstName" type="text" placeholder="Prénom ..." class="value-input-inscription"/><br>
-            <small id="small-firstName"></small><br>
-            <label for="password"></label>
-            <input id="password" type="password" placeholder="Mot de passe ..." class="value-input-inscription"/><br>
-            <small id="small-password"></small><br>
-            <label for="confirmPassword"></label>
-            <input id="confirmPassword" type="password" placeholder="Confirmez votre mot de passe ..." class="value-input-inscription"/><br>
-            <small id="small-confirmPassword"></small><br>
-            <button type="submit" id="go-to-network">Inscrivez vous et passez à la page de connexion</button>
-        </form>
-    </article>
-    <article class="inscription-form">
-        <h4>Vous avez déjà un compte ?</h4>
-        <a href="index.html">Connectez-vous</a>
-    </article>
+    <main>
+        <h1 class="principal-title">Bienvenue dans votre réseau social d'entreprise Groupomania</h1>
+        <article class="inscription-form">
+            <h3>Inscrivez-vous</h3>
+            <form id="sign-up-form" class="sign-up-form">
+                <label for="email"></label>
+                <input id="email" type="email" placeholder="Email ..." class="value-input-inscription" /><br>
+                <small id="small-email"></small><br>
+                <label for="lastName"></label>
+                <input id="lastName" type="text" placeholder="Nom ..." class="value-input-inscription" /><br>
+                <small id="small-lastName"></small><br>
+                <label for="firstName"></label>
+                <input id="firstName" type="text" placeholder="Prénom ..." class="value-input-inscription" /><br>
+                <small id="small-firstName"></small><br>
+                <label for="password"></label>
+                <input id="password" type="password" placeholder="Mot de passe ..."
+                    class="value-input-inscription" /><br>
+                <small id="small-password"></small><br>
+                <label for="confirmPassword"></label>
+                <input id="confirmPassword" type="password" placeholder="Confirmez votre mot de passe ..."
+                    class="value-input-inscription" /><br>
+                <small id="small-confirmPassword"></small><br>
+                <button type="submit" id="go-to-network">Inscrivez vous et passez à la page de connexion</button>
+            </form>
+        </article>
+        <article class="inscription-form">
+            <h4>Vous avez déjà un compte ?</h4>
+            <a href="index.html">Connectez-vous</a>
+        </article>
+    </main>
 
     <script src="javascript/request.js"></script>
     <script src="javascript/inscription.js"></script>
     <script src="javascript/view.js"></script>
     <script src="javascript/multi-fonction.js"></script>
 </body>
+
 </html>

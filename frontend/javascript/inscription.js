@@ -12,7 +12,7 @@ function signup(form) {
         token = JSON.stringify(token);
     })
         .catch((error) => ({ error }));
-}
+};
 
 function getUserSignup() {
     let mail = document.getElementById('email').value;
@@ -26,7 +26,7 @@ function getUserSignup() {
         password: password
     };
     signup(user);
-}
+};
 
 function emailValide(inputEmail) {
     let emailRegExp = /^[\w-]+(\.[\w-]+)*@groupomania.fr?$/;

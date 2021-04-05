@@ -61,6 +61,16 @@ function userEditProfil(value) {
 function serverDown() {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
-    article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser`;
+    article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
 };
+
+function badEmail() {
+    let small = document.getElementById('small-password');
+    small.innerHTML = `Votre email est incorrect.`
+}
+
+function badPassword() {
+    let small = document.getElementById('small-password');
+    small.innerHTML = `Votre mot de passe est incorrect.`
+}
 
