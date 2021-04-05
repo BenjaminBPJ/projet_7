@@ -1,9 +1,9 @@
 function signup(form) {
-    let data = send(`http://localhost:3000/api/signup`,form);
-    data.then (user => {
+    let data = send(`http://localhost:3000/api/signup`, form);
+    data.then(user => {
         let userId = user.userId;
         window.location = `reseau.html/userId=${userId}`;
-     
+
         userId = localStorage.setItem('userId', userId);
         userId = JSON.stringify(userdId);
         let token = user.token;
@@ -11,7 +11,7 @@ function signup(form) {
         token = localStorage.setItem('token', token);
         token = JSON.stringify(token);
     })
-    .catch((error) => ({ error }));
+        .catch((error) => ({ error }));
 }
 
 function getUserSignup() {
@@ -20,21 +20,12 @@ function getUserSignup() {
     let firstName = document.getElementById('firstName').value;
     let password = document.getElementById('password').value;
     let user = {
-        email : mail,
-        lastName : lastName,
-        firstName : firstName,
-        password : password
+        email: mail,
+        lastName: lastName,
+        firstName: firstName,
+        password: password
     };
-    console.log(user);
     signup(user);
-}
-
-function goNetwork() {
-    let button = document.getElementById("go-to-network");
-    button.addEventListener('click', function (e) {
-        e.preventDefault();
-        getUserSignup();
-    })
 }
 
 function emailValide(inputEmail) {
@@ -77,7 +68,7 @@ function firstNameValide(inputName) {
 };
 
 function passwordValide(inputPassword) {
-    let passwordRegExp = new RegExp(`^(?=.{8,})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*$`,`g`);
+    let passwordRegExp = new RegExp(`^(?=.{8,})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*$`, `g`);
     let testPassword = passwordRegExp.test(inputPassword.value);
     let small = document.getElementById(`small-password`);
     if (testPassword) {
@@ -89,15 +80,17 @@ function passwordValide(inputPassword) {
     };
 };
 
-function confirmPassword () {
+function confirmPassword() {
     let mdp = document.getElementById('password').value;
-    let confirmMdp = document.getElementById('confirm-password').value;
-    let small = document.getElementById(`small-confirm-password`);
+    console.log(mdp)
+    let confirmMdp = document.getElementById('confirmPassword').value;
+    console.log(confirmMdp)
+    let small = document.getElementById(`small-confirmPassword`);
 
-    if ( mdp === confirmMdp ) {
+    if (mdp != confirmMdp) {
         small.innerHTML = `Votre mot de passe n'est pas le même.`;
         return false;
-    }else {
+    } else {
         small.innerHTML = `Votre mot de passe est correct.`;
         return true;
     };
@@ -118,10 +111,24 @@ function validForm() {
     form.password.addEventListener('change', function () {
         passwordValide(this);
     });
-    form.confirm-password.addEventListener('change', function () {
+    form.confirmPassword.addEventListener('change', function () {
         confirmPassword(this);
     });
 };
 
-goNetwork();
+function goNetwork() {
+    let form = document.getElementById("sign-up-form");
+    let button = document.getElementById("go-to-network");
+
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (emailValide(form.email) && lastNameValide(form.lastName) && firstNameValide(form.firstName) && passwordValide(form.password) && confirmPassword(form.confirmPassword)) {
+            getUserSignup();
+        };
+    });
+};
+
 validForm();
+goNetwork();
+
+
