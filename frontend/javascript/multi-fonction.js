@@ -5,15 +5,3 @@ function backNetwork() {
     });
 };
 
-function emailValide(inputEmail) {
-    let emailRegExp = /^[\w-]+(\.[\w-]+)*@groupomania.fr?$/;
-    let testEmail = emailRegExp.test(inputEmail.value);
-    let small = document.getElementById(`small-email`);
-    if (testEmail) {
-        small.innerHTML = `Email valide.`;
-        return true;
-    } else {
-        small.innerHTML = `Merci d'écrire une adresse mail de notre entreprise valide.`;
-        return false;
-    };
-};

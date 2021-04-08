@@ -8,13 +8,13 @@ const fs = require('fs');
 exports.signup = (req, res, next) => {
     if (!emailIsValide.goodEmail(req.body.email) && !passwordIsValide.goodPassword(req.body.password)) {
         return res.status(401).json({ message: 'Votre adresse mail doit être correcte et votre mot de passe doit contenir au moins un chiffre, une minuscule, une majuscule et être composé de 8 caractères minimum !  ' });
-      }
-      if (!emailIsValide.goodEmail(req.body.email)) {
+    };
+    if (!emailIsValide.goodEmail(req.body.email)) {
         return res.status(401).json({ message: 'Votre adresse mail doit être correcte ' });
-      }
-      if (!passwordIsValide.goodPassword(req.body.password)) {
+    };
+    if (!passwordIsValide.goodPassword(req.body.password)) {
         return res.status(401).json({ message: 'Votre mot de passe doit contenir au moins un chiffre, une minuscule, une majuscule et être composé de 8 caractères minimum !' });
-      }
+    };
     bcrypt
         .hash(req.body.password, 10)
         .then((hash) => {
@@ -34,7 +34,7 @@ exports.signup = (req, res, next) => {
                 if (error) {
                     return res.status(403).json({
                         message: error
-                    })
+                    });
                 };
 
                 const sql2 = `SELECT * FROM users WHERE email='${email}'`;
@@ -74,7 +74,7 @@ exports.login = (req, res, next) => {
                     return res.status(401).json({
                         error: 'Mot de passe incorrect.'
                     });
-                }
+                };
                 res.status(200).json({
                     userId: result[0].id,
                     token: jwt.sign({
@@ -82,11 +82,11 @@ exports.login = (req, res, next) => {
                     }, 'LgK33h4Rn', {
                         expiresIn: '24h'
                     })
-                })
+                });
             })
             .catch(error => res.status(404).json({
                 error: 'Utilisateur non trouvé.'
-            }))
+            }));
     });
 };
 
@@ -115,42 +115,36 @@ exports.updateDescription = (req, res, next) => {
         if (error) {
             return res.status(403).json({
                 error: `Impossible de modifier votre description.`
-            })
+            });
         };
         return res.status(201).json({
             message: `Votre description a été modifiée.`
-        })
+        });
     });
 };
 
 exports.updatePhoto = (req, res, next) => {
-    if (!req.files || Object.keys(req.files).length === 0) {
+    if (!req.files) {
         return res.status(400).send('Aucun fichier téléchargé.');
     };
 
-    const sampleFile = req.files;
+    const sampleFile = req.files.photo.name;
     console.log(sampleFile);
-    const uploadPath = __dirname + '/upload/' + sampleFile.name;
+    const id = req.params.id;
+    const sql = `UPDATE users SET imageUrl ='${sampleFile}' WHERE id='${id}'`;
 
-
-    // Utilisation de mv() de la reponse pour placer le fichier sur le serveur
-    sampleFile.mv(uploadPath, function (err) {
-        if (err) return res.status(500).send(err);
-
-        const id = req.params.id;
-        const sql = `UPDATE users SET imageUrl = ? WHERE id='${id}'`
-        connectionDb.query(sql, (error, result) => {
-            if (error) {
-                return res.status(403).json({
-                    error: `Impossible de télécharger votre image.`
-                });
-            };
-            return res.status(201).json({
-                message: `Votre image a été modifiée.`
+    connectionDb.query(sql, (error, result) => {
+        if (error) {
+            return res.status(403).json({
+                error: `Impossible de télécharger votre image.`
             });
+        };
+        return res.status(201).json({
+            message: `Votre image a été modifiée.`
         });
     });
 };
+
 
 exports.getUser = (req, res, next) => {
     const id = req.params.id;

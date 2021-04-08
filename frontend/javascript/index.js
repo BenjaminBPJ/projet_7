@@ -17,9 +17,10 @@ function login(form) {
             token = JSON.stringify(token);
         };
     })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error)
             serverDown();
-        });
+        }); 
 };
 
 function getUserLogin() {
