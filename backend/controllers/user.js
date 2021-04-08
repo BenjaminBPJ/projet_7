@@ -128,21 +128,35 @@ exports.updatePhoto = (req, res, next) => {
         return res.status(400).send('Aucun fichier téléchargé.');
     };
 
-    const sampleFile = req.files.photo.name;
-    console.log(sampleFile);
+    const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
+    const fileName = file.name;
     const id = req.params.id;
-    const sql = `UPDATE users SET imageUrl ='${sampleFile}' WHERE id='${id}'`;
 
-    connectionDb.query(sql, (error, result) => {
-        if (error) {
-            return res.status(403).json({
-                error: `Impossible de télécharger votre image.`
-            });
-        };
-        return res.status(201).json({
-            message: `Votre image a été modifiée.`
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/gif") {
+        file.mv('upload/' + fileName, function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            else {
+                const sql = `UPDATE users SET imageUrl ='${fileName}' WHERE id='${id}'`;
+
+                connectionDb.query(sql, (error, result) => {
+                    if (error) {
+                        return res.status(403).json({
+                            error: `Impossible de télécharger votre image.`
+                        });
+                    };
+                    return res.status(201).json({
+                        message: `Votre image a été modifiée.`
+                    });
+                });
+            };
         });
-    });
+    } else {
+        return res.status(403).json({
+            error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.gif','.jpg'.`
+        });
+    };
 };
 
 
