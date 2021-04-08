@@ -132,7 +132,7 @@ exports.updatePhoto = (req, res, next) => {
     const fileName = file.name;
     const id = req.params.id;
 
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/gif") {
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
         file.mv('upload/' + fileName, function (err) {
             if (err) {
                 return res.status(500).send(err);
@@ -154,7 +154,7 @@ exports.updatePhoto = (req, res, next) => {
         });
     } else {
         return res.status(403).json({
-            error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.gif','.jpg'.`
+            error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.jpg'.`
         });
     };
 };
