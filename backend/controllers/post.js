@@ -1,5 +1,6 @@
-const connectionDb = require('../middleware/connect')
-const datePubli = require('../middleware/date')
+const connectionDb = require('../middleware/connect');
+const datePubli = require('../middleware/date');
+const postUserId = require('../middleware/postUserId');
 //const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
@@ -42,6 +43,7 @@ exports.deletePost = (req, res, next) => {
 };
 
 
+
 exports.getAllPosts = (req, res, next) => {
     connectionDb.query(`SELECT * FROM posts`, (error, result, fields) => {
         if (error) {
@@ -66,9 +68,3 @@ exports.getPost = (req, res, next) => {
 };
 
 
-// requete sql a realiser pour vérifier le bon id et rajouter une couche d'authentification
-/*const userId = `SELECT userId FROM posts WHERE id='${id}'`
-if (userId === req.userIdAuth) {
-} else {
-    res.status(403).json({ message: `Vous n'avez pas les droits pour modifier cette sauce` });
-};*/
