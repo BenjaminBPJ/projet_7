@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 const userCtrl = require('../controllers/post');
-const postUserId = require('../middleware/postUserId');
+const postUserId = require('../middleware/verifyUseridPost');
 const deleteImage = require('../middleware/findImagePost');
 
 router.post('/:userId', auth, userCtrl.createPost);

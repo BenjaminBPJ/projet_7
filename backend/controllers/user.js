@@ -130,7 +130,7 @@ exports.updatePhoto = (req, res, next) => {
     };
 
     const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
-    const fileName = file.name;
+    const fileName = Date.now() + file.name;
     const id = req.params.id;
 
     if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {

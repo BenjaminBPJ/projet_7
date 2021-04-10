@@ -1,7 +1,5 @@
 const connectionDb = require('../middleware/connect');
 const datePubli = require('../middleware/date');
-const postUserId = require('../middleware/postUserId');
-//const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
     const userId = req.params.userId;

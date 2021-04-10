@@ -1,4 +1,4 @@
-const connectionDb = require('../middleware/connect');
+const connectionDb = require('./connect');
 
 module.exports = (req, res, next) => {
     const id = req.params.id;
