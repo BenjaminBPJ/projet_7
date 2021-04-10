@@ -6,26 +6,42 @@ const postUserId = require('../middleware/postUserId');
 exports.createPost = (req, res, next) => {
     const userId = req.params.userId;
     const datePublication = datePubli;
-    const publication = req.body.publication;
-    const imageUrl = req.body.imageUrl;
+    const titre = req.body.title;
+    const publication = req.body.content;
+    const file = req.files.contentImage;
+    const imageUrl = file.name;
     const publi = `
     ('${userId}',
     '${datePublication}',
+    '${titre}',
     '${publication}',
     '${imageUrl}'
     )`;
 
-    const sql = `INSERT INTO posts (userId, datePublication, publication, imageUrl) VALUES ${publi} `;
-    connectionDb.query(sql, publi, (error, result, fields) => {
-        if (error) {
-            return res.status(403).json({
-                message: error
-            });
-        };
-        return res.status(201).json({
-            message: `Vous avez crée votre publication.`
+    if (!req.files) {
+        return res.status(400).send('Aucun fichier téléchargé.');
+    };
+
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
+        file.mv('images/' + imageUrl, function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            else {
+                const sql = `INSERT INTO posts (userId, datePublication, titre, publication, imageUrl) VALUES ${publi} `;
+                connectionDb.query(sql, publi, (error, result, fields) => {
+                    if (error) {
+                        return res.status(403).json({
+                            message: error
+                        });
+                    };
+                    return res.status(201).json({
+                        message: `Vous avez crée votre publication.`
+                    });
+                });
+            };
         });
-    });
+    };
 };
 
 exports.deletePost = (req, res, next) => {

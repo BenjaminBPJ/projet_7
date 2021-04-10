@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const passwordIsValide = require('../middleware/goodpassword')
 const emailIsValide = require('../middleware/goodemail');
 const fs = require('fs');
+require('dotenv').config();
 
 exports.signup = (req, res, next) => {
     if (!emailIsValide.goodEmail(req.body.email) && !passwordIsValide.goodPassword(req.body.password)) {
@@ -49,7 +50,7 @@ exports.signup = (req, res, next) => {
                         userId: result[0].id,
                         token: jwt.sign({
                             userId: result[0].id
-                        }, 'LgK33h4Rn', {
+                        }, process.env.JWT_TOKEN, {
                             expiresIn: '24h'
                         })
                     });
@@ -79,7 +80,7 @@ exports.login = (req, res, next) => {
                     userId: result[0].id,
                     token: jwt.sign({
                         userId: result[0].id
-                    }, 'LgK33h4Rn', {
+                    }, process.env.JWT_TOKEN, {
                         expiresIn: '24h'
                     })
                 });
@@ -106,7 +107,7 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.updateDescription = (req, res, next) => {
-    const description = req.body.newDescription;
+    const description = req.body.description;
     const id = req.params.id;
 
     const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`
@@ -133,7 +134,7 @@ exports.updatePhoto = (req, res, next) => {
     const id = req.params.id;
 
     if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
-        file.mv('upload/' + fileName, function (err) {
+        file.mv('avatars/' + fileName, function (err) {
             if (err) {
                 return res.status(500).send(err);
             }
