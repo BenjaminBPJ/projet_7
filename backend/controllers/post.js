@@ -9,7 +9,7 @@ exports.createPost = (req, res, next) => {
     const titre = req.body.title;
     const publication = req.body.content;
     const file = req.files.contentImage;
-    const imageUrl = file.name;
+    const imageUrl = Date.now() + file.name;
     const publi = `
     ('${userId}',
     '${datePublication}',
