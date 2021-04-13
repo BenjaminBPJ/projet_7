@@ -1,8 +1,8 @@
 function signup(form) {
-    let data = send(`http://localhost:3000/api/signup`, form);
+    let data = send(`http://localhost:3000/api/auth/signup`, form);
     data.then(user => {
         let userId = user.userId;
-        window.location = `reseau.html/userId=${userId}`;
+        window.location = `reseau.html?/userId=${userId}`;
 
         userId = localStorage.setItem('userId', userId);
         userId = JSON.stringify(userdId);
@@ -96,7 +96,7 @@ function confirmPassword() {
     };
 };
 
-function validForm() {
+/*function validForm() {
     let form = document.getElementById("sign-up-form");
     // validation du formulaire
     form.email.addEventListener('change', function () {
@@ -114,7 +114,7 @@ function validForm() {
     form.confirmPassword.addEventListener('change', function () {
         confirmPassword(this);
     });
-};
+};*/
 
 function goNetwork() {
     let form = document.getElementById("sign-up-form");
@@ -128,7 +128,7 @@ function goNetwork() {
     });
 };
 
-validForm();
+//validForm();
 goNetwork();
 
 

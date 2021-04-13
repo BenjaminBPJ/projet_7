@@ -1,6 +1,6 @@
 function editProfilPage() {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
-    let data = request(`http://localhost:3000/api/` + urlParam);
+    let data = request(`http://localhost:3000/api/auth` + urlParam);
     data.then(user => {
         userEditProfil(user);
         backNetwork(user);
@@ -22,7 +22,7 @@ function deleteUser() {
 
         alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
 
-        let data = deleteMethod(`http://localhost:3000/api/` + urlParam);
+        let data = deleteMethod(`http://localhost:3000/api/auth` + urlParam);
         window.location = `inscription.html`;
         data.then(userDelete => {
         })

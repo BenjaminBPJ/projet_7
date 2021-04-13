@@ -1,6 +1,5 @@
-const connectionDb = require('../middleware/connect')
-const datePubli = require('../middleware/date')
-//const fs = require('fs');
+const connectionDb = require('../middleware/connect');
+const datePubli = require('../middleware/date');
 
 exports.createComment = (req, res, next) => {
     const publiId = req.params.id;

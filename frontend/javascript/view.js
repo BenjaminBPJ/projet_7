@@ -13,7 +13,7 @@ function userProfil(value) {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
-    
+
     article.innerHTML = `   <img src= ${value[0].imageUrl} class="photo-profil"/>
                             <h2 class="profil-title">${value[0].firstName} ${value[0].lastName}</h2>
                             <p class="profil-description"> Description : </p>
@@ -33,7 +33,7 @@ function userEditProfil(value) {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
-    
+
     article.innerHTML = `   <form> 
                                 <img src= ${value[0].imageUrl} class="photo-profil"/>
                                 <input type="file" name="sampleFile" accept="image/*"/>
@@ -67,10 +67,10 @@ function serverDown() {
 function badEmail() {
     let small = document.getElementById('small-password');
     small.innerHTML = `Votre email est incorrect.`
-}
+};
 
 function badPassword() {
     let small = document.getElementById('small-password');
     small.innerHTML = `Votre mot de passe est incorrect.`
-}
+};
 

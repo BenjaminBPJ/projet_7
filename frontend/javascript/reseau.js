@@ -1,5 +1,6 @@
 function getPosts(){
-    let data = request(`http://localhost:3000/api/home/pseudo`);
+    let urlParam = (new URL(window.location.href)).searchParams.get('/userId');
+    let data = request(`http://localhost:3000/api/posts/` + urlParam);
     data.then(posts => {
         console.log(posts);
             for (const post of posts.result){
