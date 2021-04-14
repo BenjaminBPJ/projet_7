@@ -1,21 +1,15 @@
 function login(form) {
     let data = send(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
-        /*if (user === user.status(401)) {
-            badPassword();
-        } else if (user === user.status(404)) {
-            badEmail();
-        } else { */
             let userId = user.userId;
             window.location = `reseau.html?/userId=${userId}`;
 
             // insertion du pseudo et du token dans le localstorage à la connexion
             userId = localStorage.setItem('userId', userId);
-            userId = JSON.parse(userdId);
+            userId = JSON.stringify(userId);
             let token = user.token;
             token = localStorage.setItem('token', token);
             token = JSON.stringify(token);
-       // };
     })
       /*  .catch((error) => {
             console.log(error)

@@ -1,6 +1,6 @@
 async function request(url) {
     let response = await fetch(url)
-    if (!response.ok){
+    if (!response.ok) {
         return null
     }
     let data = await response.json()
@@ -16,10 +16,16 @@ async function send(url, data) {
         body: JSON.stringify(data)
     })
     let res = await response.json()
-    return res
+   /*if (response.status === 401) {
+        badPassword();
+    } else if (response.status == `(failed)`) {
+        badEmail(); 
+    } else { */
+        return res
+    //}
 }
 
-async function deleteMethod (url) {
+async function deleteMethod(url) {
     let response = await fetch(url, { method: "DELETE" })
     let res = await response.json()
     return res

@@ -1,5 +1,5 @@
 function profilPage() {
-    let urlParam = (new URL(window.location.href)).searchParams.get('/:id');
+    let urlParam = (new URL(window.location.href)).searchParams.get('/id');
     let data = request(`http://localhost:3000/api/auth/` + urlParam);
     data.then(user => {
         userProfil(user);

@@ -5,3 +5,6 @@ function backNetwork() {
     });
 };
 
+function sendUserId () {
+    
+}

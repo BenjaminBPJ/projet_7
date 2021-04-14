@@ -5,9 +5,8 @@ function signup(form) {
         window.location = `reseau.html?/userId=${userId}`;
 
         userId = localStorage.setItem('userId', userId);
-        userId = JSON.stringify(userdId);
+        userId = JSON.stringify(userId);
         let token = user.token;
-        console.log(token);
         token = localStorage.setItem('token', token);
         token = JSON.stringify(token);
     })
