@@ -86,7 +86,7 @@ function confirmPassword() {
     console.log(confirmMdp)
     let small = document.getElementById(`small-confirmPassword`);
 
-    if (mdp != confirmMdp) {
+    if (mdp !== confirmMdp) {
         small.innerHTML = `Votre mot de passe n'est pas le même.`;
         return false;
     } else {

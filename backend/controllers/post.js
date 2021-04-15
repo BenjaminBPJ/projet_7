@@ -1,5 +1,6 @@
 const connectionDb = require('../middleware/connect');
 const datePubli = require('../middleware/date');
+const postModel = require('../models/postModel');
 
 exports.createPost = (req, res, next) => {
     const userId = req.params.userId;
@@ -44,41 +45,34 @@ exports.createPost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
     const id = req.params.id;
-    connectionDb.query(`DELETE FROM posts WHERE id='${id}'`, (error, results, fields) => {
-        if (error) {
-            return res.status(404).json({
-                message: `Cette publication n'existe pas.`
-            });
-        };
-        return res.status(204).json({
-            message: `Vous avez supprimé votre publication.`
+    postModel.delete(id)
+        .then(result => {
+            res.status(200).json({ message : result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
         });
-    });
 };
 
-
-
 exports.getAllPosts = (req, res, next) => {
-    connectionDb.query(`SELECT * FROM posts`, (error, result, fields) => {
-        if (error) {
-            res.status(404).json({
-                error: `Impossible de charger les publications.`
-            });
-        };
-        res.status(200).json({ result });
-    });
+    postModel.findAll()
+        .then(result => {
+            res.status(200).json({ result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
+        });
 };
 
 exports.getPost = (req, res, next) => {
     const id = req.params.id;
-    connectionDb.query(`SELECT * FROM posts WHERE id='${id}'`, (error, result, fields) => {
-        if (error) {
-            res.status(404).json({
-                error: `Impossible de charger les publications.`
-            });
-        };
-        res.status(200).json({ result });
-    });
+    postModel.find(id)
+        .then(result => {
+            res.status(200).json({ result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
+        });
 };
 
 

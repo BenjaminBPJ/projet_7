@@ -7,8 +7,8 @@ const postUserId = require('../middleware/verifyUseridPost');
 const deleteImage = require('../middleware/findImagePost');
 
 router.post('/:userId', auth, userCtrl.createPost);
-router.delete('/:id', auth, postUserId, deleteImage, userCtrl.deletePost); // id du post
+router.delete('/publi/:id', auth, postUserId, deleteImage, userCtrl.deletePost); // id du post
 router.get('/:userId', auth, userCtrl.getAllPosts);
-router.get('/:id', auth, userCtrl.getPost);
+router.get('/publi/:id', auth, userCtrl.getPost);
 
 module.exports = router;
