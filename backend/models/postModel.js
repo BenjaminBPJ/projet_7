@@ -57,7 +57,6 @@ exports.checkUserId = (id, userId) => {
 };
 
 exports.insert = (publi) => {
-    console.log(publi)
     const sql = `INSERT INTO posts (userId, datePublication, titre, publication, imageUrl) VALUES ${publi} `;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, publi, (error, result, fields) => {

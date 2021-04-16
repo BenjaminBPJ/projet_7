@@ -17,8 +17,6 @@ exports.createPost = (req, res, next) => {
     '${imageUrl}'
     )`;
 
-    console.log(publi)
-
     postModel.insert(publi)
         .then(result => {
             if (!req.files) {
@@ -46,10 +44,10 @@ exports.deletePost = (req, res, next) => {
     console.log(userId)
     console.log(id)
     postModel.checkUserId(id, userId)
-        .then(result => {
+        .then(goodId => {
             postModel.delete(id)
-                .then(result => {
-                    res.status(200).json({ message: result });
+                .then(deletePost => {
+                    res.status(200).json({ message: deletePost });
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });

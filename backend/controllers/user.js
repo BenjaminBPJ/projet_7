@@ -5,6 +5,7 @@ const passwordIsValide = require('../middleware/goodpassword')
 const emailIsValide = require('../middleware/goodemail');
 const fs = require('fs');
 require('dotenv').config();
+const userModel = require('../models/userModel');
 
 exports.signup = (req, res, next) => {
     if (!emailIsValide.goodEmail(req.body.email) && !passwordIsValide.goodPassword(req.body.password)) {
@@ -30,35 +31,57 @@ exports.signup = (req, res, next) => {
                     '${password}'
                     )`;
 
-            const sql = `INSERT INTO users (email, lastName, firstName, password) VALUES ${user} `;
-            connectionDb.query(sql, user, (error, result, fields) => {
+            userModel.insert(user)
+                .then(insertIntoUser => {
+                    userModel.findByEmail(email)
+                        .then(result => {
+                            res.status(200).json({
+                                userId: result[0].id,
+                                token: jwt.sign({
+                                    userId: result[0].id
+                                }, process.env.JWT_TOKEN, {
+                                    expiresIn: '24h'
+                                })
+                            })
+                        })
+                        .catch(errorMessage => {
+                            res.status(404).json({ error: errorMessage });
+                        })
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                })
+        })
+        /*const sql = `INSERT INTO users (email, lastName, firstName, password) VALUES ${user} `;
+        connectionDb.query(sql, user, (error, result, fields) => {
+            if (error) {
+                return res.status(403).json({
+                    message: error
+                });
+            };
+ 
+            const sql2 = `SELECT * FROM users WHERE email='${email}'`;
+ 
+            connectionDb.query(sql2, email, (err, result) => {
                 if (error) {
                     return res.status(403).json({
                         message: error
                     });
                 };
-
-                const sql2 = `SELECT * FROM users WHERE email='${email}'`;
-
-                connectionDb.query(sql2, email, (err, result) => {
-                    if (error) {
-                        return res.status(403).json({
-                            message: error
-                        });
-                    };
-                    res.status(200).json({
-                        userId: result[0].id,
-                        token: jwt.sign({
-                            userId: result[0].id
-                        }, process.env.JWT_TOKEN, {
-                            expiresIn: '24h'
-                        })
-                    });
+                res.status(200).json({
+                    userId: result[0].id,
+                    token: jwt.sign({
+                        userId: result[0].id
+                    }, process.env.JWT_TOKEN, {
+                        expiresIn: '24h'
+                    })
                 });
             });
-        })
+        });
+    })*/
         .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))
 };
+
 
 exports.login = (req, res, next) => {
     const email = req.body.email;
