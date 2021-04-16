@@ -1,7 +1,7 @@
-const connectionDb = require('../middleware/connect')
+const connectionDb = require('../middleware/connect');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const passwordIsValide = require('../middleware/goodpassword')
+const passwordIsValide = require('../middleware/goodpassword');
 const emailIsValide = require('../middleware/goodemail');
 const fs = require('fs');
 require('dotenv').config();
@@ -42,43 +42,16 @@ exports.signup = (req, res, next) => {
                                 }, process.env.JWT_TOKEN, {
                                     expiresIn: '24h'
                                 })
-                            })
+                            });
                         })
                         .catch(errorMessage => {
                             res.status(404).json({ error: errorMessage });
-                        })
+                        });
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });
-                })
+                });
         })
-        /*const sql = `INSERT INTO users (email, lastName, firstName, password) VALUES ${user} `;
-        connectionDb.query(sql, user, (error, result, fields) => {
-            if (error) {
-                return res.status(403).json({
-                    message: error
-                });
-            };
- 
-            const sql2 = `SELECT * FROM users WHERE email='${email}'`;
- 
-            connectionDb.query(sql2, email, (err, result) => {
-                if (error) {
-                    return res.status(403).json({
-                        message: error
-                    });
-                };
-                res.status(200).json({
-                    userId: result[0].id,
-                    token: jwt.sign({
-                        userId: result[0].id
-                    }, process.env.JWT_TOKEN, {
-                        expiresIn: '24h'
-                    })
-                });
-            });
-        });
-    })*/
         .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))
 };
 
@@ -87,31 +60,32 @@ exports.login = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const sql = `SELECT * FROM users WHERE email='${email}'`;
-
-    connectionDb.query(sql, (err, result) => {
-        if (err) throw err;
-        bcrypt
-            .compare(password, result[0].password)
-            .then((valid) => {
-                if (!valid) {
-                    return res.status(401).json({
-                        error: 'Mot de passe incorrect.'
+    userModel.findByEmail(email)
+        .then(getUser => {
+            bcrypt
+                .compare(password, getUser[0].password)
+                .then((valid) => {
+                    if (!valid) {
+                        return res.status(401).json({
+                            error: 'Mot de passe incorrect.'
+                        });
+                    };
+                    res.status(200).json({
+                        userId: getUser[0].id,
+                        token: jwt.sign({
+                            userId: getUser[0].id
+                        }, process.env.JWT_TOKEN, {
+                            expiresIn: '24h'
+                        })
                     });
-                };
-                res.status(200).json({
-                    userId: result[0].id,
-                    token: jwt.sign({
-                        userId: result[0].id
-                    }, process.env.JWT_TOKEN, {
-                        expiresIn: '24h'
-                    })
-                });
-            })
-            .catch(error => res.status(404).json({
-                error: 'Utilisateur non trouvé.'
-            }));
-    });
+                })
+                .catch(error => res.status(404).json({
+                    error: 'Utilisateur non trouvé.'
+                }));
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: 'utilisateur non trouvé' });
+        });
 };
 
 exports.deleteUser = (req, res, next) => {
