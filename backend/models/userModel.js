@@ -26,3 +26,16 @@ exports.findByEmail = (email) => {
     });
 };
 
+exports.updateDescription = (description, id) => {
+    const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`;
+    return new Promise((resolve, reject) => {
+        connectionDb.query(sql, (error, result, fields) => {
+            if (result === undefined) {
+                reject(`Utilisateur non trouvé.`);
+            } else {
+                resolve(`Vous avez modifié votre description.`);
+            };
+        });
+    });
+};
+

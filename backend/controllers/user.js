@@ -107,18 +107,13 @@ exports.updateDescription = (req, res, next) => {
     const description = req.body.description;
     const id = req.params.id;
 
-    const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`
-
-    connectionDb.query(sql, (error, result) => {
-        if (error) {
-            return res.status(403).json({
-                error: `Impossible de modifier votre description.`
-            });
-        };
-        return res.status(201).json({
-            message: `Votre description a été modifiée.`
+    userModel.updateDescription(description, id)
+        .then(update => {
+            res.status(200).json({ message: update });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
         });
-    });
 };
 
 exports.updatePhoto = (req, res, next) => {
