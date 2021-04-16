@@ -118,38 +118,47 @@ exports.updateDescription = (req, res, next) => {
 
 exports.updatePhoto = (req, res, next) => {
     if (!req.files) {
-        return res.status(400).send('Aucun fichier téléchargé.');
+        return res.status(400).json({error: 'Aucun fichier téléchargé.'});
     };
 
     const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
     const fileName = Date.now() + file.name;
     const id = req.params.id;
+    const userId = req.userIdAuth;
 
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
-        file.mv('avatars/' + fileName, function (err) {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            else {
-                const sql = `UPDATE users SET imageUrl ='${fileName}' WHERE id='${id}'`;
-
-                connectionDb.query(sql, (error, result) => {
-                    if (error) {
-                        return res.status(403).json({
-                            error: `Impossible de télécharger votre image.`
-                        });
-                    };
-                    return res.status(201).json({
-                        message: `Votre image a été modifiée.`
+    userModel.checkUserId(id, userId)
+        .then(goodId => {
+            userModel.findPhoto(id)
+                .then(oldPhoto => {
+                    fs.unlink(`avatars/${oldPhoto[0].imageUrl}`, () => {
+                        userModel.updatePhoto(fileName, id)
+                            .then(update => {
+                                if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
+                                    file.mv('avatars/' + fileName, (err) => {
+                                        if (err) {
+                                            return res.status(500).json({err});
+                                        } else {
+                                            res.status(200).json({ message: update });
+                                        };
+                                    });
+                                } else {
+                                    return res.status(403).json({
+                                        error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.jpg'.`
+                                    });
+                                };
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
                     });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
                 });
-            };
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
         });
-    } else {
-        return res.status(403).json({
-            error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.jpg'.`
-        });
-    };
 };
 
 

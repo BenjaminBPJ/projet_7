@@ -41,8 +41,6 @@ exports.createPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     const id = req.params.id;
     const userId = req.userIdAuth;
-    console.log(userId)
-    console.log(id)
     postModel.checkUserId(id, userId)
         .then(goodId => {
             postModel.delete(id)

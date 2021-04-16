@@ -43,7 +43,6 @@ exports.checkUserId = (id, userId) => {
     const sql = `SELECT userId FROM posts WHERE id='${id}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            console.log(result)
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver cette publication.`);
             }
