@@ -17,37 +17,43 @@ exports.createPost = (req, res, next) => {
     '${imageUrl}'
     )`;
 
-    if (!req.files) {
-        return res.status(400).send('Aucun fichier téléchargé.');
-    };
+    console.log(publi)
 
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
-        file.mv('images/' + imageUrl, function (err) {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            else {
-                const sql = `INSERT INTO posts (userId, datePublication, titre, publication, imageUrl) VALUES ${publi} `;
-                connectionDb.query(sql, publi, (error, result, fields) => {
-                    if (error) {
-                        return res.status(403).json({
-                            message: error
-                        });
+    postModel.insert(publi)
+        .then(result => {
+            if (!req.files) {
+                return res.status(400).send('Aucun fichier téléchargé.');
+            };
+            if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
+                file.mv('images/' + imageUrl, function (err) {
+                    if (err) {
+                        return res.status(500).send(err);
+                    } else {
+                        return res.status(200).json({ message: result });
                     };
-                    return res.status(201).json({
-                        message: `Vous avez crée votre publication.`
-                    });
                 });
             };
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
         });
-    };
 };
+
 
 exports.deletePost = (req, res, next) => {
     const id = req.params.id;
-    postModel.delete(id)
+    const userId = req.userIdAuth;
+    console.log(userId)
+    console.log(id)
+    postModel.checkUserId(id, userId)
         .then(result => {
-            res.status(200).json({ message : result });
+            postModel.delete(id)
+                .then(result => {
+                    res.status(200).json({ message: result });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                });
         })
         .catch(errorMessage => {
             res.status(404).json({ error: errorMessage });
