@@ -155,10 +155,11 @@ exports.updatePhoto = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
     const id = req.params.id;
-    connectionDb.query(`SELECT * FROM users WHERE id='${id}'`, (error, result, fields) => {
-        if (error) {
-            return res.status(400).json({ error: 'Utilisateur non trouvé.' });
-        };
-        return res.status(200).json(result)
-    });
+    userModel.findById(id)
+        .then(result => {
+            res.status(200).json({ result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
+        });
 };
