@@ -1,8 +1,13 @@
 const connectionDb = require('../middleware/connect');
 const datePubli = require('../middleware/date');
 const postModel = require('../models/postModel');
+const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
+    if (!req.files) {
+        return res.status(400).send('Aucun fichier téléchargé.');
+    };
+
     const userId = req.params.userId;
     const datePublication = datePubli;
     const titre = req.body.title;
@@ -19,9 +24,6 @@ exports.createPost = (req, res, next) => {
 
     postModel.insert(publi)
         .then(result => {
-            if (!req.files) {
-                return res.status(400).send('Aucun fichier téléchargé.');
-            };
             if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
                 file.mv('images/' + imageUrl, function (err) {
                     if (err) {
@@ -29,6 +31,10 @@ exports.createPost = (req, res, next) => {
                     } else {
                         return res.status(200).json({ message: result });
                     };
+                });
+            } else {
+                return res.status(403).json({
+                    error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.jpg'.`
                 });
             };
         })
@@ -41,11 +47,20 @@ exports.createPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     const id = req.params.id;
     const userId = req.userIdAuth;
+
     postModel.checkUserId(id, userId)
         .then(goodId => {
-            postModel.delete(id)
-                .then(deletePost => {
-                    res.status(200).json({ message: deletePost });
+            postModel.findPhoto(id)
+                .then(oldPhoto => {
+                    fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
+                        postModel.delete(id)
+                            .then(deletePost => {
+                                res.status(200).json({ message: deletePost });
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
+                    });
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });

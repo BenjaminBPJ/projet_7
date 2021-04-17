@@ -60,7 +60,6 @@ exports.checkUserId = (id, userId) => {
                 reject(`Impossible de trouver votre résultat.`);
             }
             else if (result[0].id === userId) {
-                console.log(result)
                 resolve(`Utilisateur authentifié.`);
             } else {
                 reject(`Vous n'avez pas les droits pour effectuer des modifications.`);

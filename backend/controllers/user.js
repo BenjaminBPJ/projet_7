@@ -1,4 +1,3 @@
-const connectionDb = require('../middleware/connect');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passwordIsValide = require('../middleware/goodpassword');
@@ -84,32 +83,51 @@ exports.login = (req, res, next) => {
                 }));
         })
         .catch(errorMessage => {
-            res.status(404).json({ error: 'utilisateur non trouvé' });
+            res.status(404).json({ error: 'utilisateur non trouvé.' });
         });
 };
 
 exports.deleteUser = (req, res, next) => {
-    const user = req.params.id;
+    const id = req.params.id;
+    const userId = req.userIdAuth;
 
-    connectionDb.query(`DELETE FROM users WHERE id='${user}'`, (error, results, fields) => {
-        if (error) {
-            return res.status(404).json({
-                message: `Cet utilisateur n'existe pas.`
-            });
-        };
-        return res.status(204).json({
-            message: `Vous avez supprimé votre profil.`
+    userModel.checkUserId(id, userId)
+        .then(goodId => {
+            userModel.findPhoto(id)
+                .then(oldPhoto => {
+                    fs.unlink(`avatars/${oldPhoto[0].imageUrl}`, () => {
+                        userModel.delete(id)
+                            .then(deleteUser => {
+                                res.status(200).json({ message: deleteUser });
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
+                    });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                });
         });
-    });
 };
 
 exports.updateDescription = (req, res, next) => {
     const description = req.body.description;
     const id = req.params.id;
+    const userId = req.userIdAuth;
 
-    userModel.updateDescription(description, id)
-        .then(update => {
-            res.status(200).json({ message: update });
+    userModel.checkUserId(id, userId)
+        .then(goodId => {
+            userModel.updateDescription(description, id)
+                .then(update => {
+                    res.status(200).json({ message: update });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                });
         })
         .catch(errorMessage => {
             res.status(404).json({ error: errorMessage });
@@ -118,7 +136,7 @@ exports.updateDescription = (req, res, next) => {
 
 exports.updatePhoto = (req, res, next) => {
     if (!req.files) {
-        return res.status(400).json({error: 'Aucun fichier téléchargé.'});
+        return res.status(400).json({ error: 'Aucun fichier téléchargé.' });
     };
 
     const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
@@ -136,7 +154,7 @@ exports.updatePhoto = (req, res, next) => {
                                 if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
                                     file.mv('avatars/' + fileName, (err) => {
                                         if (err) {
-                                            return res.status(500).json({err});
+                                            return res.status(500).json({ err });
                                         } else {
                                             res.status(200).json({ message: update });
                                         };
@@ -164,6 +182,7 @@ exports.updatePhoto = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
     const id = req.params.id;
+
     userModel.findById(id)
         .then(result => {
             res.status(200).json({ result });
