@@ -1,4 +1,3 @@
-const connectionDb = require('../middleware/connect');
 const datePubli = require('../middleware/date');
 const postModel = require('../models/postModel');
 const fs = require('fs');

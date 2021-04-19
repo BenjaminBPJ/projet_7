@@ -1,22 +1,19 @@
 const connectionDb = require('../middleware/connect');
 const datePubli = require('../middleware/date');
+const commentModel = require('../models/commentModel');
 
 exports.createComment = (req, res, next) => {
     const publiId = req.params.id;
     const content = req.body.comments;
     const publiAt = datePubli;
     
-    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) SELECT '${publiId}','${content}','${publiAt}', userId FROM posts WHERE id='${publiId}' `;
-    connectionDb.query(sql, (error, result, fields) => {
-        if (error) {
-            return res.status(403).json({
-                message: error
-            });
-        };
-        return res.status(201).json({
-            message: `Vous avez crée votre publication.`
+    commentModel.insert(publiId, content, publiAt)
+        .then(result => {
+            res.status(200).json({ message: result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
         });
-    });
 };
 
 exports.deleteComment = (req, res, next) => {
@@ -35,10 +32,11 @@ exports.deleteComment = (req, res, next) => {
 
 exports.getAllCommentsFromOnePubli = (req, res, next) => {
     const id = req.params.id;
-    connectionDb.query(`SELECT * FROM commentaires WHERE publiId='${id}'`, (error, result, fields) => {
-        if (error) {
-            return res.status(400).json({ error: 'Publication non trouvée.' });
-        };
-        return res.status(200).json(result);
-    });
+    commentModel.find(id)
+        .then(result => {
+            res.status(200).json({ result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
+        });
 };
