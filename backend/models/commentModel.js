@@ -7,7 +7,20 @@ exports.insert = (publiId, content, publiAt) => {
             if (result === undefined) {
                 reject(`Impossible de créer votre commentaire.`);
             } else {
-                resolve(`Vous avez crée votre commentaire`);
+                resolve(`Vous avez crée votre commentaire.`);
+            };
+        });
+    });
+};
+
+exports.delete = (id) => {
+    const sql = `DELETE FROM commentaires WHERE id='${id}'`;
+    return new Promise((resolve, reject) => {
+        connectionDb.query(sql, (error, result, fields) => {
+            if (result === undefined) {
+                reject(`Impossible de trouver votre commentaire.`);
+            } else {
+                resolve(`Votre commentaire a été supprimé.`);
             };
         });
     });
