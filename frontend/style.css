@@ -33,7 +33,7 @@ main{
 }
 
 /* ---- Mise en page de la page d'accueil ---- */
-header{
+.header-groupomania{
     display: flex;
     height: 7em;
     background-color: #ffd7d7;
@@ -65,12 +65,12 @@ header{
     color: black;
 }
 
-.publication-home{
-    font-size: 1.5em;
+.main-reseau{
+    width: 70%;
     text-align: center;
 }
 
-.textarea-publi{
+#textarea-publi{
     width: 35%;
     resize: none;
 }
@@ -80,6 +80,28 @@ header{
     animation-duration: 0.9s;
     animation-fill-mode: forwards;
     transform: scale(1);
+}
+
+.publication{
+    display: flex;
+    flex-direction: column;
+    border: solid black 1px;
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.header-publication{
+    display: flex;
+    justify-content: space-between;
+    border: solid black 1px;
+}
+
+.auteur-publication{
+    padding-left: 2em;
+}
+
+.date-publication{
+    padding-right: 2em;
 }
 
 @keyframes zoom{

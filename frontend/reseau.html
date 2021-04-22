@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <header>
+    <header class="header-groupomania">
         <img src="logos/icon-left-font-monochrome-black.svg" class="logo-header"
-            alt="logo de l'entreprise groupomania" />  
+            alt="logo de l'entreprise groupomania" />
         <nav>
             <ul class="ul-home">
                 <li class="li-home">
@@ -22,24 +22,27 @@
                 </li>
                 <li class="li-home">
                     <a href="index.html" class="lien-deco">
-                    <i class="fas fa-power-off fa-2x emote-nav-home"></i>
-                    <p>Déconnexion</p>
+                        <i class="fas fa-power-off fa-2x emote-nav-home"></i>
+                        <p>Déconnexion</p>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="main-reseau">
         <article class="publication-home">
-            <h3>Créer une publication</h3>
-            <textarea placeholder="Exprimez-vous ..." rows="5" class="textarea-publi"></textarea>
-            <div>
-                <button>Insérez un fichier</button>
-                <button>Partagez</button>
-            </div>
+            <h2>Créer une publication</h2>
+            <form class="form-publication" method="post" enctype="multipart/form-data">
+                <input placeholder="votre titre" id="titre-publication" /><br>
+                <textarea placeholder="Exprimez-vous ..." rows="5" id="textarea-publi"></textarea>
+                <div>
+                    <input type="file" name="contentImage" id="image-publi" />
+                    <button type="submit" id="send-post">Partagez</button>
+                </div>
+            </form>
         </article>
         <article class="publication-home">
-            <h4 id="ida" class="titre-derniere-publi">Dernières actualités</h4>
+            <h3 class="titre-derniere-publi">actualités</h3>
         </article>
     </main>
 

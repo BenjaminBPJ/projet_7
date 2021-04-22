@@ -24,3 +24,38 @@ function goToProfil(){
 };
 
 goToProfil();
+
+function createPost(post) {
+    let urlParam = (new URL(window.location.href)).searchParams.get('/userId');
+    let data = send(`http://localhost:3000/api/posts/` + urlParam, post);
+    data.then(post => {
+        console.log(post);
+    })
+      /*  .catch((error) => {
+            console.log(error)
+            serverDown();
+        }); */
+};
+
+function getPostInfo() {
+    let titre = document.getElementById('titre-publication').value;
+    let content = document.getElementById('textarea-publi').value;
+    let image = document.getElementById('image-publi').value;
+    let publication = {
+        title: titre,
+        content: content,
+        contentImage: image
+    };
+    createPost(publication);
+};
+
+function sendPost() {
+    let button = document.getElementById("send-post");
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        getPostInfo();
+    });
+};
+
+sendPost()
+

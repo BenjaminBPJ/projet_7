@@ -95,7 +95,7 @@ function confirmPassword() {
     };
 };
 
-/*function validForm() {
+function validForm() {
     let form = document.getElementById("sign-up-form");
     // validation du formulaire
     form.email.addEventListener('change', function () {
@@ -113,7 +113,7 @@ function confirmPassword() {
     form.confirmPassword.addEventListener('change', function () {
         confirmPassword(this);
     });
-};*/
+};
 
 function goNetwork() {
     let form = document.getElementById("sign-up-form");
@@ -127,7 +127,7 @@ function goNetwork() {
     });
 };
 
-//validForm();
+validForm();
 goNetwork();
 
 

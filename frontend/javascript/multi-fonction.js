@@ -4,7 +4,3 @@ function backNetwork() {
         window.location = `reseau.html`;
     });
 };
-
-function sendUserId () {
-    
-}

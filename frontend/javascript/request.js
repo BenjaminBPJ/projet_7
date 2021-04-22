@@ -16,13 +16,7 @@ async function send(url, data) {
         body: JSON.stringify(data)
     })
     let res = await response.json()
-   /*if (response.status === 401) {
-        badPassword();
-    } else if (response.status == `(failed)`) {
-        badEmail(); 
-    } else { */
         return res
-    //}
 }
 
 async function deleteMethod(url) {
