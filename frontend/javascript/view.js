@@ -17,11 +17,12 @@ function userProfil(value) {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
+    console.log(value)
 
-    article.innerHTML = `   <img src= "${value[0].imageUrl}" class="photo-profil"/>
-                            <h2 class="profil-title">${value[0].firstName} ${value[0].lastName}</h2>
+    article.innerHTML = `   <img src= "${value.result[0].imageUrl}" class="photo-profil"/>
+                            <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <p class="profil-description"> Description : </p>
-                            <p id="text-description" class="profil-description" rows="5">${value[0].description}</p><br>
+                            <p id="text-description" class="profil-description" rows="5">${value.result[0].description}</p><br>
                             <button id="goToEdit">Modification de votre profil</buttton>
                         `;
 
@@ -37,14 +38,15 @@ function userEditProfil(value) {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
+    console.log(value)
 
     article.innerHTML = `   <form> 
-                                <img src= ${value[0].imageUrl} class="photo-profil"/>
+                                <img src= ${value.result[0].imageUrl} class="photo-profil"/>
                                 <input type="file" name="sampleFile" accept="image/*"/>
                                 <small id="small-edit-photo"></small>
                                 <input type="submit"/>
                             </form>
-                            <h2 class="profil-title">${value[0].firstName} ${value[0].lastName}</h2>
+                            <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <form>
                             <p class="profil-description"> Description : </p>
                             <label for="description"></label>

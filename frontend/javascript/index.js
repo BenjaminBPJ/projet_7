@@ -11,10 +11,9 @@ function login(form) {
             token = localStorage.setItem('token', token);
             token = JSON.stringify(token);
     })
-      /*  .catch((error) => {
-            console.log(error)
+        .catch((error) => {
             serverDown();
-        }); */
+        }); 
 };
 
 function getUserLogin() {

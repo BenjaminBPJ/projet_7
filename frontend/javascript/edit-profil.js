@@ -1,6 +1,6 @@
 function editProfilPage() {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
-    let data = request(`http://localhost:3000/api/auth` + urlParam);
+    let data = request(`http://localhost:3000/api/auth/` + urlParam);
     data.then(user => {
         userEditProfil(user);
         backNetwork(user);

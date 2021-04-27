@@ -1,9 +1,8 @@
 function getPosts(){
-    let urlParam = (new URL(window.location.href)).searchParams.get('/userId');
-    let data = request(`http://localhost:3000/api/posts/` + urlParam);
+    let data = request(`http://localhost:3000/api/posts/`);
     data.then(posts => {
         console.log(posts);
-            for (const post of posts.result){
+            for (const post of posts.result) {
                 createOnePost(post);
             }                                      
         });
@@ -26,8 +25,7 @@ function goToProfil(){
 goToProfil();
 
 function createPost(post) {
-    let urlParam = (new URL(window.location.href)).searchParams.get('/userId');
-    let data = send(`http://localhost:3000/api/posts/` + urlParam, post);
+    let data = send(`http://localhost:3000/api/posts/`, post);
     data.then(post => {
         console.log(post);
     })

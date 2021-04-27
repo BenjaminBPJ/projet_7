@@ -71,7 +71,6 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-
     postModel.findAll()
         .then(result => {
             res.status(200).json({ result });
@@ -83,7 +82,7 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.getPost = (req, res, next) => {
     const id = req.params.id;
-    
+
     postModel.find(id)
         .then(result => {
             res.status(200).json({ result });
