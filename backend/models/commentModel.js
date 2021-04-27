@@ -4,6 +4,10 @@ exports.insert = (publiId, content, publiAt) => {
     const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) SELECT '${publiId}','${content}','${publiAt}', userId FROM posts WHERE id='${publiId}' `;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
+            console.log(result)
+            console.log(publiId)
+            console.log(content)
+            console.log(publiAt)
             if (result === undefined) {
                 reject(`Impossible de créer votre commentaire.`);
             } else {
@@ -34,6 +38,35 @@ exports.find = (id) => {
                 reject(`Impossible de trouver votre commentaire.`);
             } else {
                 resolve(result);
+            };
+        });
+    });
+};
+
+exports.modify = (content, id) => {
+    const sql = `UPDATE commentaires SET content='${content}' WHERE id='${id}'`;
+    return new Promise((resolve, reject) => {
+        connectionDb.query(sql, (error, result, fields) => {
+            if (result === undefined) {
+                reject(`Impossible de trouver votre commentaire.`);
+            } else {
+                resolve('Vous avez modifié votre commentaire.');
+            };
+        });
+    });
+};
+
+exports.checkUserId = (id, userId) => {
+    const sql = `SELECT userId FROM commentaires WHERE id='${id}'`;
+    return new Promise((resolve, reject) => {
+        connectionDb.query(sql, (error, result, fields) => {
+            if (result === undefined || result == "") {
+                reject(`Impossible de trouver votre résultat.`);
+            }
+            else if (result[0].userId === userId) {
+                resolve(`Utilisateur authentifié.`);
+            } else {
+                reject(`Vous n'avez pas les droits pour effectuer des modifications.`);
             };
         });
     });

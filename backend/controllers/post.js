@@ -7,7 +7,7 @@ exports.createPost = (req, res, next) => {
         return res.status(400).send('Aucun fichier téléchargé.');
     };
 
-    const userId = req.params.userId;
+    const userId = req.jwtToken.userId
     const datePublication = datePubli;
     const titre = req.body.title;
     const publication = req.body.content;
@@ -45,7 +45,7 @@ exports.createPost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
     const id = req.params.id;
-    const userId = req.userIdAuth;
+    const userId = req.jwtToken.userId;
 
     postModel.checkUserId(id, userId)
         .then(goodId => {
@@ -71,6 +71,7 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
+    console.log(req.jwtToken.userId);
     postModel.findAll()
         .then(result => {
             res.status(200).json({ result });

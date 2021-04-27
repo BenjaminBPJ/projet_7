@@ -89,7 +89,7 @@ exports.login = (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {
     const id = req.params.id;
-    const userId = req.userIdAuth;
+    const userId = req.jwtToken.userId;
 
     userModel.checkUserId(id, userId)
         .then(goodId => {
@@ -117,7 +117,7 @@ exports.deleteUser = (req, res, next) => {
 exports.updateDescription = (req, res, next) => {
     const description = req.body.description;
     const id = req.params.id;
-    const userId = req.userIdAuth;
+    const userId = req.jwtToken.userId;
 
     userModel.checkUserId(id, userId)
         .then(goodId => {
@@ -142,7 +142,7 @@ exports.updatePhoto = (req, res, next) => {
     const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
     const fileName = Date.now() + file.name;
     const id = req.params.id;
-    const userId = req.userIdAuth;
+    const userId = req.jwtToken.userId;
 
     userModel.checkUserId(id, userId)
         .then(goodId => {

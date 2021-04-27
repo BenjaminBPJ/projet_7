@@ -61,7 +61,7 @@ exports.findAll = () => {
     const sql = `SELECT * FROM posts`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            if (result === undefined) {
+            if (result === undefined || result == "") {
                 reject(`Impossible de charger les publications.`);
             } else {
                 resolve(result);
@@ -74,7 +74,7 @@ exports.find = (id) => {
     const sql = `SELECT * FROM posts WHERE id='${id}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            if (result === undefined) {
+            if (result === undefined || result == "") {
                 reject(`Impossible de charger la publication.`);
             } else {
                 resolve(result);
