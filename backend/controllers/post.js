@@ -92,4 +92,30 @@ exports.getPost = (req, res, next) => {
         });
 };
 
+exports.modifyPost = (req, res, next) => {
+    const userId = req.jwtToken.userId
+    const id = req.params.id;
+    const datePublication = datePubli;
+    const titre = req.body.title;
+    const publication = req.body.content;
+    const file = req.files.contentImage;
+    const imageUrl = Date.now() + file.name;
+    
+    const postObject = req.file ?
+        {
+            datePublication: datePublication,
+            titre: titre,
+            publication: publication,
+            imageUrl: imageUrl
+        } : { ...req.body }
 
+    postModel.update( postObject, id )
+        .then(result => {
+            res.status(200).json({ result });
+        })
+        .catch(errorMessage => {
+            res.status(404).json({ error: errorMessage });
+        });
+};
+
+//id, userId, datePublication, titre, publication, imageUrl
