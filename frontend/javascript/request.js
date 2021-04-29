@@ -16,7 +16,8 @@ async function send(url, data) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'authorization': 'bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(data)
     });
@@ -34,7 +35,8 @@ async function update(url, data) {
     let response = await fetch(url, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'authorization': 'bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(data)
     });
