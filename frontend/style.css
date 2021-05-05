@@ -12,7 +12,7 @@ body{
 }
 
 .logo-login{
-    height: 25em;
+    height: 15em;
 }
 
 main{
@@ -28,9 +28,15 @@ main{
     border: 0.5px solid grey;
     margin: auto;
     margin-bottom: 0.8em;
+    text-align: center;
     padding: 0.5em;
-    width: 12em;
 }
+
+.value-input-inscription{
+    margin: 1em;
+    padding: 0.5em;
+}
+
 
 /* ---- Mise en page de la page d'accueil ---- */
 .header-groupomania{

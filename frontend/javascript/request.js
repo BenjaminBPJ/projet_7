@@ -1,10 +1,11 @@
-async function request(url, bearer, token) {
+async function request(url) {
     let response = await fetch(url, {
         method: "GET",
         headers: {
             'authorization': 'bearer ' + localStorage.getItem('token')
         }
     });
+
     if (!response.ok) {
         return null
     };
@@ -22,7 +23,18 @@ async function send(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json();
-        return res;
+    return res;
+};
+
+async function sendPostToApi(url, data) {
+    let response = await axios.post(url, data, {
+        method: "POST",
+        headers: {
+            'authorization': 'bearer ' + localStorage.getItem('token')
+        },
+    });
+    let res = await response.json();
+    return res;
 };
 
 async function deleteMethod(url) {

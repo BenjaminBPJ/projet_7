@@ -1,6 +1,12 @@
 function login(form) {
     let data = send(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
+        if (user === status(401)) {
+            badPassword()
+        }
+        if (user === status(404)) {
+            badEmail()
+        } else {
             let userId = user.userId;
             window.location = `reseau.html?/userId=${userId}`;
 
@@ -10,10 +16,11 @@ function login(form) {
             let token = user.token;
             token = localStorage.setItem('token', token);
             token = JSON.stringify(token);
+        }
     })
         .catch((error) => {
             serverDown();
-        }); 
+        });
 };
 
 function getUserLogin() {

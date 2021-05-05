@@ -7,39 +7,23 @@ exports.createPost = (req, res, next) => {
         return res.status(400).send('Aucun fichier téléchargé.');
     };*/
 
-    console.log(req.post)
-
-    //const postObject = JSON.parse(req.body.post);
-
+    const postObject = JSON.parse(req.body.publication);
     const userId = req.jwtToken.userId;
     const datePublication = datePubli;
-    /*const titre = req.body.post.title;
-    const publication = req.body.post.content;*/
+    const titre = req.body.publication.title;
+    const publication = req.body.publication.content;
     const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.files.name}`;
 
-    /*const post = new Post({
-        userId : userId,
-        datePublication: datePublication,
-        ...postObject,
-        titre: titre,
-        publication: publication,
-        file: req.files.contentImage,
+    const post = new Post({
+        ... postObject,
         imageUrl: imageUrl
-    })*/
+    })
 
-    const publi = `
-    ('${userId}',
-    '${datePublication}',
-    '${titre}',
-    '${publication}',
-    '${imageUrl}'
-    )`;
-
-    console.log(publi)
+    console.log(post)
     console.log(postObject)
     console.log(titre)
 
-    postModel.insert(publi)
+    postModel.insert(post)
         .then(result => {
             res.status(200).json({ result });
         })
@@ -135,7 +119,8 @@ exports.modifyPost = (req, res, next) => {
     const userId = req.jwtToken.userId
     const id = req.params.id;
     const datePublication = datePubli;
-    const imageUrl =  `${req.protocol}://${req.get('host')}/images/${req.files.name}`;
+    const imageUrl =  `${req.protocol}://${req.get('host')}/images/${req.files.imageUrl}`;
+
 
     const postObject = req.file ?
         {

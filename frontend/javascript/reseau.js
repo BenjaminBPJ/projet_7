@@ -25,7 +25,7 @@ function goToProfil(){
 goToProfil();
 
 function createPost(post) {
-    let data = send(`http://localhost:3000/api/posts/`, post);
+    let data = sendPostToApi(`http://localhost:3000/api/posts/`, post);
     data.then(post => {
         console.log(post);
     })
@@ -38,13 +38,15 @@ function createPost(post) {
 function getPostInfo() {
     let titre = document.getElementById('titre-publication').value;
     let content = document.getElementById('textarea-publi').value;
-    let image = document.getElementById('image-publi').value;
-    let publication = {
-        title: titre,
-        content: content,
-        contentImage: image
-    };
-    createPost(publication);
+    let image = document.getElementById('image-publi').files[0];
+    console.log(image)
+    let formData = new FormData()
+    formData.append('images', image);
+    formData.append("publication", JSON.stringify({
+        tilte: titre,
+        content: content
+    }));
+    createPost(formData);
 };
 
 function sendPost() {
