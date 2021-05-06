@@ -1,12 +1,14 @@
 const connectionDb = require('../middleware/connect');
 
 exports.insert = (publi) => {
-    const sql = `INSERT INTO posts (userId, datePublication, titre, publication, imageUrl) VALUES ${publi} `;
+    const sql = `INSERT INTO posts (userId, datePublication, titre, publication, imageUrl) VALUES (?, NOW(), ?, ?, ?) `;
+    const value = [publi.userId, publi.titre, publi.publication, publi.imageUrl]
     return new Promise((resolve, reject) => {
-        connectionDb.query(sql, publi, (error, result, fields) => {
+        connectionDb.query(sql, value, (error, result, fields) => {
             console.log(result)
-            if (result === undefined) {
-                console.log(error)
+            if (publi.imageUrl === null && publi.titre == "") {
+                reject('Vous devez envoyer au moins un fichier ou un message de publication.');
+            } else if (result === undefined) {
                 reject(`Impossible de créer la publication.`);
             } else {
                 resolve(`Vous avez crée votre publication`);

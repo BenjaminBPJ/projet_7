@@ -32,6 +32,7 @@ async function sendPostToApi(url, data) {
         headers: {
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
+        body: JSON.stringify(data)
     });
     let res = await response.json();
     return res;
