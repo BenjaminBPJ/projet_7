@@ -6,7 +6,7 @@ exports.createPost = (req, res, next) => {
     let postObject = req.file ?
         { ...JSON.parse(req.body.post), imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         : { ...req.body, imageUrl: null };
-        
+
     postObject = { ...postObject, userId: req.jwtToken.userId };
 
     postModel.insert(postObject)
@@ -27,7 +27,8 @@ exports.deletePost = (req, res, next) => {
         .then(goodId => {
             postModel.findPhoto(id)
                 .then(oldPhoto => {
-                    fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
+                    const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => {
                         postModel.delete(id)
                             .then(deletePost => {
                                 res.status(200).json({ message: deletePost });
@@ -69,28 +70,40 @@ exports.getPost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-    const userId = req.jwtToken.userId
     const id = req.params.id;
-    const datePublication = datePubli;
-    const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.files.imageUrl}`;
+    const userId = req.jwtToken.userId;
 
-
-    const postObject = req.file ?
+    let postObject = 
         {
             ...JSON.parse(req.body.post),
-            imageUrl: imageUrl
-        } : { ...req.body };
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        };
 
-    const titre = req.body.post.title;
-    const publication = req.body.post.content;
+    postObject = { ...postObject, userId: userId, postId: id };
 
-    postModel.update(userId, datePublication, titre, publication, imageUrl, id)
-        .then(result => {
-            res.status(200).json({ result });
+    
+
+    postModel.checkUserId(id, userId)
+        .then(goodId => {
+            postModel.findPhoto(id)
+                .then(oldPhoto => {
+                   const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => {
+                        postModel.update(postObject)
+                            .then(result => {
+                                res.status(200).json({ result });
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
+                    });
+                })
+                .catch(errorMessage => {
+                    res.status(404).json({ error: errorMessage });
+                })
         })
         .catch(errorMessage => {
             res.status(404).json({ error: errorMessage });
         });
 };
 
-//id, userId, datePublication, titre, publication, imageUrl

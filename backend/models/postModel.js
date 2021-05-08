@@ -85,10 +85,12 @@ exports.find = (id) => {
     });
 };
 
-exports.update = (userId, datePublication, titre, publication, imageUrl, id) => {
-    const sql = `UPDATE posts SET userId=${userId}, datePublication= ${datePublication}, titre= ${titre}, publication= ${publication}, imageUrl= ${imageUrl} WHERE id=${id}`;
+exports.update = (publi) => {
+    const sql = `UPDATE posts SET userId=?, datePublication=NOW(), titre=?, publication=?, imageUrl=? WHERE id=?`;
+    const value = [publi.userId, publi.titre, publi.publication, publi.imageUrl, publi.postId]
+    console.log(value)
     return new Promise((resolve, reject) => {
-        connectionDb.query(sql, (error, result, fields) => {
+        connectionDb.query(sql, value, (error, result, fields) => {
             if (result === undefined || result == "") {
                 console.log(error)
                 reject(`Impossible de modifier la publication.`);
