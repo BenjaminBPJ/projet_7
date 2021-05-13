@@ -5,9 +5,9 @@ const commentModel = require('../models/commentModel');
 exports.createComment = (req, res, next) => {
     const publiId = req.params.idPost;
     const content = req.body.comments;
-    const publiAt = datePubli;
+    const userId = req.jwtToken.userId
 
-    commentModel.insert(publiId, content, publiAt)
+    commentModel.insert(publiId, content, userId)
         .then(result => {
             res.status(200).json({ message: result });
         })

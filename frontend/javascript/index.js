@@ -1,7 +1,16 @@
 function login(form) {
     let data = send(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
-if (user === null )
+        if (user === 1 ) {
+            return badEmail();
+        };
+        if (user === 2 ) {
+            return badPassword();
+        };
+        if (user === 3 ) {
+            return tooManyRequests();
+        };
+
         let userId = user.userId;
         window.location = `reseau.html?/userId=${userId}`;
 
@@ -11,10 +20,8 @@ if (user === null )
         let token = user.token;
         token = localStorage.setItem('token', token);
         token = JSON.stringify(token);
-
     })
         .catch((error) => {
-            serverDown();
         });
 };
 

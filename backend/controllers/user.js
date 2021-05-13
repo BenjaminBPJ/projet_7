@@ -51,7 +51,7 @@ exports.signup = (req, res, next) => {
                     res.status(404).json({ error: errorMessage });
                 });
         })
-        .catch((error) => res.status(403).json({ error: `Impossible de créer un utilisateur` }))
+        .catch((error) => res.status(403).json({ error: `Erreur dans l'inscripton d'un utilisateur.` }))
 };
 
 
@@ -83,7 +83,7 @@ exports.login = (req, res, next) => {
                 }));
         })
         .catch(errorMessage => {
-            res.status(404).json({ error: 'utilisateur non trouvé.' });
+            res.status(404).json({ error: 'Nous avons échoué à retrouver cet utilisateur.' });
         });
 };
 

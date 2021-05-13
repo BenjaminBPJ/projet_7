@@ -13,6 +13,21 @@ function createOnePost(value) {
                          <img src="backend/images/${value.imageUrl}" class="" />`
 };
 
+function createOneComment(value) {
+    console.log(value);
+    let article = document.createElement(`div`);
+    document.querySelector("publication").appendChild(article);
+    article.classList.add("commentaire");
+
+    article.innerHTML = `<header class ="header-publication">
+                            <h3 class="auteur-publication">${value.userId}</h3>
+                            <h4 class="date-publication">${value.datePublication}</h4>
+                         </header>
+                         <h5>${value.titre}</h5>
+                         <p>${value.publication}</p>
+                         <img src="backend/images/${value.imageUrl}" class="" />`
+};
+
 function userProfil(value) {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
@@ -71,12 +86,17 @@ function serverDown() {
 };
 
 function badEmail() {
-    let small = document.getElementById('small-password');
-    small.innerHTML = `Votre email est incorrect.`
+    let small = document.getElementById('small-email');
+    small.innerHTML = `Votre email est incorrect.`;
 };
 
 function badPassword() {
     let small = document.getElementById('small-password');
-    small.innerHTML = `Votre mot de passe est incorrect.`
+    small.innerHTML = `Votre mot de passe est incorrect.`;
+};
+
+function tooManyRequests() {
+    let small = document.getElementById('small-email');
+    small.innerHTML = `Vous avez eu trop d'échecs de connexion, veuillez attendre 3 minutes.`;
 };
 

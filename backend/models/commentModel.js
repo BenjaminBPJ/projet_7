@@ -1,13 +1,10 @@
 const connectionDb = require('../middleware/connect');
 
-exports.insert = (publiId, content, publiAt) => {
-    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) SELECT '${publiId}','${content}','${publiAt}', userId FROM posts WHERE id='${publiId}' `;
+exports.insert = (publiId, content,userId) => {
+    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) VALUES ('${publiId}','${content}', NOW(), '${userId}')`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            console.log(result)
-            console.log(publiId)
-            console.log(content)
-            console.log(publiAt)
+            console.log(error)
             if (result === undefined) {
                 reject(`Impossible de créer votre commentaire.`);
             } else {

@@ -23,16 +23,23 @@ async function send(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json();
+    if (response.status === 404) {
+        return 1;
+    };
+    if (response.status === 401) {
+        return 2;
+    };
+    if (response.status === 429) {
+        return 3;
+    };
     return res;
 };
 
 async function sendPostToApi(url, data) {
     let response = await axios.post(url, data, {
-        method: "POST",
         headers: {
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
-        body: JSON.stringify(data)
     });
     let res = await response.json();
     return res;

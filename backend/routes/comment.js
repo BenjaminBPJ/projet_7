@@ -6,6 +6,6 @@ const commentCtrl = require('../controllers/comment');
 router.post('/:idPost', auth, commentCtrl.createComment); 
 router.delete('/:id', auth, commentCtrl.deleteComment); // du com
 router.get('/:idPost', auth, commentCtrl.getAllCommentsFromOnePubli);
-router.put('/:id', auth, commentCtrl.modifyComment) // a créer
+router.put('/:id', auth, commentCtrl.modifyComment) 
 
 module.exports = router;
