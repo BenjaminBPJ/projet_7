@@ -106,5 +106,5 @@ exports.update = (publi) => {
         sql = `UPDATE posts SET datePublication=NOW(), titre=?, publication=? WHERE id=?`;
         value = [publi.titre, publi.publication, publi.postId];
     }
-    return updatePost(sql, value)
+    return updatePost(sql, value);
 };

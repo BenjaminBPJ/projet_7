@@ -39,19 +39,6 @@ exports.delete = (id) => {
     });
 };
 
-exports.updateDescription = (description, id) => {
-    const sql = `UPDATE users SET description='${description}' WHERE id='${id}'`;
-    return new Promise((resolve, reject) => {
-        connectionDb.query(sql, (error, result, fields) => {
-            if (result === undefined) {
-                reject(`Utilisateur non trouvé.`);
-            } else {
-                resolve(`Vous avez modifié votre description.`);
-            };
-        });
-    });
-};
-
 exports.checkUserId = (id, userId) => {
     const sql = `SELECT id FROM users WHERE id='${id}'`;
     return new Promise((resolve, reject) => {
@@ -68,17 +55,26 @@ exports.checkUserId = (id, userId) => {
     });
 };
 
-exports.updatePhoto = (fileName, id) => {
-    const sql = `UPDATE users SET imageUrl ='${fileName}' WHERE id='${id}'`;
+const updateUser = (sql, params) => {
     return new Promise((resolve, reject) => {
-        connectionDb.query(sql, (error, result, fields) => {
-            if (result === undefined) {
-                reject(`Impossible de modifier votre photo.`);
+        connectionDb.query(sql, params, (error, result, fields) => {
+            if (result === undefined || result == "") {
+                reject(`Impossible de modifier votre profil.`);
             } else {
-                resolve(`Vous avez modifié votre photo.`);
+                resolve(`Vous avez modifié votre profil.`);
             };
         });
     });
+};
+
+exports.update = (user) => {
+    let sql = `UPDATE users SET description=?, imageUrl =? WHERE id=?`;
+    let value = [user.description, user.imageUrl, user.userId]
+    if (user.imageUrl === null){
+        sql = `UPDATE users SET description=? WHERE id=?`;
+        value = [user.description, user.userId]
+    };
+    return updateUser(sql, value);
 };
 
 exports.findPhoto = (id) => {

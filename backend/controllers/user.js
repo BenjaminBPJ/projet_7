@@ -20,13 +20,13 @@ exports.signup = (req, res, next) => {
         .hash(req.body.password, 10)
         .then((hash) => {
             const email = req.body.email;
-            const firstName = req.body.firstName;
             const lastName = req.body.lastName;
+            const firstName = req.body.firstName;
             const password = hash;
             const user = `
                     ('${email}',
-                    '${firstName}',
                     '${lastName}',
+                    '${firstName}',
                     '${password}'
                     )`;
 
@@ -114,61 +114,40 @@ exports.deleteUser = (req, res, next) => {
         });
 };
 
-exports.updateDescription = (req, res, next) => {
-    const description = req.body.description;
+exports.modifyUser = (req, res, next) => {
     const id = req.params.id;
     const userId = req.jwtToken.userId;
 
-    userModel.checkUserId(id, userId)
-        .then(goodId => {
-            userModel.updateDescription(description, id)
-                .then(update => {
-                    res.status(200).json({ message: update });
-                })
-                .catch(errorMessage => {
-                    res.status(404).json({ error: errorMessage });
-                });
-        })
-        .catch(errorMessage => {
-            res.status(404).json({ error: errorMessage });
-        });
-};
+    let userObject = req.file ?
+        { ...JSON.parse(req.body.description), imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
+        : { ...req.body, imageUrl: null };
 
-exports.updatePhoto = (req, res, next) => {
-    if (!req.files) {
-        return res.status(400).json({ error: 'Aucun fichier téléchargé.' });
-    };
-
-    const file = req.files.uploadImage;  // uploadImage = clef = nom de l'input coté front
-    const fileName = Date.now() + file.name;
-    const id = req.params.id;
-    const userId = req.jwtToken.userId;
+    userObject = { ...userObject, userId: userId };
 
     userModel.checkUserId(id, userId)
         .then(goodId => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
-                    fs.unlink(`avatars/${oldPhoto[0].imageUrl}`, () => {
-                        userModel.updatePhoto(fileName, id)
-                            .then(update => {
-                                if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
-                                    file.mv('avatars/' + fileName, (err) => {
-                                        if (err) {
-                                            return res.status(500).json({ err });
-                                        } else {
-                                            res.status(200).json({ message: update });
-                                        };
-                                    });
-                                } else {
-                                    return res.status(403).json({
-                                        error: `Format non autorisé, veuillez télécharger des fichiers aux formats '.png','.jpg'.`
-                                    });
-                                };
+                    if (oldPhoto[0].imageUrl !== null) {
+                        const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                        fs.unlink(`images/${filename}`, () => {
+                            userModel.update(userObject)
+                                .then(result => {
+                                    res.status(200).json({ result });
+                                })
+                                .catch(errorMessage => {
+                                    res.status(404).json({ error: errorMessage });
+                                });
+                        });
+                    } else {
+                        userModel.update(userObject)
+                            .then(result => {
+                                res.status(200).json({ result });
                             })
                             .catch(errorMessage => {
                                 res.status(404).json({ error: errorMessage });
                             });
-                    });
+                    };
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });
@@ -178,7 +157,6 @@ exports.updatePhoto = (req, res, next) => {
             res.status(404).json({ error: errorMessage });
         });
 };
-
 
 exports.getUser = (req, res, next) => {
     const id = req.params.id;

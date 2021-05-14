@@ -91,7 +91,6 @@ exports.modifyPost = (req, res, next) => {
                                     res.status(200).json({ result });
                                 })
                                 .catch(errorMessage => {
-                                    console.log('error1')
                                     res.status(404).json({ error: errorMessage });
                                 });
                         });
@@ -101,18 +100,15 @@ exports.modifyPost = (req, res, next) => {
                                 res.status(200).json({ result });
                             })
                             .catch(errorMessage => {
-                                console.log('error1a')
                                 res.status(404).json({ error: errorMessage });
                             });
                     };
                 })
                 .catch(errorMessage => {
-                    console.log('error2')
                     res.status(404).json({ error: errorMessage });
                 });
         })
         .catch(errorMessage => {
-            console.log('error3')
             res.status(404).json({ error: errorMessage });
         });
 };
