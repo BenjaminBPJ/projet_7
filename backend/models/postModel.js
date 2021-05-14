@@ -85,18 +85,26 @@ exports.find = (id) => {
     });
 };
 
-exports.update = (publi) => {
-    const sql = `UPDATE posts SET userId=?, datePublication=NOW(), titre=?, publication=?, imageUrl=? WHERE id=?`;
-    const value = [publi.userId, publi.titre, publi.publication, publi.imageUrl, publi.postId]
-    console.log(value)
+const updatePost = (sql, params) => {
     return new Promise((resolve, reject) => {
-        connectionDb.query(sql, value, (error, result, fields) => {
+        connectionDb.query(sql, params, (error, result, fields) => {
+            console.log(error)
             if (result === undefined || result == "") {
-                console.log(error)
                 reject(`Impossible de modifier la publication.`);
             } else {
                 resolve('Vous avez modifié votre publication.');
             };
         });
     });
+};
+
+exports.update = (publi) => {
+    console.log('update post')
+    let sql = `UPDATE posts SET datePublication=NOW(), titre=?, publication=?, imageUrl=? WHERE id=?`;
+    let value = [publi.titre, publi.publication, publi.imageUrl, publi.postId]
+    if (publi.imageUrl === null){
+        sql = `UPDATE posts SET datePublication=NOW(), titre=?, publication=? WHERE id=?`;
+        value = [publi.titre, publi.publication, publi.postId];
+    }
+    return updatePost(sql, value)
 };

@@ -73,36 +73,46 @@ exports.modifyPost = (req, res, next) => {
     const id = req.params.id;
     const userId = req.jwtToken.userId;
 
-    let postObject = 
-        {
-            ...JSON.parse(req.body.post),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        };
+    let postObject = req.file ?
+        { ...JSON.parse(req.body.post), imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
+        : { ...req.body, imageUrl: null };
 
     postObject = { ...postObject, userId: userId, postId: id };
-
-    
 
     postModel.checkUserId(id, userId)
         .then(goodId => {
             postModel.findPhoto(id)
                 .then(oldPhoto => {
-                   const filename = oldPhoto[0].imageUrl.split('/images/')[1];
-                    fs.unlink(`images/${filename}`, () => {
+                    if (oldPhoto[0].imageUrl !== null) {
+                        const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                        fs.unlink(`images/${filename}`, () => {
+                            postModel.update(postObject)
+                                .then(result => {
+                                    res.status(200).json({ result });
+                                })
+                                .catch(errorMessage => {
+                                    console.log('error1')
+                                    res.status(404).json({ error: errorMessage });
+                                });
+                        });
+                    } else {
                         postModel.update(postObject)
                             .then(result => {
                                 res.status(200).json({ result });
                             })
                             .catch(errorMessage => {
+                                console.log('error1a')
                                 res.status(404).json({ error: errorMessage });
                             });
-                    });
+                    };
                 })
                 .catch(errorMessage => {
+                    console.log('error2')
                     res.status(404).json({ error: errorMessage });
-                })
+                });
         })
         .catch(errorMessage => {
+            console.log('error3')
             res.status(404).json({ error: errorMessage });
         });
 };
