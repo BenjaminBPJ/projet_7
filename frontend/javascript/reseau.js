@@ -4,9 +4,6 @@ function getPosts(){
         console.log(posts);
             for (const post of posts.result) {
                 createOnePost(post);
-                for (const comment of comment)
-                getComments(posts)
-                console.log(posts.result[0].id)
             };                                      
         })
         .catch((error) => {
@@ -30,7 +27,7 @@ function getPostInfo() {
     let titre = document.getElementById('titre-publication').value;
     let content = document.getElementById('textarea-publi').value;
     let image = document.getElementById('image-publi').files[0];
-    console.log(image)
+    console.log('image=' + image)
     let formData = new FormData()
     formData.append('image', image);
     formData.append("post", JSON.stringify({
@@ -38,7 +35,6 @@ function getPostInfo() {
         publication: content
     }));
     createPost(formData);
-    console.log(formData)
 };
 
 function sendPost() {
@@ -52,6 +48,18 @@ function sendPost() {
 
 sendPost()
 
+/* --------------------------- Creation des commentaires --------------------------- */
+
+
+function profilPage() {
+    let urlParam = (new URL(window.location.href)).searchParams.get('/id');
+    let data = request(`http://localhost:3000/api/auth/` + urlParam);
+    data.then(user => {
+    })
+    /*.catch(() => {
+        serverDown();
+    })*/
+};
 function getComments(post){
     let idPost = post.result[0].id;
     let data = request(`http://localhost:3000/api/comments/${idPost}`);

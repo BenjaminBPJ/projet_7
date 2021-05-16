@@ -8,9 +8,11 @@ function createOnePost(value) {
                             <h3 class="auteur-publication">${value.userId}</h3>
                             <h4 class="date-publication">${value.datePublication}</h4>
                          </header>
-                         <h5>${value.titre}</h5>
-                         <p>${value.publication}</p>
-                         <img src="backend/images/${value.imageUrl}" class="" />`
+                         <div>
+                            <h5>${value.titre}</h5>
+                            <p>${value.publication}</p>
+                            <img src="backend/images/${value.imageUrl}" class="" />
+                         </div>`
 };
 
 function createOneComment(value) {

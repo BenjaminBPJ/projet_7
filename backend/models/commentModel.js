@@ -1,7 +1,7 @@
 const connectionDb = require('../middleware/connect');
 
-exports.insert = (publiId, content,userId) => {
-    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId) VALUES ('${publiId}','${content}', NOW(), '${userId}')`;
+exports.insert = (publiId, content, userId) => {
+    const sql = `INSERT INTO commentaires (publiId, content, publiAt, userId, userFirstName, userLastName, userImage) SELECT '${publiId}', '${content}', NOW(), '${userId}', firstName, lastName, ImageUrl FROM users WHERE id='${userId}' `;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
             console.log(error)
