@@ -36,7 +36,7 @@ exports.find = (id) => {
             } else {
                 resolve(result);
             };
-        });
+        })
     });
 };
 

@@ -1,13 +1,24 @@
-function getPosts(){
-    let data = request(`http://localhost:3000/api/posts/`);
-    data.then(posts => {
-        console.log(posts);
-            for (const post of posts.result) {
+/* --------------------------- Creation et affichage des publications --------------------------- */
+function getPosts() {
+    let dataPost = request(`http://localhost:3000/api/posts/`);
+    dataPost.then(posts => {
+        for (let post of posts.result) {
+            
+
+            let idPost = post.id;
+            let dataComment = request(`http://localhost:3000/api/comments/` + idPost);
+            dataComment.then(comments => {
                 createOnePost(post);
-            };                                      
-        })
-        .catch((error) => {
-        });
+                for (let commentaire of comments.result) {
+                createOneComment(commentaire)
+                }
+            })
+        }
+        /*.catch((error) => {
+         });*/
+    })
+    /*.catch((error) => {
+    });*/
 };
 
 getPosts();
@@ -20,7 +31,7 @@ function createPost(post) {
         .catch((error) => {
             console.log(error)
             serverDown();
-        }); 
+        });
 };
 
 function getPostInfo() {
@@ -50,36 +61,37 @@ sendPost()
 
 /* --------------------------- Creation des commentaires --------------------------- */
 
+/*function getComments(post){
+    let idPost = post.result[0].id;
+    let data = request(`http://localhost:3000/api/comments/` + idPost);
+    data.then(comments => {                                    
+        })
+        .catch((error) => {
+        });
+};*/
 
+function goToProfil() {
+    let profil = document.getElementById('emote-profil');
+    let id = JSON.parse(localStorage.getItem('userId'));
+    console.log(id);
+    profil.addEventListener('click', function () {
+        window.location = `profil.html?/id=${id}`
+    });
+};
+
+/* --------------------------- Envois d'un commentaire --------------------------- */
+function sendComment() {
+
+}
+/* --------------------------- Aller sur la page profil --------------------------- */
 function profilPage() {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
     let data = request(`http://localhost:3000/api/auth/` + urlParam);
     data.then(user => {
     })
-    /*.catch(() => {
-        serverDown();
-    })*/
-};
-function getComments(post){
-    let idPost = post.result[0].id;
-    let data = request(`http://localhost:3000/api/comments/${idPost}`);
-    data.then(comments => {
-        console.log(comments);
-            for (const comment of comments.result) {
-                createOneComment(comments);
-            };                                      
+        .catch(() => {
+            serverDown();
         })
-        .catch((error) => {
-        });
-};
-
-function goToProfil(){
-    let profil = document.getElementById('emote-profil');
-    let id = JSON.parse(localStorage.getItem('userId'));
-    console.log(id);
-    profil.addEventListener('click', function (){
-        window.location = `profil.html?/id=${id}`
-    });
 };
 
 goToProfil();

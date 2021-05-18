@@ -1,5 +1,5 @@
 function createOnePost(value) {
-    console.log(value);
+    console.log(value.id)
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
@@ -7,28 +7,36 @@ function createOnePost(value) {
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.userId}</h3>
                             <h4 class="date-publication">${value.datePublication}</h4>
-                         </header>
-                         <div>
+                        </header>
+                        <div class="texte-image-publication">
                             <h5>${value.titre}</h5>
                             <p>${value.publication}</p>
-                            <img src="backend/images/${value.imageUrl}" class="" />
-                         </div>`
+                            <img src="backend/images/${value.imageUrl}" class="image-publication" />
+                        </div>
+                        <input placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />`  
+
 };
 
 function createOneComment(value) {
-    console.log(value);
     let article = document.createElement(`div`);
-    document.querySelector("publication").appendChild(article);
+    document.querySelector(".texte-image-publication").appendChild(article);
     article.classList.add("commentaire");
 
-    article.innerHTML = `<header class ="header-publication">
-                            <h3 class="auteur-publication">${value.userId}</h3>
-                            <h4 class="date-publication">${value.datePublication}</h4>
-                         </header>
-                         <h5>${value.titre}</h5>
-                         <p>${value.publication}</p>
-                         <img src="backend/images/${value.imageUrl}" class="" />`
+    article.innerHTML = `<header class ="header-commentaire">
+                            <div class="image-nom-commentaire">
+                                <img src="backend/images/${value.imageUrl}" class="" />
+                                <h3 class="auteur-commentaire">${value.userFirstName} ${value.userLastName}</h3>
+                            </div>
+                            <h4 class="date-commentaire">${value.publiAt}</h4>
+                        </header>
+                        <p>${value.content}</p>`
 };
+
+function writeComment(){
+    let input = document.createElement('input')
+    document.querySelector(".publication").appendChild(input)
+}
+
 
 function userProfil(value) {
     let article = document.createElement(`article`);
