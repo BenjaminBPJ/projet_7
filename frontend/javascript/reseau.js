@@ -23,15 +23,16 @@ function getPosts() {
 
 getPosts();
 
+/* --------------------------- Envois d'une publication --------------------------- */
 function createPost(post) {
     let data = sendPostToApi(`http://localhost:3000/api/posts/`, post);
     data.then(post => {
         console.log(post);
     })
-        .catch((error) => {
+        /*.catch((error) => {
             console.log(error)
             serverDown();
-        });
+        });*/
 };
 
 function getPostInfo() {
@@ -51,47 +52,25 @@ function getPostInfo() {
 function sendPost() {
     let button = document.getElementById("send-post");
     button.addEventListener('click', function (e) {
-        e.preventDefault();
+        //e.preventDefault();
         getPostInfo();
-        window.location.reload()
+        //window.location.reload()
     });
 };
 
 sendPost()
-
-/* --------------------------- Creation des commentaires --------------------------- */
-
-/*function getComments(post){
-    let idPost = post.result[0].id;
-    let data = request(`http://localhost:3000/api/comments/` + idPost);
-    data.then(comments => {                                    
-        })
-        .catch((error) => {
-        });
-};*/
-
-function goToProfil() {
-    let profil = document.getElementById('emote-profil');
-    let id = JSON.parse(localStorage.getItem('userId'));
-    console.log(id);
-    profil.addEventListener('click', function () {
-        window.location = `profil.html?/id=${id}`
-    });
-};
 
 /* --------------------------- Envois d'un commentaire --------------------------- */
 function sendComment() {
 
 }
 /* --------------------------- Aller sur la page profil --------------------------- */
-function profilPage() {
-    let urlParam = (new URL(window.location.href)).searchParams.get('/id');
-    let data = request(`http://localhost:3000/api/auth/` + urlParam);
-    data.then(user => {
-    })
-        .catch(() => {
-            serverDown();
-        })
+function goToProfil() {
+    let profil = document.getElementById('emote-profil');
+    let id = JSON.parse(localStorage.getItem('userId'));
+    profil.addEventListener('click', function () {
+        window.location = `profil.html?/id=${id}`
+    });
 };
 
 goToProfil();
