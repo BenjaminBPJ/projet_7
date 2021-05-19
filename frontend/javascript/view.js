@@ -13,7 +13,8 @@ function createOnePost(value) {
                             <p>${value.publication}</p>
                             <img src="backend/images/${value.imageUrl}" class="image-publication" />
                         </div>
-                        <input placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />`  
+                        <input type="" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
+                        <button type="submit" id="sending-comment">commenter</button>`  
 
 };
 
@@ -31,12 +32,6 @@ function createOneComment(value) {
                         </header>
                         <p>${value.content}</p>`
 };
-
-function writeComment(){
-    let input = document.createElement('input')
-    document.querySelector(".publication").appendChild(input)
-}
-
 
 function userProfil(value) {
     let article = document.createElement(`article`);
@@ -66,17 +61,17 @@ function userEditProfil(value) {
     console.log(value)
 
     article.innerHTML = `   <form> 
-                                <img src= ${value.result[0].imageUrl} class="photo-profil"/>
-                                <input type="file" name="sampleFile" accept="image/*"/>
+                                <img src= ${value.result[0].imageUrl} class="photo-profil" />
+                                <input type="file" name="imageUrl" id="photo-user" accept="image/*" />
                                 <small id="small-edit-photo"></small>
-                                <input type="submit"/>
                             </form>
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <form>
                             <p class="profil-description"> Description : </p>
+                            <p class="ancienne-description">${value.result[0].description}</p>
                             <label for="description"></label>
                             <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea>
-                            <input type="submit"/>
+                            <input type="submit" class="send-profil"/>
                             </form>
                             <button id="delete-account" class="delete-account">Suppression du compte</button>
                         `;

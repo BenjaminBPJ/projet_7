@@ -55,7 +55,6 @@ async function update(url, data) {
     let response = await fetch(url, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(data)
