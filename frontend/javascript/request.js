@@ -13,6 +13,18 @@ async function request(url) {
     return data;
 };
 
+async function sendLog(url, data) {
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    let res = await response.json()
+    return res;
+};
+
 async function send(url, data) {
     let response = await fetch(url, {
         method: "POST",
@@ -22,16 +34,7 @@ async function send(url, data) {
         },
         body: JSON.stringify(data)
     });
-    let res = await response.json();
-    if (response.status === 404) {
-        return 1;
-    };
-    if (response.status === 401) {
-        return 2;
-    };
-    if (response.status === 429) {
-        return 3;
-    };
+    let res = await response.json()
     return res;
 };
 

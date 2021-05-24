@@ -1,8 +1,8 @@
 function signup(form) {
-    let data = send(`http://localhost:3000/api/auth/signup`, form);
+    let data = sendLog(`http://localhost:3000/api/auth/signup`, form);
     data.then(user => {
         let userId = user.userId;
-        window.location = `reseau.html?/userId=${userId}`;
+        window.location = `reseau.html`;
 
         userId = localStorage.setItem('userId', userId);
         userId = JSON.stringify(userId);

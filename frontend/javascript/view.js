@@ -60,16 +60,18 @@ function userEditProfil(value) {
     article.classList.add("profil");
     console.log(value)
 
-    article.innerHTML = `   <form> 
+    article.innerHTML = `   <form>
+                                <label for="image-user"></label> 
                                 <img src= ${value.result[0].imageUrl} class="photo-profil" />
                                 <input type="file" name="imageUrl" id="photo-user" accept="image/*" />
                                 <small id="small-edit-photo"></small>
                             </form>
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <form>
+                            <label for="old-description-user"></label>
                             <p class="profil-description"> Description : </p>
                             <p class="ancienne-description">${value.result[0].description}</p>
-                            <label for="description"></label>
+                            <label for="new-description-user"></label>
                             <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea>
                             <input type="submit" class="send-profil"/>
                             </form>
@@ -90,18 +92,4 @@ function serverDown() {
     article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
 };
 
-function badEmail() {
-    let small = document.getElementById('small-email');
-    small.innerHTML = `Votre email est incorrect.`;
-};
-
-function badPassword() {
-    let small = document.getElementById('small-password');
-    small.innerHTML = `Votre mot de passe est incorrect.`;
-};
-
-function tooManyRequests() {
-    let small = document.getElementById('small-email');
-    small.innerHTML = `Vous avez eu trop d'échecs de connexion, veuillez attendre 3 minutes.`;
-};
 

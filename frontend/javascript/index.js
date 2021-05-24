@@ -1,27 +1,25 @@
 function login(form) {
-    let data = send(`http://localhost:3000/api/auth/login`, form)
+    let data = sendLog(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
-        if (user === 1 ) {
-            return badEmail();
-        };
-        if (user === 2 ) {
-            return badPassword();
-        };
-        if (user === 3 ) {
-            return tooManyRequests();
-        };
+        console.log(user)
+        if (user.userId) {
+            let userId = user.userId;
+            window.location = `reseau.html`;
 
-        let userId = user.userId;
-        window.location = `reseau.html?/userId=${userId}`;
-
-        // insertion du pseudo et du token dans le localstorage à la connexion
-        userId = localStorage.setItem('userId', userId);
-        userId = JSON.stringify(userId);
-        let token = user.token;
-        token = localStorage.setItem('token', token);
-        token = JSON.stringify(token);
+            // insertion du pseudo et du token dans le localstorage à la connexion
+            userId = localStorage.setItem('userId', userId);
+            userId = JSON.stringify(userId);
+            let token = user.token;
+            token = localStorage.setItem('token', token);
+            token = JSON.stringify(token);
+        } else {
+            let small = document.getElementById('small-email');
+            small.innerHTML = user.error;
+        };
     })
         .catch((error) => {
+            let small = document.getElementById('small-email');
+            small.innerHTML = error;
         });
 };
 
@@ -44,3 +42,4 @@ function goNetwork() {
 };
 
 goNetwork();
+
