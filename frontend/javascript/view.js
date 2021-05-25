@@ -1,5 +1,4 @@
 function createOnePost(value) {
-    console.log(value.id)
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
@@ -14,14 +13,23 @@ function createOnePost(value) {
                             <img src="backend/images/${value.imageUrl}" class="image-publication" />
                         </div>
                         <input type="" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
-                        <button type="submit" id="sending-comment">commenter</button>`  
+                        <button type="submit" id="sending-comment">commenter</button>` 
+};
 
+function noPost() {
+    let article = document.createElement(`div`);
+    document.querySelector("h3").appendChild(article);
+    article.classList.add("publication");
+
+    article.innerHTML = `<div class="texte-image-publication">
+                            <p>Aucune publication pour le moment</p>
+                        </div>` 
 };
 
 function createOneComment(value) {
     let article = document.createElement(`div`);
     document.querySelector(".texte-image-publication").appendChild(article);
-    article.classList.add("commentaire");
+    article.classList.add("commentaire", "hidden-com");
 
     article.innerHTML = `<header class ="header-commentaire">
                             <div class="image-nom-commentaire">
@@ -90,6 +98,14 @@ function serverDown() {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
+};
+
+function noComment(value) {
+    let article = document.createElement(`div`);
+    document.querySelector(".texte-image-publication").appendChild(article);
+    article.classList.add("commentaire");
+
+    article.innerHTML = `<p>Aucun commentaire</p>`
 };
 
 

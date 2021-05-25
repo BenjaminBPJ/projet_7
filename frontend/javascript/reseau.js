@@ -2,30 +2,24 @@
 function getPosts() {
     let dataPost = request(`http://localhost:3000/api/posts/`);
     dataPost.then(posts => {
-        for (let post of posts.result) {
-            let idPost = post.id;
+        if (posts === null) {
+            noPost();
+        };
+        console.log(posts.result)
+        let publication = posts.result;
+        publication.forEach(onePublication => {
+            createOnePost(onePublication);
+            let idPost = onePublication.id;
             let dataComment = request(`http://localhost:3000/api/comments/` + idPost);
-            dataComment.then(commentsFromApi => {
-                createOnePost(post);
-
-                let commentToSend = document.getElementById('send-comment').value;
-                console.log(commentToSend)
-                let comment = {
-                    comments: commentToSend
+            dataComment.then(comments => {
+                for (const com of comments.result) {
+                    createOneComment(com);
                 };
-                console.log(comment)
-                sendComment(idPost, comment);
-
-                for (let commentaire of commentsFromApi.result) {
-                    createOneComment(commentaire)
-                }
             })
-        }
-        /*.catch((error) => {
-         });*/
-    })
-    /*.catch((error) => {
-    });*/
+                .catch((error) => {
+                })
+        });
+    });
 };
 
 getPosts();
