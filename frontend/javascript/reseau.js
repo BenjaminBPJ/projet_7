@@ -26,20 +26,19 @@ getPosts();
 
 /* --------------------------- Envois d'une publication --------------------------- */
 function createPost(post) {
+    console.log(post)
     let data = sendPostToApi(`http://localhost:3000/api/posts/`, post);
-    data.then(post => {
-        console.log(post);
+    data.then(publication => {
     })
     /*.catch((error) => {
         console.log(error)
-        serverDown();
     });*/
 };
 
 function getPostInfo() {
     let titre = document.getElementById('titre-publication').value;
     let content = document.getElementById('textarea-publi').value;
-    let image = document.getElementById('image-publi').files[0];
+    let image = document.getElementById('image-publi').files[0].name;
     let formData = new FormData()
     formData.append('image', image);
     formData.append("post", JSON.stringify({
@@ -54,7 +53,7 @@ function sendPost() {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getPostInfo();
-        window.location.reload()
+        //window.location.reload()
     });
 };
 

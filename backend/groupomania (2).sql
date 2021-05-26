@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 14 avr. 2021 à 17:46
+-- Généré le : mer. 26 mai 2021 à 22:33
 -- Version du serveur :  8.0.22
 -- Version de PHP : 8.0.3
 
@@ -32,8 +32,21 @@ CREATE TABLE `commentaires` (
   `userId` smallint UNSIGNED NOT NULL,
   `publiId` smallint UNSIGNED NOT NULL,
   `content` varchar(250) NOT NULL,
-  `publiAt` datetime NOT NULL
+  `publiAt` datetime NOT NULL,
+  `userFirstName` varchar(50) NOT NULL,
+  `userLastName` varchar(50) NOT NULL,
+  `userImage` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `commentaires`
+--
+
+INSERT INTO `commentaires` (`id`, `userId`, `publiId`, `content`, `publiAt`, `userFirstName`, `userLastName`, `userImage`) VALUES
+(14, 76, 37, 'encore une fois jadore', '2021-05-16 11:28:59', 'Antoine', 'Ascoli', NULL),
+(15, 78, 37, 'geniale', '2021-05-17 15:35:08', 'Nathalie', 'Ratin', NULL),
+(16, 78, 39, 'genialissime', '2021-05-17 17:47:30', 'Nathalie', 'Ratin', NULL),
+(33, 78, 36, 'de meme, bienvenue', '2021-05-25 09:56:16', 'Nathalie', 'Ratin', NULL);
 
 -- --------------------------------------------------------
 
@@ -45,9 +58,9 @@ CREATE TABLE `posts` (
   `id` smallint UNSIGNED NOT NULL,
   `userId` smallint UNSIGNED NOT NULL,
   `datePublication` date NOT NULL,
-  `titre` varchar(55) NOT NULL,
-  `publication` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `titre` varchar(55) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `publication` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `imageUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -55,15 +68,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `userId`, `datePublication`, `titre`, `publication`, `imageUrl`) VALUES
-(5, 42, '2021-04-09', '', 'bpj@hot.fr', '0000'),
-(6, 42, '2021-04-10', 'yubgvyuh.png', 'first publi', 'salut tout le monde'),
-(7, 42, '2021-04-10', 'deuxieme publication', 'partage d\'un feu de joie', 'vionjviozenj.png'),
-(8, 42, '2021-04-10', 'undefined', 'undefined', 'http://localhost:3000/images/vionjviozenj.png'),
-(9, 42, '2021-04-10', 'undefined', 'undefined', 'http://localhost:3000/images/vionjviozenj.png'),
-(10, 42, '2021-04-10', 'undefined', 'undefined', '1618057177924vionjviozenj.png'),
-(11, 42, '2021-04-10', 'undefined', 'undefined', '1618057219168vionjviozenj.png'),
-(13, 42, '2021-04-10', 'deuxieme publicationnn', 'partage dun feu de joieeee', '1618057671931vionjviozenj.png'),
-(15, 42, '2021-04-10', 'deuxieme publicationnn', 'partage dun feu de joieeee', '1618057673158vionjviozenj.png');
+(36, 76, '2021-05-14', 'Bienvenue', 'salut à tous je suis heureux de vous retrouver ici', 'http://localhost:3000/images/bcuize1620985379158.jpg'),
+(37, 76, '2021-05-14', 'nouveau paysage', 'je vous envoie une photo du paysage vu des nouveaux locaux', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1620985465565.jpg'),
+(39, 78, '2021-05-14', 'aide', 'salut, une collegue a besoin d\'aide pour le projet 4785D, cordialement', 'http://localhost:3000/images/kellen-riggin-SLZiNNkf9Kc-unsplash1620985880399.jpg'),
+(44, 78, '2021-05-25', 'nouvelle publication', 'test', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1621941226151.jpg');
 
 -- --------------------------------------------------------
 
@@ -77,8 +85,8 @@ CREATE TABLE `users` (
   `lastName` varchar(50) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Aucune description pour le moment',
-  `imageUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'avatar1.png',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `imageUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `role` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'membre'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -87,18 +95,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `lastName`, `firstName`, `password`, `description`, `imageUrl`, `role`) VALUES
-(5, 'pj@hot.fr', 'pj', 'ben', '$2b$10$nZdpYkCZNMnf66gqqvKeg.Ju83fnEN3UhvZRUJlhHDzaZZ7JXAGGW', 'Aucune description pour le moment', 'Photo', 'membre'),
-(32, 'pierrejeanbenjamin@hotmail.fr', 'Benjamin', 'Pierre-Jean', '$2b$10$TlZmGsGJU8Mru1z0/sviB.1dltNoe4WRUubU1DlJJKN9BGWN9Er0O', '', 'toto1611671113933.jpg', 'membre'),
-(34, 'svzsev', 'vsevfze', 'vzesz', '$2b$10$.UAobLMrOHgAbGzvTsu7j.wlGCrZZQ/7Wtc.IiVbunYkWf0OGIkWG', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(35, 'arti@gmail.com', 'benben', 'benten', '$2b$10$YKImEsmquV9ES.ZQPvDKdu9cZ3LfWE0YZCENFx3p3nqKFOOkPFaG2', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(36, 'lacune@gmail.com', 'czefcze', 'fzer', '$2b$10$7vGcePiC4bb6lLiCyXYiOO9/S4fF6KX4Eq7OmDquktdjE2RAS5GNS', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(40, 'conichuvdsvsdaligato@gmail.com', 'v sdfvzer', 'qsdcvs', '$2b$10$cLWDTG/Il0VfPTyjPQl56OlFFyKBr7vak51JOqFnqhDg.iHf0R9dC', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(42, 'taratata@free.fr', 'Michmich', 'Michel', '$2b$10$B62UXMO9fxU9.3tBVcFWuOSw5HsqVu0JtImf8QeXjFUq5lN3CorVW', 'nouveau CTO de Groupomania', '1618417745758avatar6.png', 'membre'),
-(43, 'alololu@free.fr', 'ertyti', 'neph', '$2b$10$7ttZvaK5gxJFP5aj1ve1U.tZyCJdjZMWFdrqGXPsrQTUqBi4lrlSi', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(44, 'alololu@groupomania.fr', 'undefined', 'undefined', '$2b$10$aRs9unkCz.GFEEZy7s2mmullFqYtFLEtvOPvCCVin1175z.5X7g1.', 'Aucune description pour le moment', 'toto1611671113933.jpg', 'membre'),
-(46, 'aloRlolu@groupomania.fr', 'undefined', 'undefined', '$2b$10$B1bQV6PWaaZ2MtJ4MGc7w.b4K52iagT/LcEp37nmXBhcpoUsbRrba', 'Aucune description pour le moment', 'avatar1.png', 'membre'),
-(48, 'tararatata@groupomania.fr', 'Benben', 'tarata', '$2b$10$4EkXHzQqQrRhHgVKq1UNAuKoV6VZoqWWSqHcEx0RpBFpLP7eUHtgC', 'Benben pour vous servir', '1618071982567avatar6.png', 'membre'),
-(49, 'guadapj@groupomania.fr', 'Benjamin', 'Pierre-Jean', '$2b$10$eGws/UbmkKDqKdB8B8J/2epTIpCjHyArfPb31W8OysqKnEyw00LsW', 'Aucune description pour le moment', 'avatar1.png', 'membre');
+(75, 'benjamin@groupomania.fr', 'Pierre-jean', 'Benjamin', '$2b$10$fQn6TGBjJBHqj32uh0Pj.ezjiD2MUlb.Sn0ai9gV6Xo1ZUfoZKcta', NULL, NULL, 'membre'),
+(76, 'antoine@groupomania.fr', 'Ascoli', 'Antoine', '$2b$10$n/oAuav1fLO.b8hdPhiVee0GhV0BWFf.RO1TR1LVD9.uU6YbfBcCS', NULL, NULL, 'membre'),
+(77, 'rodin@groupomania.fr', 'Rodin', 'jacques', '$2b$10$LoLgDDMaIrHryStDIB.mJe.HNUekCMxnXFEBAtw65qIcTGu4a5ZTy', NULL, NULL, 'membre'),
+(78, 'ratich@groupomania.fr', 'Ratin', 'Nathalie', '$2b$10$lLHWI1gPVEalJfH0Tn31BOdswwgVNO2C3XQbqJZtVIawLs6h8kvSC', NULL, NULL, 'membre');
 
 --
 -- Index pour les tables déchargées
@@ -110,7 +110,10 @@ INSERT INTO `users` (`id`, `email`, `lastName`, `firstName`, `password`, `descri
 ALTER TABLE `commentaires`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_userId_commentaires` (`userId`),
-  ADD KEY `fk_publiId_commentaires` (`publiId`);
+  ADD KEY `fk_publiId_commentaires` (`publiId`),
+  ADD KEY `fk_userFirstName_commentaires` (`userFirstName`) USING BTREE,
+  ADD KEY `fk_userImage_commentaires` (`userImage`),
+  ADD KEY `fk_userLastName_commentaires` (`userLastName`);
 
 --
 -- Index pour la table `posts`
@@ -134,19 +137,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `commentaires`
 --
 ALTER TABLE `commentaires`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Contraintes pour les tables déchargées
@@ -163,7 +166,7 @@ ALTER TABLE `commentaires`
 -- Contraintes pour la table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `fk_id_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `fk_id_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
