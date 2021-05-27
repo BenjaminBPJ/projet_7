@@ -60,7 +60,10 @@ exports.delete = (id) => {
 };
 
 exports.findAll = () => {
-    const sql = `SELECT * FROM posts`;
+    const sql = `SELECT posts.* , users.id, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
+    FROM posts
+    INNER JOIN users ON users.id=posts.userId
+    ORDER BY posts.datePublication DESC`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
             if (result === undefined || result == "") {
