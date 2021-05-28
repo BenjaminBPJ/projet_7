@@ -1,5 +1,4 @@
 function createOnePost(value) {
-    console.log(value)
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
@@ -32,14 +31,20 @@ function createOneComment(value) {
     document.querySelector(".texte-image-publication").appendChild(article);
     article.classList.add("commentaire", "hidden-com");
 
+    
+    if (value.usersimageUrl === null){
+        value.usersimageUrl = avatar();
+    }
+
     article.innerHTML = `<header class ="header-commentaire">
                             <div class="image-nom-commentaire">
-                                <img src="backend/images/${value.imageUrl}" class="" />
-                                <h3 class="auteur-commentaire">${value.userFirstName} ${value.userLastName}</h3>
+                                <img src="${value.usersimageUrl}" class="photo-profil" />
+                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
                             </div>
-                            <h4 class="date-commentaire">${value.publiAt}</h4>
+                            <h4 class="date-commentaire">${calcTime(value.publiAt)}</h4>
                         </header>
                         <p>${value.content}</p>`
+
 };
 
 function userProfil(value) {
@@ -153,3 +158,8 @@ calcTime = (time) => {
             return undefined;
     };
 };
+
+function avatar(){
+    photoProfil = `logos/icons.png`
+    return photoProfil
+}

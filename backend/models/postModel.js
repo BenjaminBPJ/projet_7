@@ -5,7 +5,6 @@ exports.insert = (publi) => {
     const value = [publi.userId, publi.titre, publi.publication, publi.imageUrl]
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, value, (error, result, fields) => {
-            console.log(result)
             if (publi.imageUrl === null && publi.titre == "") {
                 reject('Vous devez envoyer au moins un fichier ou un message de publication.');
             } else if (result === undefined) {
@@ -60,7 +59,7 @@ exports.delete = (id) => {
 };
 
 exports.findAll = () => {
-    const sql = `SELECT posts.* , users.id, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
+    const sql = `SELECT posts.*, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
     FROM posts
     INNER JOIN users ON users.id=posts.userId
     ORDER BY posts.datePublication DESC`;

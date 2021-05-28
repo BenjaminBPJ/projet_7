@@ -25,7 +25,7 @@ async function sendLog(url, data) {
     return res;
 };
 
-async function send(url, data) {
+async function sendWithOutImage(url, data) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -38,13 +38,14 @@ async function send(url, data) {
     return res;
 };
 
-async function sendPostToApi(url, data) {
-    let response = await axios.post(url, data, {
+async function sendWithImage(url, data) {
+    let response = await fetch(url, {
+        method: "POST",
         headers: {
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
     });
-    let res = await response.json();
+    let res = await response.json()
     return res;
 };
 

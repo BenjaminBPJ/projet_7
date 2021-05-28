@@ -28,7 +28,7 @@ exports.delete = (id) => {
 };
 
 exports.find = (id) => {
-    const sql = `SELECT commentaires.* , users.id, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
+    const sql = `SELECT commentaires.*, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
     FROM commentaires 
     INNER JOIN users ON users.id=commentaires.userId
     WHERE publiId=${id}

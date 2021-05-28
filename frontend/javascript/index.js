@@ -1,7 +1,6 @@
 function login(form) {
     let data = sendLog(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
-        console.log(user)
         if (user.userId) {
             let userId = user.userId;
             window.location = `reseau.html`;
@@ -19,7 +18,7 @@ function login(form) {
     })
         .catch((error) => {
             let small = document.getElementById('small-email');
-            small.innerHTML = error;
+            small.innerHTML = `Erreur de serveur, Impossible de se connecter.`;
         });
 };
 
