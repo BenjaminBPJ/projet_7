@@ -28,7 +28,11 @@ exports.delete = (id) => {
 };
 
 exports.find = (id) => {
-    const sql = `SELECT * FROM commentaires WHERE publiId='${id}'`;
+    const sql = `SELECT commentaires.* , users.id, users.lastName, users.firstName, users.imageUrl AS usersimageUrl
+    FROM commentaires 
+    INNER JOIN users ON users.id=commentaires.userId
+    WHERE publiId=${id}
+    ORDER BY commentaires.publiAt DESC`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
             if (result === undefined || result == "") {
