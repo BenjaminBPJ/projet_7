@@ -1,4 +1,4 @@
-function signup(form) {
+signup = (form) => {
     let data = sendLog(`http://localhost:3000/api/auth/signup`, form);
     data.then(user => {
         let userId = user.userId;
@@ -13,7 +13,7 @@ function signup(form) {
         .catch((error) => ({ error }));
 };
 
-function getUserSignup() {
+getUserSignup = () => {
     let mail = document.getElementById('email').value;
     let lastName = document.getElementById('lastName').value;
     let firstName = document.getElementById('firstName').value;
@@ -27,7 +27,7 @@ function getUserSignup() {
     signup(user);
 };
 
-function emailValide(inputEmail) {
+emailValide = (inputEmail) => {
     let emailRegExp = /^[\w-]+(\.[\w-]+)*@groupomania.fr?$/;
     let testEmail = emailRegExp.test(inputEmail.value);
     let small = document.getElementById(`small-email`);
@@ -40,7 +40,7 @@ function emailValide(inputEmail) {
     };
 };
 
-function lastNameValide(inputName) {
+lastNameValide = (inputName) => {
     let nameRegExp = new RegExp(`^[A-Za-zÀ-ÖØ-öø-ÿ-]+( {0,1}[A-Za-zÀ-ÖØ-öø-ÿ-]?){1,60}$`, 'g');
     let testName = nameRegExp.test(inputName.value);
     let small = document.getElementById(`small-lastName`);
@@ -53,7 +53,7 @@ function lastNameValide(inputName) {
     };
 };
 
-function firstNameValide(inputName) {
+firstNameValide = (inputName) => {
     let nameRegExp = new RegExp(`^[A-Za-zÀ-ÖØ-öø-ÿ-]+( {0,1}[A-Za-zÀ-ÖØ-öø-ÿ-]?){1,60}$`, 'g');
     let testName = nameRegExp.test(inputName.value);
     let small = document.getElementById(`small-firstName`);
@@ -66,7 +66,7 @@ function firstNameValide(inputName) {
     };
 };
 
-function passwordValide(inputPassword) {
+passwordValide = (inputPassword) => {
     let passwordRegExp = new RegExp(`^(?=.{8,})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*$`, `g`);
     let testPassword = passwordRegExp.test(inputPassword.value);
     let small = document.getElementById(`small-password`);
@@ -79,7 +79,7 @@ function passwordValide(inputPassword) {
     };
 };
 
-function confirmPassword() {
+confirmPassword = () => {
     let mdp = document.getElementById('password').value;
     console.log(mdp)
     let confirmMdp = document.getElementById('confirmPassword').value;
@@ -95,7 +95,7 @@ function confirmPassword() {
     };
 };
 
-function validForm() {
+validForm = () => {
     let form = document.getElementById("sign-up-form");
     // validation du formulaire
     form.email.addEventListener('change', function () {
@@ -115,7 +115,7 @@ function validForm() {
     });
 };
 
-function goNetwork() {
+goNetwork = () => {
     let form = document.getElementById("sign-up-form");
     let button = document.getElementById("go-to-network");
 

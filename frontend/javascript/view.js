@@ -1,4 +1,28 @@
-function createOnePost(value) {
+createOnePostWithComment = (value, comment) => {
+    let article = document.createElement(`div`);
+    document.querySelector("h3").appendChild(article);
+    article.classList.add("publication");
+
+    article.innerHTML = `<header class ="header-publication">
+                            <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
+                            <h4 class="date-publication">${calcTime(value.datePublication)}</h4>
+                        </header>
+                        <div class="texte-image-publication">
+                            <h5>${value.titre}</h5>
+                            <p>${value.publication}</p>
+                            <img src="${value.imageUrl}" class="image-publication" />
+                        </div>
+                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
+                        <input type="submit" id="sending-comment" value="commenter" />`
+
+                    if (comment){
+                        createOneComment(comment)
+                    }
+
+                                                     
+};
+
+createOnePostCurrentUserWithOutComment = (value) => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
@@ -13,41 +37,42 @@ function createOnePost(value) {
                             <img src="${value.imageUrl}" class="image-publication" />
                         </div>
                         <input type="" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
-                        <button type="submit" id="sending-comment">commenter</button>` 
+                        <button type="submit" id="sending-comment">commenter</button>
+                        <button type="submit" id="delete">supprimer</button>`
+noComment()
 };
 
-function noPost() {
+noPost = () => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
 
     article.innerHTML = `<div class="texte-image-publication">
                             <p>Aucune publication pour le moment</p>
-                        </div>` 
+                        </div>`
 };
 
-function createOneComment(value) {
+createOneComment = (value) => {
+    console.log(value)
     let article = document.createElement(`div`);
     document.querySelector(".texte-image-publication").appendChild(article);
     article.classList.add("commentaire", "hidden-com");
 
-    
-    if (value.usersimageUrl === null){
-        value.usersimageUrl = avatar();
+    for (i = 0; i < value.length; i++){
+        article.innerHTML = `<header class ="header-commentaire">
+        <div class="image-nom-commentaire">
+            <img src="${value[i].usersimageUrl}" class="photo-profil" />
+            <h3 class="auteur-commentaire">${value[i].firstName} ${value[i].lastName}</h3>
+        </div>
+        <h4 class="date-commentaire">${calcTime(value[i].publiAt)}</h4>
+    </header>
+    <p>${value[i].content}</p>`
     }
 
-    article.innerHTML = `<header class ="header-commentaire">
-                            <div class="image-nom-commentaire">
-                                <img src="${value.usersimageUrl}" class="photo-profil" />
-                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
-                            </div>
-                            <h4 class="date-commentaire">${calcTime(value.publiAt)}</h4>
-                        </header>
-                        <p>${value.content}</p>`
 
 };
 
-function userProfil(value) {
+userProfil = (value) => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
@@ -68,7 +93,7 @@ function userProfil(value) {
     backNetwork.textContent = 'Retour';
 };
 
-function userEditProfil(value) {
+userEditProfil = (value) => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
@@ -100,13 +125,13 @@ function userEditProfil(value) {
     backNetwork.textContent = 'Retour';
 };
 
-function serverDown() {
+serverDown = () => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
 };
 
-function noComment(value) {
+noComment = () => {
     let article = document.createElement(`div`);
     document.querySelector(".texte-image-publication").appendChild(article);
     article.classList.add("commentaire");
@@ -139,7 +164,7 @@ calcTime = (time) => {
                 (dateNow.getFullYear() * 12 + date2.getMonth()) -
                 (dateCreation.getFullYear() * 12 + date1.getMonth())
             ) + " mois";
-            case timeDiff > week:
+        case timeDiff > week:
             value = Math.floor(timeDiff / week);
             return value + " semaine" + (value > 1 ? "s" : "");
         case (timeDiff > day):
@@ -159,7 +184,7 @@ calcTime = (time) => {
     };
 };
 
-function avatar(){
+avatar = () => {
     photoProfil = `logos/icons.png`
     return photoProfil
 }

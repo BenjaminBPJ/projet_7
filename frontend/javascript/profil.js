@@ -1,4 +1,4 @@
-function profilPage() {
+profilPage = () => {
     let urlParam = (new URL(window.location.href)).searchParams.get('/id');
     let data = request(`http://localhost:3000/api/auth/` + urlParam);
     data.then(user => {
@@ -11,9 +11,7 @@ function profilPage() {
     })*/
 };
 
-profilPage();
-
-function goToEditProfil() {
+goToEditProfil = () => {
     let button = document.getElementById('goToEdit');
     let id = JSON.parse(localStorage.getItem('userId'));
     button.addEventListener('click', function (e) {
@@ -22,3 +20,4 @@ function goToEditProfil() {
     });
 };
 
+profilPage();

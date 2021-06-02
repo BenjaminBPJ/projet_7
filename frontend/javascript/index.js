@@ -1,4 +1,4 @@
-function login(form) {
+login = (form) => {
     let data = sendLog(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
         if (user.userId) {
@@ -22,7 +22,7 @@ function login(form) {
         });
 };
 
-function getUserLogin() {
+getUserLogin = () => {
     let mail = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let user = {
@@ -32,7 +32,7 @@ function getUserLogin() {
     login(user);
 };
 
-function goNetwork() {
+goNetwork = () => {
     let button = document.getElementById("go-to-network");
     button.addEventListener('click', function (e) {
         e.preventDefault();

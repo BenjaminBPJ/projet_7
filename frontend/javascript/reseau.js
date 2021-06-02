@@ -1,53 +1,64 @@
 /* --------------------------- Creation et affichage des publications --------------------------- */
-function getPosts() {
+getPosts = () => {
     let dataPost = request(`http://localhost:3000/api/posts/`);
     dataPost.then(posts => {
-        if (posts === null) {
-            noPost();
-        };
-        console.log(posts.result)
         let publication = posts.result;
         publication.forEach(onePublication => {
-            createOnePost(onePublication);
-            console.log(onePublication)
             let idPost = onePublication.id;
             let dataComment = request(`http://localhost:3000/api/comments/` + idPost);
             dataComment.then(comments => {
-                console.log(comments)
-                for (const com of comments.result) {
-                    createOneComment(com);
-                };
+                if (comments){
+                    let commentaire = comments.result;
+                    if(onePublication.id === commentaire.publiId )
+                    createOnePostWithComment(onePublication, comments)
+                    /*let commentaire = comments.result;
+                    let currentUser = localStorage.getItem('userId')
+                    if (onePublication.userId == currentUser) {
+                        createOnePostCurrentUser(onePublication, commentaire)
+                    } else {
+                        createOnePost(onePublication);
+                    }*/
+                }else{
+                    createOnePostCurrentUserWithOutComment(onePublication)
+                }
+
+                
             })
                 .catch((error) => {
+                    console.log(error)
                 })
-        });
-    });
+        })
+    })
+        .catch((error) => {
+            console.log(error)
+        })
 };
+
 
 getPosts();
 
 /* --------------------------- Envois d'une publication --------------------------- */
-function createPostWithImage(post) {
-    console.log(post)
-    let data = sendsendWithImage(`http://localhost:3000/api/posts/`, post);
+createPostWithImage = (post) => {
+    let data = sendWithImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
+        console.log(publication)
     })
-    /*.catch((error) => {
-        console.log(error)
-    });*/
+        .catch((error) => {
+            console.log(error)
+        });
 };
 
-function createPostWithOutImage(post) {
-    console.log(post)
+createPostWithOutImage = (post) => {
     let data = sendWithOutImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
+        console.log(publication)
     })
-    /*.catch((error) => {
-        console.log(error)
-    });*/
+        .catch((error) => {
+            console.log(error)
+        });
 };
 
-function getPostInfo() {
+getPostInfo = () => {
     let titre = document.getElementById('titre-publication').value;
     let content = document.getElementById('textarea-publi').value;
     let imageValue = document.getElementById('image-publi').files[0];
@@ -55,17 +66,18 @@ function getPostInfo() {
     if (imageValue) {
         let image = document.getElementById('image-publi').files[0].name;
 
-        let post = JSON.stringify({
+        let postContent = {
             titre: titre,
             publication: content,
-        })
-         
+        }
+
         let publication = {
-            post: post,
-            imageUrl: image
-        }   
+            post: postContent,
+            image: image
+        }
+
         createPostWithImage(publication);
-    }else {
+    } else {
         let publication = {
             titre: titre,
             publication: content,
@@ -74,7 +86,7 @@ function getPostInfo() {
     }
 };
 
-function sendPost() {
+sendPost = () => {
     let button = document.getElementById("send-post");
     button.addEventListener('click', function (e) {
         e.preventDefault();
@@ -86,17 +98,16 @@ function sendPost() {
 sendPost()
 
 /* --------------------------- Envois d'un commentaire --------------------------- */
-function sendCommentToApi(postId, comment) {
+sendCommentToApi = (postId, comment) => {
     let data = send(`http://localhost:3000/api/comments/` + postId, comment);
     data.then(commentaire => {
     })
     /*.catch((error) => {
         console.log(error)
-        serverDown();
     });*/
 };
 
-function sendComment(postId, comment) {
+sendComment = (postId, comment) => {
     let button = document.getElementById("sending-comment");
     console.log(button)
     button.addEventListener('click', function (e) {
@@ -107,7 +118,7 @@ function sendComment(postId, comment) {
 }
 
 /* --------------------------- Aller sur la page profil --------------------------- */
-function goToProfil() {
+goToProfil = () => {
     let profil = document.getElementById('emote-profil');
     let id = JSON.parse(localStorage.getItem('userId'));
     profil.addEventListener('click', function () {

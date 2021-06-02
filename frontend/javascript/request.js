@@ -42,9 +42,13 @@ async function sendWithImage(url, data) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
+            "Content-Type": "multipart/form-data;boundary=<calculated when request is sent>",
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
+        body: JSON.stringify(data.post)
+
     });
+
     let res = await response.json()
     return res;
 };
