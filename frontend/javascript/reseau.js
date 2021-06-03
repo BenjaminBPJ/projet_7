@@ -120,9 +120,8 @@ sendComment = (postId, comment) => {
 /* --------------------------- Aller sur la page profil --------------------------- */
 goToProfil = () => {
     let profil = document.getElementById('emote-profil');
-    let id = JSON.parse(localStorage.getItem('userId'));
     profil.addEventListener('click', function () {
-        window.location = `profil.html?/id=${id}`
+        window.location = `profil.html`
     });
 };
 

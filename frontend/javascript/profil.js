@@ -1,14 +1,14 @@
 profilPage = () => {
-    let urlParam = (new URL(window.location.href)).searchParams.get('/id');
-    let data = request(`http://localhost:3000/api/auth/` + urlParam);
+    let userId = localStorage.getItem('userId');
+    let data = request(`http://localhost:3000/api/auth/` + userId);
     data.then(user => {
         userProfil(user);
         backNetwork(user);
         goToEditProfil();
     })
-    /*.catch(() => {
-        serverDown();
-    })*/
+    .catch((error) => {
+        console.log(error)
+    })
 };
 
 goToEditProfil = () => {
@@ -16,7 +16,7 @@ goToEditProfil = () => {
     let id = JSON.parse(localStorage.getItem('userId'));
     button.addEventListener('click', function (e) {
         e.preventDefault()
-        window.location = `edit-profil.html?/id=${id}`
+        window.location = `edit-profil.html`
     });
 };
 

@@ -15,11 +15,8 @@ createOnePostWithComment = (value, comment) => {
                         <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
                         <input type="submit" id="sending-comment" value="commenter" />`
 
-                    if (comment){
                         createOneComment(comment)
-                    }
-
-                                                     
+                                                                         
 };
 
 createOnePostCurrentUserWithOutComment = (value) => {
