@@ -5,12 +5,11 @@ async function request(url) {
             'authorization': 'bearer ' + localStorage.getItem('token')
         }
     });
-
+    let res = await response.json();
     if (!response.ok) {
-        return null
+        throw res
     };
-    let data = await response.json();
-    return data;
+    return res;
 };
 
 async function sendLog(url, data) {
@@ -35,6 +34,10 @@ async function sendWithOutImage(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json()
+    console.log('ici', response.ok, response.status, res)
+    if (!response.ok){
+        throw res
+    }   
     return res;
 };
 

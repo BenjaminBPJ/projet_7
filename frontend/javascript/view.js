@@ -1,42 +1,61 @@
-createOnePostWithComment = (value, comment) => {
+getPost = (value, comment) => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
 
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
-                            <h4 class="date-publication">${calcTime(value.datePublication)}</h4>
+                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>
                         </header>
                         <div class="texte-image-publication">
-                            <h5>${value.titre}</h5>
-                            <p>${value.publication}</p>
-                            <img src="${value.imageUrl}" class="image-publication" />
-                        </div>
-                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
-                        <input type="submit" id="sending-comment" value="commenter" />`
+                            <h5>${value.titre}</h5>                           
+                            <p>${value.publication}</p>`;
 
-                        createOneComment(comment)
-                                                                         
+    if (comment) {
+        getComment(comment, article);
+    } else {
+        noComment(article);
+    };
+
+    article.innerHTML += `</div>
+                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
+                        <input type="submit" id="sending-comment" value="commenter" />`;
+
+    let currentUser = localStorage.getItem('userId');
+    if (value.userId == currentUser) {
+        article.innerHTML += `<button type="submit" id="delete-publication">Supprimer</button>
+                              <button type="submit" id="update-publication">Modifier</button>`;
+    };
 };
 
-createOnePostCurrentUserWithOutComment = (value) => {
-    let article = document.createElement(`div`);
-    document.querySelector("h3").appendChild(article);
-    article.classList.add("publication");
+getComment = (value, article) => {
+    for (let commentaire of value) {
+    let comment = document.createElement(`div`);
+    article.appendChild(comment);
+    comment.classList.add("commentaire");
 
-    article.innerHTML = `<header class ="header-publication">
-                            <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
-                            <h4 class="date-publication">${calcTime(value.datePublication)}</h4>
-                        </header>
-                        <div class="texte-image-publication">
-                            <h5>${value.titre}</h5>
-                            <p>${value.publication}</p>
-                            <img src="${value.imageUrl}" class="image-publication" />
-                        </div>
-                        <input type="" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
-                        <button type="submit" id="sending-comment">commenter</button>
-                        <button type="submit" id="delete">supprimer</button>`
-noComment()
+    
+        console.log(commentaire)
+        comment.innerHTML = `<header class ="header-commentaire">
+                                <h3 class="auteur-commentaire">${commentaire.firstName} ${commentaire.lastName}</h3>
+                                <h4 class="date-commentaire">Il y a ${calcTime(commentaire.publiAt)}</h4>
+                            </header>
+                            <p>${commentaire.content}</p>`;
+
+        let currentUser = localStorage.getItem('userId');
+        if (commentaire.userId == currentUser) {
+            comment.innerHTML += `<button type="submit" id="delete-comment">Supprimer</button>
+                              <button type="submit" id="update-comment">Modifier</button>`;
+        };
+    };
+};
+
+noComment = (article) => {
+    let comment = document.createElement(`div`);
+    article.appendChild(comment);
+    comment.classList.add("commentaire");
+
+    comment.innerHTML = `<p>Aucun commentaire</p>`
 };
 
 noPost = () => {
@@ -47,26 +66,6 @@ noPost = () => {
     article.innerHTML = `<div class="texte-image-publication">
                             <p>Aucune publication pour le moment</p>
                         </div>`
-};
-
-createOneComment = (value) => {
-    console.log(value)
-    let article = document.createElement(`div`);
-    document.querySelector(".texte-image-publication").appendChild(article);
-    article.classList.add("commentaire", "hidden-com");
-
-    for (i = 0; i < value.length; i++){
-        article.innerHTML = `<header class ="header-commentaire">
-        <div class="image-nom-commentaire">
-            <img src="${value[i].usersimageUrl}" class="photo-profil" />
-            <h3 class="auteur-commentaire">${value[i].firstName} ${value[i].lastName}</h3>
-        </div>
-        <h4 class="date-commentaire">${calcTime(value[i].publiAt)}</h4>
-    </header>
-    <p>${value[i].content}</p>`
-    }
-
-
 };
 
 userProfil = (value) => {
@@ -109,7 +108,7 @@ userEditProfil = (value) => {
                             <p class="ancienne-description">${value.result[0].description}</p>
                             <label for="new-description-user"></label>
                             <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea>
-                            <input type="submit" class="send-profil"/>
+                            <button type="" id="send-profil">modifier</button>
                             </form>
                             <button id="delete-account" class="delete-account">Suppression du compte</button>
                         `;
@@ -128,13 +127,7 @@ serverDown = () => {
     article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
 };
 
-noComment = () => {
-    let article = document.createElement(`div`);
-    document.querySelector(".texte-image-publication").appendChild(article);
-    article.classList.add("commentaire");
 
-    article.innerHTML = `<p>Aucun commentaire</p>`
-};
 
 
 calcTime = (time) => {
@@ -154,13 +147,10 @@ calcTime = (time) => {
     if (isNaN(timeDiff)) return NaN;
     switch (true) {
         case timeDiff > year:
-            value = date2.getFullYear() - date1.getFullYear()
+            value = dateNow.getFullYear() - dateCreation.getFullYear()
             return value + " an" + value > 1 ? "s" : "";
         case timeDiff > month:
-            return (
-                (dateNow.getFullYear() * 12 + date2.getMonth()) -
-                (dateCreation.getFullYear() * 12 + date1.getMonth())
-            ) + " mois";
+            return value = Math.floor(timeDiff / month) + " mois";
         case timeDiff > week:
             value = Math.floor(timeDiff / week);
             return value + " semaine" + (value > 1 ? "s" : "");

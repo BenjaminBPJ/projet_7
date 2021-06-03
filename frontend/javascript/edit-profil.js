@@ -2,16 +2,15 @@ editProfilPage = () => {
     let userId = localStorage.getItem('userId')
     let data = request(`http://localhost:3000/api/auth/` + userId);
     data.then(user => {
+        console.log(user.result)
         userEditProfil(user);
         backNetwork();
         deleteUser(user);
         sendUpdateUser();
     })
-    .catch(() => {
-    })
+        .catch(() => {
+        })
 };
-
-editProfilPage();
 
 deleteUser = () => {
     let button = document.getElementById('delete-account');
@@ -32,22 +31,30 @@ updateUser = (newInfo) => {
     let userId = localStorage.getItem('userId');
     let data = update(`http://localhost:3000/api/auth/` + userId, newInfo);
     data.then(updateUser => {
-
+        console.log(updateUser)
     })
-    .catch((error) => {
-    console.log(error)
-});
+        .catch((error) => {
+            console.log(error)
+        });
 };
 
 getNewInfo = () => {
     let photoUser = document.getElementById("photo-user").files[0];
-    let newDescription = document.getElementById("area-description").value;
-    let newProfil = {
-        description: newDescription,
-        imageUrl: photoUser
-    }
-    console.log(description)
-    updateUser(newProfil);
+    let newDescription = document.getElementById("new-description").value;
+
+    if (photoUser) {
+        let avatar = document.getElementById('photo-user').files[0].name;
+        let newProfil = {
+            description: newDescription,
+            imageUrl: avatar,
+        };
+        updateUser(newProfil);
+    } else {
+        let newProfil = {
+            description: newDescription,
+        };
+        updateUser(newProfil);
+    };
 };
 
 sendUpdateUser = () => {
@@ -55,6 +62,8 @@ sendUpdateUser = () => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getNewInfo();
-        window.location = `profil.html`
+        //window.location = `profil.html`
     })
 }
+
+editProfilPage();

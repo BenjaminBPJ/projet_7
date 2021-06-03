@@ -101,7 +101,7 @@ const updatePost = (sql, params) => {
 };
 
 exports.update = (publi) => {
-    console.log('update post')
+    console.log(publi)
     let sql = `UPDATE posts SET datePublication=NOW(), titre=?, publication=?, imageUrl=? WHERE id=?`;
     let value = [publi.titre, publi.publication, publi.imageUrl, publi.postId]
     if (publi.imageUrl === null){

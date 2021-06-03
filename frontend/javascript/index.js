@@ -16,7 +16,7 @@ login = (form) => {
             small.innerHTML = user.error;
         };
     })
-        .catch((error) => {
+        .catch(() => {
             let small = document.getElementById('small-email');
             small.innerHTML = `Erreur de serveur, Impossible de se connecter.`;
         });

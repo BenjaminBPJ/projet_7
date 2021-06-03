@@ -78,12 +78,14 @@ exports.modifyPost = (req, res, next) => {
         : { ...req.body, imageUrl: null };
 
     postObject = { ...postObject, userId: userId, postId: id };
-
+console.log(postObject)
+console.log(req.file)
     postModel.checkUserId(id, userId)
         .then(goodId => {
             postModel.findPhoto(id)
                 .then(oldPhoto => {
-                    if (oldPhoto[0].imageUrl !== null) {
+                    if (oldPhoto[0].imageUrl !== null && req.file) {
+                        console.log('tut')
                         const filename = oldPhoto[0].imageUrl.split('/images/')[1];
                         fs.unlink(`images/${filename}`, () => {
                             postModel.update(postObject)

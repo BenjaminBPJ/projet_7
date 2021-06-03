@@ -13,7 +13,6 @@ profilPage = () => {
 
 goToEditProfil = () => {
     let button = document.getElementById('goToEdit');
-    let id = JSON.parse(localStorage.getItem('userId'));
     button.addEventListener('click', function (e) {
         e.preventDefault()
         window.location = `edit-profil.html`

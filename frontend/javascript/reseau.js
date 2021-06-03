@@ -7,33 +7,17 @@ getPosts = () => {
             let idPost = onePublication.id;
             let dataComment = request(`http://localhost:3000/api/comments/` + idPost);
             dataComment.then(comments => {
-                if (comments){
-                    let commentaire = comments.result;
-                    if(onePublication.id === commentaire.publiId )
-                    createOnePostWithComment(onePublication, comments)
-                    /*let commentaire = comments.result;
-                    let currentUser = localStorage.getItem('userId')
-                    if (onePublication.userId == currentUser) {
-                        createOnePostCurrentUser(onePublication, commentaire)
-                    } else {
-                        createOnePost(onePublication);
-                    }*/
-                }else{
-                    createOnePostCurrentUserWithOutComment(onePublication)
-                }
-
-                
+                let commentaire = comments.result
+                    getPost(onePublication, commentaire)
             })
                 .catch((error) => {
-                    console.log(error)
+                    getPost(onePublication)
                 })
         })
     })
         .catch((error) => {
-            console.log(error)
         })
 };
-
 
 getPosts();
 
@@ -51,10 +35,10 @@ createPostWithImage = (post) => {
 createPostWithOutImage = (post) => {
     let data = sendWithOutImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
-        console.log(publication)
+        console.log('ici publication', publication)
     })
         .catch((error) => {
-            console.log(error)
+            console.log('ici error', error)
         });
 };
 
