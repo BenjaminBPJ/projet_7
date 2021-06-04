@@ -1,6 +1,8 @@
 /* --------------------------- Creation et affichage des publications --------------------------- */
 getPosts = () => {
-    let dataPost = request(`http://localhost:3000/api/posts/`);
+    let currentUser = localStorage.getItem('userId');
+    let urlPost = `http://localhost:3000/api/posts/`;
+    let dataPost = request(urlPost);
     dataPost.then(posts => {
         let publication = posts.result;
         publication.forEach(onePublication => {
@@ -10,8 +12,13 @@ getPosts = () => {
                 let commentaire = comments.result
                     getPost(onePublication, commentaire)
             })
-                .catch((error) => {
+                .catch((error) => {                  
                     getPost(onePublication)
+                    if (onePublication.userId == currentUser){
+                        let urlForDelete = urlPost + idPost;
+                        postToDelete(urlForDelete, onePublication)
+                    }
+                    
                 })
         })
     })
@@ -80,6 +87,25 @@ sendPost = () => {
 };
 
 sendPost()
+
+/* --------------------------- Suppression d'une publication --------------------------- */
+deletePost = (url) => {
+    let data = deleteMethod(url);
+    data.then(post => {
+    })
+    .catch((err) => {err});    
+}
+
+postToDelete = (url, value) => {
+    let button = document.getElementById(`delete-publication${value.id}`);
+    console.log(button)
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        deletePost(url);
+        window.location.reload();
+        alert(`Vous avez supprimé votre publication`)
+    });
+}
 
 /* --------------------------- Envois d'un commentaire --------------------------- */
 sendCommentToApi = (postId, comment) => {

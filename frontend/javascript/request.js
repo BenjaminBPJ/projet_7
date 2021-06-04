@@ -35,9 +35,9 @@ async function sendWithOutImage(url, data) {
     });
     let res = await response.json()
     console.log('ici', response.ok, response.status, res)
-    if (!response.ok){
+    if (!response.ok) {
         throw res
-    }   
+    }
     return res;
 };
 
@@ -51,14 +51,21 @@ async function sendWithImage(url, data) {
         body: JSON.stringify(data.post)
 
     });
-
     let res = await response.json()
     return res;
 };
 
 async function deleteMethod(url) {
-    let response = await fetch(url, { method: "DELETE" });
+    let response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            'authorization': 'bearer ' + localStorage.getItem('token')
+        }
+    });
     let res = await response.json();
+    if (!response.ok) {
+        throw res
+    }
     return res;
 };
 

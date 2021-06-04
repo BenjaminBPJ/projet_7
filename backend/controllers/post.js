@@ -27,8 +27,18 @@ exports.deletePost = (req, res, next) => {
         .then(goodId => {
             postModel.findPhoto(id)
                 .then(oldPhoto => {
-                    const filename = oldPhoto[0].imageUrl.split('/images/')[1];
-                    fs.unlink(`images/${filename}`, () => {
+                    if (oldPhoto[0].imageUrl !== null) {
+                        const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                        fs.unlink(`images/${filename}`, () => {
+                            postModel.delete(id)
+                                .then(deletePost => {
+                                    res.status(200).json({ message: deletePost });
+                                })
+                                .catch(errorMessage => {
+                                    res.status(404).json({ error: errorMessage });
+                                });
+                        });
+                    } else {
                         postModel.delete(id)
                             .then(deletePost => {
                                 res.status(200).json({ message: deletePost });
@@ -36,7 +46,7 @@ exports.deletePost = (req, res, next) => {
                             .catch(errorMessage => {
                                 res.status(404).json({ error: errorMessage });
                             });
-                    });
+                    };
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });
@@ -78,13 +88,12 @@ exports.modifyPost = (req, res, next) => {
         : { ...req.body, imageUrl: null };
 
     postObject = { ...postObject, userId: userId, postId: id };
-console.log(postObject)
-console.log(req.file)
+
     postModel.checkUserId(id, userId)
         .then(goodId => {
             postModel.findPhoto(id)
                 .then(oldPhoto => {
-                    if (oldPhoto[0].imageUrl !== null && req.file) {
+                    if (oldPhoto[0].imageUrl !== null) {
                         console.log('tut')
                         const filename = oldPhoto[0].imageUrl.split('/images/')[1];
                         fs.unlink(`images/${filename}`, () => {

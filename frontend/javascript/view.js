@@ -11,6 +11,10 @@ getPost = (value, comment) => {
                             <h5>${value.titre}</h5>                           
                             <p>${value.publication}</p>`;
 
+    if (value.imageUrl) {
+        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication" alt="image illustrant l'article" />`;
+    };
+
     if (comment) {
         getComment(comment, article);
     } else {
@@ -23,19 +27,19 @@ getPost = (value, comment) => {
 
     let currentUser = localStorage.getItem('userId');
     if (value.userId == currentUser) {
-        article.innerHTML += `<button type="submit" id="delete-publication">Supprimer</button>
-                              <button type="submit" id="update-publication">Modifier</button>`;
+        article.innerHTML += `<button type="submit" id="delete-publication${value.id}">Supprimer</button>
+                              <small id="small-delete-publication"></small>
+                              <button type="submit" id="update-publication">Modifier</button>
+                              <small id="small-update-publication"></small>`;
     };
 };
 
 getComment = (value, article) => {
     for (let commentaire of value) {
-    let comment = document.createElement(`div`);
-    article.appendChild(comment);
-    comment.classList.add("commentaire");
+        let comment = document.createElement(`div`);
+        article.appendChild(comment);
+        comment.classList.add("commentaire");
 
-    
-        console.log(commentaire)
         comment.innerHTML = `<header class ="header-commentaire">
                                 <h3 class="auteur-commentaire">${commentaire.firstName} ${commentaire.lastName}</h3>
                                 <h4 class="date-commentaire">Il y a ${calcTime(commentaire.publiAt)}</h4>
