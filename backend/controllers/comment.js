@@ -3,11 +3,11 @@ const datePubli = require('../middleware/date');
 const commentModel = require('../models/commentModel');
 
 exports.createComment = (req, res, next) => {
+    const userId = req.jwtToken.userId;
     const publiId = req.params.idPost;
     const content = req.body.comments;
-    const userId = req.jwtToken.userId
 
-    commentModel.insert(publiId, content, userId)
+    commentModel.insert(userId, publiId, content)
         .then(result => {
             res.status(200).json({ message: result });
         })

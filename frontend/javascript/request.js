@@ -78,5 +78,8 @@ async function update(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json();
+    if (!response.ok) {
+        throw res
+    }
     return res;
 };

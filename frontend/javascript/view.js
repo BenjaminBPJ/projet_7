@@ -22,8 +22,8 @@ getPost = (value, comment) => {
     };
 
     article.innerHTML += `</div>
-                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment" />
-                        <input type="submit" id="sending-comment" value="commenter" />`;
+                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
+                        <input type="submit" id="sending-comment${value.id}" value="commenter" />`;
 
     let currentUser = localStorage.getItem('userId');
     if (value.userId == currentUser) {
@@ -48,8 +48,13 @@ getComment = (value, article) => {
 
         let currentUser = localStorage.getItem('userId');
         if (commentaire.userId == currentUser) {
-            comment.innerHTML += `<button type="submit" id="delete-comment">Supprimer</button>
-                              <button type="submit" id="update-comment">Modifier</button>`;
+            console.log(commentaire.id)
+            comment.innerHTML += `<button type="submit" id="delete-comment${commentaire.id}">Supprimer</button>
+                                  <small id="small-delete-comment"></small><br>
+                                  <button type="submit" id="update-comment${commentaire.id}">Modifier</button><br>
+                                  <input class="hidden-update-comment" id="comment-to-update" />
+                                  <input type="submit" id="update-comment-done" value="Modifier commentaire"/>
+                                  <small id="small-update-comment"></small>`;
         };
     };
 };
