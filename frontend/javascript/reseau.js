@@ -2,27 +2,31 @@
 getPosts = () => {
     let currentUser = localStorage.getItem('userId');
     let urlPost = `http://localhost:3000/api/posts/`;
+    let urlComment = `http://localhost:3000/api/comments/`;
     let dataPost = request(urlPost);
     dataPost.then(posts => {
         let publication = posts.result;
         publication.forEach(onePublication => {
             let idPost = onePublication.id;
-            let urlComment = `http://localhost:3000/api/comments/`;
+            let urlForOnePost = urlPost + idPost;
+            let urlCommentFromOnePost = urlComment + idPost;
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
                 let commentaire = comments.result
-                getPost(onePublication, commentaire)
-                if (onePublication.userId == currentUser) {
-                    let urlForOnePost = urlPost + idPost;
-                    postToDelete(urlForOnePost, onePublication)
-                }
-                let urlCommentFromOnePost = urlComment + idPost;
-                createComment(urlCommentFromOnePost, onePublication)
+                commentaire.forEach(oneComment => {
+                    getPost(onePublication, commentaire)
+                    createComment(urlCommentFromOnePost, onePublication)
+                    if (onePublication.userId == currentUser) {                   
+                        postToDelete(urlForOnePost, onePublication)
+                        commentToUpdate()
+                    }; 
+                })                                            
             })
                 .catch((error) => {
                     getPost(onePublication)
-                })
-        })
+                    createComment(urlCommentFromOnePost, onePublication)
+                });
+        });
     })
         .catch((error) => {
         })
@@ -112,13 +116,14 @@ postToDelete = (url, value) => {
 sendCommentToApi = (url, comment) => {
     let data = sendWithOutImage(url, comment);
     data.then(commentaire => {
+        window.location.reload();
     })
         .catch((error) => {
             console.log(error)
         });
 };
 
-newComment = (url, post) => {
+newCommentCreate = (url, post) => {
     let comment = document.getElementById(`send-comment${post.id}`).value;
     console.log(comment)
     let newCommentaire = {
@@ -130,9 +135,7 @@ newComment = (url, post) => {
 createComment = (url, post) => {
     let button = document.getElementById(`sending-comment${post.id}`);
     button.addEventListener('click', function (e) {
-        //e.preventDefault();
-        newComment(url, post);
-        //window.location.reload();
+        newCommentCreate(url, post);
     });
 };
 
@@ -140,20 +143,26 @@ createComment = (url, post) => {
 updateComment = (url, value) => {
     let data = update(url, value);
     data.then(comment => {
+        //window.location.reload();
     })
         .catch((error) => {
-            let small = document.getElementById('small-update-comment');
-            small.innerHTML = error;
         });
 };
 
-commentToDelete = (url, value) => {
-    let button = document.getElementById(`delete-comment${value.id}`);
+newCommentUpdate = (url, post) => {
+    let comment = document.getElementById(`comment-to-update${post.id}`).value;
+    console.log(comment)
+    let newCommentaire = {
+        comments: comment
+    };
+    updateComment(url, newCommentaire);
+};
+
+commentToUpdate = (url, post) => {
+    let button = document.getElementById(`update-comment-done${post.id}`);
     button.addEventListener('click', function (e) {
-        e.preventDefault();
-        deletePost(url);
-        window.location.reload();
-        alert(`Vous avez supprimé votre publication`)
+        //e.preventDefault();
+        newCommentUpdate(url, post);
     });
 };
 

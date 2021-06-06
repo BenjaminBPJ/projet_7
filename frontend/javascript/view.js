@@ -35,25 +35,24 @@ getPost = (value, comment) => {
 };
 
 getComment = (value, article) => {
-    for (let commentaire of value) {
+    for (i = 0; i < value.length; i++) {
         let comment = document.createElement(`div`);
         article.appendChild(comment);
         comment.classList.add("commentaire");
 
         comment.innerHTML = `<header class ="header-commentaire">
-                                <h3 class="auteur-commentaire">${commentaire.firstName} ${commentaire.lastName}</h3>
-                                <h4 class="date-commentaire">Il y a ${calcTime(commentaire.publiAt)}</h4>
+                                <h3 class="auteur-commentaire">${value[i].firstName} ${value[i].lastName}</h3>
+                                <h4 class="date-commentaire">Il y a ${calcTime(value[i].publiAt)}</h4>
                             </header>
-                            <p>${commentaire.content}</p>`;
+                            <p>${value[i].content}</p>`;
 
         let currentUser = localStorage.getItem('userId');
-        if (commentaire.userId == currentUser) {
-            console.log(commentaire.id)
-            comment.innerHTML += `<button type="submit" id="delete-comment${commentaire.id}">Supprimer</button>
+        if (value[i].userId == currentUser) {
+            comment.innerHTML += `<button type="submit" id="delete-comment${value[i].id}">Supprimer</button>
                                   <small id="small-delete-comment"></small><br>
-                                  <button type="submit" id="update-comment${commentaire.id}">Modifier</button><br>
-                                  <input class="hidden-update-comment" id="comment-to-update" />
-                                  <input type="submit" id="update-comment-done" value="Modifier commentaire"/>
+                                  <button type="submit" id="update-comment">Modifier</button><br>
+                                  <input class="hidden-update-comment" id="comment-to-update${value[i].id}" />
+                                  <input type="submit" class="hidden-update-comment" id="update-comment-done${value[i].id}" value="Modifier commentaire"/>
                                   <small id="small-update-comment"></small>`;
         };
     };
