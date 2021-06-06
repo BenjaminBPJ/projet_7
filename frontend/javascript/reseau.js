@@ -13,18 +13,24 @@ getPosts = () => {
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
                 let commentaire = comments.result
+                getPost(onePublication, commentaire)
+                createComment(urlCommentFromOnePost, onePublication)
+                if (onePublication.userId == currentUser) {
+                    postToDelete(urlForOnePost, onePublication);
+                }
                 commentaire.forEach(oneComment => {
-                    getPost(onePublication, commentaire)
-                    createComment(urlCommentFromOnePost, onePublication)
-                    if (onePublication.userId == currentUser) {                   
-                        postToDelete(urlForOnePost, onePublication)
-                        commentToUpdate()
-                    }; 
-                })                                            
+                    let idComment = oneComment.id;
+                    let urlOneComment = urlComment + idComment;
+                    commentToUpdate(urlOneComment, oneComment);
+                    commentToDelete(urlOneComment, oneComment);
+                });
             })
-                .catch((error) => {
+                .catch(() => {
                     getPost(onePublication)
                     createComment(urlCommentFromOnePost, onePublication)
+                    if (onePublication.userId == currentUser) {
+                        postToDelete(urlForOnePost, onePublication)
+                    }
                 });
         });
     })
@@ -110,7 +116,7 @@ postToDelete = (url, value) => {
         window.location.reload();
         alert(`Vous avez supprimé votre publication`)
     });
-}
+};
 
 /* --------------------------- Envois d'un commentaire --------------------------- */
 sendCommentToApi = (url, comment) => {
@@ -143,14 +149,14 @@ createComment = (url, post) => {
 updateComment = (url, value) => {
     let data = update(url, value);
     data.then(comment => {
-        //window.location.reload();
+        window.location.reload();
     })
         .catch((error) => {
         });
 };
 
-newCommentUpdate = (url, post) => {
-    let comment = document.getElementById(`comment-to-update${post.id}`).value;
+newCommentUpdate = (url, commentaire) => {
+    let comment = document.getElementById(`comment-to-update${commentaire.id}`).value;
     console.log(comment)
     let newCommentaire = {
         comments: comment
@@ -158,18 +164,19 @@ newCommentUpdate = (url, post) => {
     updateComment(url, newCommentaire);
 };
 
-commentToUpdate = (url, post) => {
-    let button = document.getElementById(`update-comment-done${post.id}`);
+commentToUpdate = (url, commentaire) => {
+    let button = document.getElementById(`update-comment-done${commentaire.id}`);
     button.addEventListener('click', function (e) {
         //e.preventDefault();
-        newCommentUpdate(url, post);
+        newCommentUpdate(url, commentaire);
     });
 };
 
 /* --------------------------- Suppression d'un commentaire --------------------------- */
 deleteComment = (url) => {
     let data = deleteMethod(url);
-    data.then(post => {
+    data.then(comment => {
+        window.location.reload();
     })
         .catch((err) => { err });
 };
@@ -178,9 +185,7 @@ commentToDelete = (url, value) => {
     let button = document.getElementById(`delete-comment${value.id}`);
     button.addEventListener('click', function (e) {
         e.preventDefault();
-        deletePost(url);
-        window.location.reload();
-        alert(`Vous avez supprimé votre publication`)
+        deleteComment(url);
     });
 };
 

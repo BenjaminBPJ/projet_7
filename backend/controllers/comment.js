@@ -40,6 +40,8 @@ exports.modifyComment = (req, res, next) => {
     const content = req.body.comments;
     const userId = req.jwtToken.userId;
 
+    console.log(content)
+
     commentModel.checkUserId(commentId, userId)
         .then(goodId => {
             commentModel.modify(content, commentId)

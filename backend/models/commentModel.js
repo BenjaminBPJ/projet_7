@@ -45,6 +45,7 @@ exports.find = (id) => {
 };
 
 exports.modify = (content, id) => {
+    console.log(content)
     const sql = `UPDATE commentaires SET content='${content}' WHERE id='${id}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
