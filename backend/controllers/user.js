@@ -40,7 +40,8 @@ exports.signup = (req, res, next) => {
                                     userId: result[0].id
                                 }, process.env.JWT_TOKEN, {
                                     expiresIn: '24h'
-                                })
+                                }),
+                                role: result[0].role
                             });
                         })
                         .catch(errorMessage => {
@@ -75,7 +76,8 @@ exports.login = (req, res, next) => {
                             userId: getUser[0].id
                         }, process.env.JWT_TOKEN, {
                             expiresIn: '24h'
-                        })
+                        }),
+                        role: getUser[0].role
                     });
                 })
                 .catch(error => res.status(404).json({
@@ -95,7 +97,7 @@ exports.deleteUser = (req, res, next) => {
         .then(goodId => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
-                    fs.unlink(`avatars/${oldPhoto[0].imageUrl}`, () => {
+                    fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
                         userModel.delete(id)
                             .then(deleteUser => {
                                 res.status(200).json({ message: deleteUser });

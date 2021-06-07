@@ -1,6 +1,8 @@
 /* --------------------------- Creation et affichage des publications --------------------------- */
 getPosts = () => {
     let currentUser = localStorage.getItem('userId');
+    let roleUser = localStorage.getItem('role');
+    console.log(roleUser)
     let urlPost = `http://localhost:3000/api/posts/`;
     let urlComment = `http://localhost:3000/api/comments/`;
     let dataPost = request(urlPost);
@@ -15,7 +17,7 @@ getPosts = () => {
                 let commentaire = comments.result
                 getPost(onePublication, commentaire)
                 createComment(urlCommentFromOnePost, onePublication)
-                if (onePublication.userId == currentUser) {
+                if (onePublication.userId == currentUser || roleUser === 'administrateur') {
                     postToDelete(urlForOnePost, onePublication);
                 }
                 commentaire.forEach(oneComment => {
@@ -28,7 +30,7 @@ getPosts = () => {
                 .catch(() => {
                     getPost(onePublication)
                     createComment(urlCommentFromOnePost, onePublication)
-                    if (onePublication.userId == currentUser) {
+                    if (onePublication.userId == currentUser || roleUser === 'administrateur') {
                         postToDelete(urlForOnePost, onePublication)
                     }
                 });
@@ -110,10 +112,11 @@ deletePost = (url) => {
 
 postToDelete = (url, value) => {
     let button = document.getElementById(`delete-publication${value.id}`);
+    console.log(button)
     button.addEventListener('click', function (e) {
         e.preventDefault();
         deletePost(url);
-        window.location.reload();
+        //window.location.reload();
         alert(`Vous avez supprimé votre publication`)
     });
 };

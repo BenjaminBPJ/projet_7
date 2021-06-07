@@ -2,15 +2,19 @@ login = (form) => {
     let data = sendLog(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
         if (user.userId) {
+            console.log(user)
             let userId = user.userId;
             window.location = `reseau.html`;
 
-            // insertion du pseudo et du token dans le localstorage à la connexion
+            // insertion du userId, du token et du role dans le localstorage à la connexion
             userId = localStorage.setItem('userId', userId);
             userId = JSON.stringify(userId);
             let token = user.token;
             token = localStorage.setItem('token', token);
             token = JSON.stringify(token);
+            let role = user.role;
+            role = localStorage.setItem('role', role);
+            role = JSON.stringify(role);
         } else {
             let small = document.getElementById('small-email');
             small.innerHTML = user.error;

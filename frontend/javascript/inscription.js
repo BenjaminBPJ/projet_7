@@ -9,6 +9,9 @@ signup = (form) => {
         let token = user.token;
         token = localStorage.setItem('token', token);
         token = JSON.stringify(token);
+        let role = user.role;
+        role = localStorage.setItem('role', role);
+        role = JSON.stringify(role);
     })
         .catch((error) => ({ error }));
 };

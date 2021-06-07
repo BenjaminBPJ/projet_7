@@ -26,7 +26,8 @@ getPost = (value, comment) => {
                         <input type="submit" id="sending-comment${value.id}" value="commenter" />`;
 
     let currentUser = localStorage.getItem('userId');
-    if (value.userId == currentUser) {
+    let roleUser = localStorage.getItem('role');
+    if (value.userId == currentUser || roleUser === 'administrateur') {
         article.innerHTML += `<button type="submit" id="delete-publication${value.id}">Supprimer</button>
                               <small id="small-delete-publication"></small>
                               <button type="submit" id="update-publication">Modifier</button>
@@ -47,7 +48,8 @@ getComment = (value, article) => {
                             <p>${value[i].content}</p>`;
 
         let currentUser = localStorage.getItem('userId');
-        if (value[i].userId == currentUser) {
+        let roleUser = localStorage.getItem('role');
+        if (value[i].userId == currentUser || roleUser === 'administrateur') {
             comment.innerHTML += `<button type="submit" id="delete-comment${value[i].id}">Supprimer</button>
                                   <small id="small-delete-comment"></small><br>
                                   <button type="submit" id="update-comment">Modifier</button><br>
