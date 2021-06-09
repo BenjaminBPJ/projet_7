@@ -19,13 +19,13 @@ getPosts = () => {
                 createComment(urlCommentFromOnePost, onePublication)
                 if (onePublication.userId == currentUser || roleUser === 'administrateur') {
                     postToDelete(urlForOnePost, onePublication);
+                    commentaire.forEach(oneComment => {
+                        let idComment = oneComment.id;
+                        let urlOneComment = urlComment + idComment;
+                        commentToUpdate(urlOneComment, oneComment);
+                        commentToDelete(urlOneComment, oneComment);
+                    });
                 }
-                commentaire.forEach(oneComment => {
-                    let idComment = oneComment.id;
-                    let urlOneComment = urlComment + idComment;
-                    commentToUpdate(urlOneComment, oneComment);
-                    commentToDelete(urlOneComment, oneComment);
-                });
             })
                 .catch(() => {
                     getPost(onePublication)
@@ -47,6 +47,7 @@ createPostWithImage = (post) => {
     let data = sendWithImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
         console.log(publication)
+        //window.location.reload()
     })
         .catch((error) => {
             console.log(error)
@@ -57,6 +58,7 @@ createPostWithOutImage = (post) => {
     let data = sendWithOutImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
         console.log('ici publication', publication)
+        //window.location.reload()
     })
         .catch((error) => {
             console.log('ici error', error)
@@ -96,7 +98,6 @@ sendPost = () => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getPostInfo();
-        //window.location.reload()
     });
 };
 
@@ -106,6 +107,8 @@ sendPost()
 deletePost = (url) => {
     let data = deleteMethod(url);
     data.then(post => {
+        window.location.reload();
+        alert(`Vous avez supprimé votre publication`);
     })
         .catch((err) => { err });
 };
@@ -115,9 +118,7 @@ postToDelete = (url, value) => {
     console.log(button)
     button.addEventListener('click', function (e) {
         e.preventDefault();
-        deletePost(url);
-        //window.location.reload();
-        alert(`Vous avez supprimé votre publication`)
+        deletePost(url);     
     });
 };
 

@@ -16,19 +16,29 @@ getPost = (value, comment) => {
     };
 
     if (comment) {
+        article.innerHTML += `<div id="comment-appear${value.id}">
+                                <i class="fas fa-comments"></i>
+                                <p>${comment.length} commentaire` + (comment.length > 1 ? "s" : "");
+        article.innerHTML += `</p></div>`
         getComment(comment, article);
+        commentAppear(value, comment);
     } else {
-        noComment(article);
+        article.innerHTML += `<div id="comment-appear${value.id}">
+                                <i class="fas fa-comments"></i>
+                                <p>Aucun commentaire</p>
+                              </div>`
     };
 
     article.innerHTML += `</div>
+                        <div class="input-new-comment hidden-comment">
                         <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
-                        <input type="submit" id="sending-comment${value.id}" value="commenter" />`;
+                        <input type="submit" id="sending-comment${value.id}" value="commenter" />
+                        </div>`;
 
     let currentUser = localStorage.getItem('userId');
     let roleUser = localStorage.getItem('role');
     if (value.userId == currentUser || roleUser === 'administrateur') {
-        article.innerHTML += `<button type="submit" id="delete-publication${value.id}">Supprimer</button>
+        article.innerHTML += `<i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
                               <small id="small-delete-publication"></small>
                               <button type="submit" id="update-publication">Modifier</button>
                               <small id="small-update-publication"></small>`;
@@ -39,7 +49,8 @@ getComment = (value, article) => {
     for (i = 0; i < value.length; i++) {
         let comment = document.createElement(`div`);
         article.appendChild(comment);
-        comment.classList.add("commentaire");
+        comment.setAttribute(`id`, `commentaire${value[i].id}`);
+        comment.classList.add("hidden-comment", "commentaire");
 
         comment.innerHTML = `<header class ="header-commentaire">
                                 <h3 class="auteur-commentaire">${value[i].firstName} ${value[i].lastName}</h3>
@@ -53,19 +64,24 @@ getComment = (value, article) => {
             comment.innerHTML += `<button type="submit" id="delete-comment${value[i].id}">Supprimer</button>
                                   <small id="small-delete-comment"></small><br>
                                   <button type="submit" id="update-comment">Modifier</button><br>
-                                  <input class="hidden-update-comment" id="comment-to-update${value[i].id}" />
-                                  <input type="submit" class="hidden-update-comment" id="update-comment-done${value[i].id}" value="Modifier commentaire"/>
+                                  <input  id="comment-to-update${value[i].id}" />
+                                  <input type="submit" id="update-comment-done${value[i].id}" value="Modifier commentaire"/>
                                   <small id="small-update-comment"></small>`;
         };
     };
 };
 
-noComment = (article) => {
-    let comment = document.createElement(`div`);
-    article.appendChild(comment);
-    comment.classList.add("commentaire");
-
-    comment.innerHTML = `<p>Aucun commentaire</p>`
+commentAppear = (post, comment) => {
+    for (i = 0; i < comment.length; i++) {
+        let button = document.getElementById(`comment-appear${post.id}`);
+        let commentaire = document.getElementById(`commentaire${comment[i].id}`);
+        button.addEventListener('click', function () {
+            button.classList.add('hidden-comment');
+            commentaire.classList.remove('hidden-comment');
+        });
+        console.log(commentaire)
+        console.log(button)
+    }
 };
 
 noPost = () => {
@@ -181,7 +197,3 @@ calcTime = (time) => {
     };
 };
 
-avatar = () => {
-    photoProfil = `logos/icons.png`
-    return photoProfil
-}

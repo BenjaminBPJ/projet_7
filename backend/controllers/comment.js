@@ -1,5 +1,4 @@
 const connectionDb = require('../middleware/connect');
-const datePubli = require('../middleware/date');
 const commentModel = require('../models/commentModel');
 
 exports.createComment = (req, res, next) => {

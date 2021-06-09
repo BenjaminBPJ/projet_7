@@ -128,6 +128,10 @@ main{
     display: flex;
 }
 
+/*.hidden-comment{
+    display: none;
+}*/
+
 @keyframes zoom{
     0%{
         transform: scale(1);
@@ -149,7 +153,7 @@ main{
     margin: auto;
     margin-top: 5em;
     margin-bottom: 5em;
-    width: 45%;
+    width: 75%;
     border: solid 0.3em #fd2d01 ;
     border-radius: 2em;
     padding: 1em;

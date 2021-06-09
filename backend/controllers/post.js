@@ -1,4 +1,3 @@
-const datePubli = require('../middleware/date');
 const postModel = require('../models/postModel');
 const fs = require('fs');
 
@@ -8,7 +7,7 @@ exports.createPost = (req, res, next) => {
         : { ...req.body, imageUrl: null };
 
     postObject = { ...postObject, userId: req.jwtToken.userId };
-    console.log(postObject)
+
     postModel.insert(postObject)
         .then(result => {
             res.status(200).json({ result });

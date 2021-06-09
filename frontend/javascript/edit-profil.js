@@ -20,10 +20,10 @@ deleteUser = () => {
         alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
 
         let data = deleteMethod(`http://localhost:3000/api/auth` + userId);
-        window.location = `inscription.html`;
         data.then(userDelete => {
+            window.location = `inscription.html`;
         })
-            .catch((err) => ({ error: 'Impossible de supprimer votre compte.' + err }));
+            .catch((err) => ({ err }));
     });
 };
 
@@ -32,6 +32,7 @@ updateUser = (newInfo) => {
     let data = update(`http://localhost:3000/api/auth/` + userId, newInfo);
     data.then(updateUser => {
         console.log(updateUser)
+        window.location = `profil.html`;
     })
         .catch((error) => {
             console.log(error)
@@ -62,7 +63,6 @@ sendUpdateUser = () => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getNewInfo();
-        //window.location = `profil.html`
     })
 }
 

@@ -97,15 +97,27 @@ exports.deleteUser = (req, res, next) => {
         .then(goodId => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
-                    fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
-                        userModel.delete(id)
-                            .then(deleteUser => {
-                                res.status(200).json({ message: deleteUser });
-                            })
-                            .catch(errorMessage => {
-                                res.status(404).json({ error: errorMessage });
-                            });
-                    });
+                    if (oldPhoto[0].imageUrl !== null) {
+                        fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
+                            userModel.delete(id)
+                                .then(deleteUser => {
+                                    res.status(200).json({ message: deleteUser });
+                                })
+                                .catch(errorMessage => {
+                                    res.status(404).json({ error: errorMessage });
+                                });
+                        });
+                    } else {
+                        fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
+                            userModel.delete(id)
+                                .then(deleteUser => {
+                                    res.status(200).json({ message: deleteUser });
+                                })
+                                .catch(errorMessage => {
+                                    res.status(404).json({ error: errorMessage });
+                                });
+                        });
+                    };
                 })
                 .catch(errorMessage => {
                     res.status(404).json({ error: errorMessage });
