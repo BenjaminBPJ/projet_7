@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 26 mai 2021 à 22:33
+-- Généré le : mer. 09 juin 2021 à 22:31
 -- Version du serveur :  8.0.22
 -- Version de PHP : 8.0.3
 
@@ -32,21 +32,17 @@ CREATE TABLE `commentaires` (
   `userId` smallint UNSIGNED NOT NULL,
   `publiId` smallint UNSIGNED NOT NULL,
   `content` varchar(250) NOT NULL,
-  `publiAt` datetime NOT NULL,
-  `userFirstName` varchar(50) NOT NULL,
-  `userLastName` varchar(50) NOT NULL,
-  `userImage` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+  `publiAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `commentaires`
 --
 
-INSERT INTO `commentaires` (`id`, `userId`, `publiId`, `content`, `publiAt`, `userFirstName`, `userLastName`, `userImage`) VALUES
-(14, 76, 37, 'encore une fois jadore', '2021-05-16 11:28:59', 'Antoine', 'Ascoli', NULL),
-(15, 78, 37, 'geniale', '2021-05-17 15:35:08', 'Nathalie', 'Ratin', NULL),
-(16, 78, 39, 'genialissime', '2021-05-17 17:47:30', 'Nathalie', 'Ratin', NULL),
-(33, 78, 36, 'de meme, bienvenue', '2021-05-25 09:56:16', 'Nathalie', 'Ratin', NULL);
+INSERT INTO `commentaires` (`id`, `userId`, `publiId`, `content`, `publiAt`) VALUES
+(14, 76, 37, 'encore une fois jadore', '2021-05-16 11:28:59'),
+(15, 78, 37, 'oui vraiment vraiment genial', '2021-05-17 15:35:08'),
+(39, 78, 47, 'dernier com', '2021-06-05 17:31:35');
 
 -- --------------------------------------------------------
 
@@ -57,7 +53,7 @@ INSERT INTO `commentaires` (`id`, `userId`, `publiId`, `content`, `publiAt`, `us
 CREATE TABLE `posts` (
   `id` smallint UNSIGNED NOT NULL,
   `userId` smallint UNSIGNED NOT NULL,
-  `datePublication` date NOT NULL,
+  `datePublication` datetime NOT NULL,
   `titre` varchar(55) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `publication` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `imageUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
@@ -68,10 +64,11 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `userId`, `datePublication`, `titre`, `publication`, `imageUrl`) VALUES
-(36, 76, '2021-05-14', 'Bienvenue', 'salut à tous je suis heureux de vous retrouver ici', 'http://localhost:3000/images/bcuize1620985379158.jpg'),
-(37, 76, '2021-05-14', 'nouveau paysage', 'je vous envoie une photo du paysage vu des nouveaux locaux', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1620985465565.jpg'),
-(39, 78, '2021-05-14', 'aide', 'salut, une collegue a besoin d\'aide pour le projet 4785D, cordialement', 'http://localhost:3000/images/kellen-riggin-SLZiNNkf9Kc-unsplash1620985880399.jpg'),
-(44, 78, '2021-05-25', 'nouvelle publication', 'test', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1621941226151.jpg');
+(36, 76, '2021-06-03 16:08:30', 'Bienvenue', 'salut à tous je suis heureux de vous retrouver ici', 'http://localhost:3000/images/kellen-riggin-SLZiNNkf9Kc-unsplash1622729310474.jpg'),
+(37, 76, '2021-05-14 00:00:00', 'nouveau paysage', 'je vous envoie une photo du paysage vu des nouveaux locaux', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1620985465565.jpg'),
+(47, 76, '2021-05-28 00:00:00', 'salutation', 'hello le reseau', 'http://localhost:3000/images/kellen-riggin-SLZiNNkf9Kc-unsplash1622213495041.jpg'),
+(48, 77, '2021-05-29 00:00:00', 'sdc', 'sdcvsd', NULL),
+(54, 76, '2021-06-03 14:14:52', 'new', 'taratata', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,9 +93,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `lastName`, `firstName`, `password`, `description`, `imageUrl`, `role`) VALUES
 (75, 'benjamin@groupomania.fr', 'Pierre-jean', 'Benjamin', '$2b$10$fQn6TGBjJBHqj32uh0Pj.ezjiD2MUlb.Sn0ai9gV6Xo1ZUfoZKcta', NULL, NULL, 'membre'),
-(76, 'antoine@groupomania.fr', 'Ascoli', 'Antoine', '$2b$10$n/oAuav1fLO.b8hdPhiVee0GhV0BWFf.RO1TR1LVD9.uU6YbfBcCS', NULL, NULL, 'membre'),
+(76, 'antoine@groupomania.fr', 'Ascoli', 'Antoine', '$2b$10$n/oAuav1fLO.b8hdPhiVee0GhV0BWFf.RO1TR1LVD9.uU6YbfBcCS', 'nouveau comptable', 'http://localhost:3000/images/ryan-hoffman-V7GBs5HehG8-unsplash1622715242219.jpg', 'membre'),
 (77, 'rodin@groupomania.fr', 'Rodin', 'jacques', '$2b$10$LoLgDDMaIrHryStDIB.mJe.HNUekCMxnXFEBAtw65qIcTGu4a5ZTy', NULL, NULL, 'membre'),
-(78, 'ratich@groupomania.fr', 'Ratin', 'Nathalie', '$2b$10$lLHWI1gPVEalJfH0Tn31BOdswwgVNO2C3XQbqJZtVIawLs6h8kvSC', NULL, NULL, 'membre');
+(78, 'ratich@groupomania.fr', 'Ratin', 'Nathalie', '$2b$10$lLHWI1gPVEalJfH0Tn31BOdswwgVNO2C3XQbqJZtVIawLs6h8kvSC', 'Bienvenue sur ma bio', NULL, 'membre'),
+(79, 'admin@groupomania.fr', 'Pierre-Jean', 'Benjamin', '$2b$10$tI/ZAjOvZ0YLDEtr9u1xK.9i8K13jjiKnsC7WraFU1LHU3evfgEz.', NULL, NULL, 'administrateur');
 
 --
 -- Index pour les tables déchargées
@@ -110,10 +108,7 @@ INSERT INTO `users` (`id`, `email`, `lastName`, `firstName`, `password`, `descri
 ALTER TABLE `commentaires`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_userId_commentaires` (`userId`),
-  ADD KEY `fk_publiId_commentaires` (`publiId`),
-  ADD KEY `fk_userFirstName_commentaires` (`userFirstName`) USING BTREE,
-  ADD KEY `fk_userImage_commentaires` (`userImage`),
-  ADD KEY `fk_userLastName_commentaires` (`userLastName`);
+  ADD KEY `fk_publiId_commentaires` (`publiId`);
 
 --
 -- Index pour la table `posts`
@@ -137,19 +132,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `commentaires`
 --
 ALTER TABLE `commentaires`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT pour la table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- Contraintes pour les tables déchargées
