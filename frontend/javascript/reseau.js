@@ -1,3 +1,4 @@
+
 /* --------------------------- Creation et affichage des publications --------------------------- */
 getPosts = () => {
     let currentUser = localStorage.getItem('userId');
@@ -14,29 +15,34 @@ getPosts = () => {
             let urlCommentFromOnePost = urlComment + idPost;
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
-                let commentaire = comments.result
-                getPost(onePublication, commentaire)
-                createComment(urlCommentFromOnePost, onePublication)
-                if (onePublication.userId == currentUser || roleUser === 'administrateur') {
-                    postToDelete(urlForOnePost, onePublication);
+                    let commentaire = comments.result
+                    getPost(onePublication, commentaire)
+                    createComment(urlCommentFromOnePost, onePublication)
+                    if (onePublication.userId == currentUser || roleUser === 'administrateur') {
+                        postToDelete(urlForOnePost, onePublication);
+                    }
                     commentaire.forEach(oneComment => {
                         let idComment = oneComment.id;
                         let urlOneComment = urlComment + idComment;
                         commentToUpdate(urlOneComment, oneComment);
                         commentToDelete(urlOneComment, oneComment);
-                    });
-                }
+                    })              
             })
-                .catch(() => {
-                    getPost(onePublication)
-                    createComment(urlCommentFromOnePost, onePublication)
-                    if (onePublication.userId == currentUser || roleUser === 'administrateur') {
-                        postToDelete(urlForOnePost, onePublication)
+                .catch((error) => {
+                    if (error.error){
+                        getPost(onePublication)
+                        createComment(urlCommentFromOnePost, onePublication)
+                        if (onePublication.userId == currentUser || roleUser === 'administrateur') {
+                            postToDelete(urlForOnePost, onePublication)
+                        }
                     }
                 });
         });
     })
         .catch((error) => {
+            if (error.error){
+                noPost()
+            }
         })
 };
 
@@ -58,7 +64,7 @@ createPostWithOutImage = (post) => {
     let data = sendWithOutImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
         console.log('ici publication', publication)
-        //window.location.reload()
+        window.location.reload()
     })
         .catch((error) => {
             console.log('ici error', error)
@@ -70,27 +76,25 @@ getPostInfo = () => {
     let content = document.getElementById('textarea-publi').value;
     let imageValue = document.getElementById('image-publi').files[0];
 
-    if (imageValue) {
-        let image = document.getElementById('image-publi').files[0].name;
-
-        let postContent = {
+    if (imageValue && titre) {
+        let postContent = JSON.stringify({
             titre: titre,
             publication: content,
-        }
-
-        let publication = {
-            post: postContent,
-            image: image
-        }
-
-        createPostWithImage(publication);
-    } else {
+        });
+        const data = new FormData();
+        data.append('image', imageValue);
+        data.append('post', postContent);
+        createPostWithImage(data);
+    } else if (titre !== "" && content !== "") {
         let publication = {
             titre: titre,
             publication: content,
-        }
+        };
         createPostWithOutImage(publication);
-    }
+    } else {
+        let small = document.getElementById('small-form-publication');
+        small.innerHTML = `Veuillez écrire un titre à votre publication et y insérer un article ou une image.`;
+    };
 };
 
 sendPost = () => {
@@ -115,10 +119,9 @@ deletePost = (url) => {
 
 postToDelete = (url, value) => {
     let button = document.getElementById(`delete-publication${value.id}`);
-    console.log(button)
     button.addEventListener('click', function (e) {
         e.preventDefault();
-        deletePost(url);     
+        deletePost(url);
     });
 };
 
@@ -151,7 +154,7 @@ createComment = (url, post) => {
 
 /* --------------------------- Modification d'un commentaire --------------------------- */
 updateComment = (url, value) => {
-    let data = update(url, value);
+    let data = updateWithOutImage(url, value);
     data.then(comment => {
         window.location.reload();
     })
@@ -202,4 +205,3 @@ goToProfil = () => {
 };
 
 goToProfil();
-

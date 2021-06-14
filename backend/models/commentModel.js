@@ -7,6 +7,8 @@ exports.insert = (userId, publiId, content) => {
             console.log(error)
             if (result === undefined) {
                 reject(`Impossible de créer votre commentaire.`);
+            } else if (content === ""){
+                reject(`Vous devez écrire un commentaire.`);
             } else {
                 resolve(`Vous avez crée votre commentaire.`);
             };
@@ -36,7 +38,7 @@ exports.find = (id) => {
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
             if (result === undefined || result == "") {
-                reject(`Impossible de trouver votre commentaire.`);
+                reject(`Aucun commentaire.`);
             } else {
                 resolve(result);
             };

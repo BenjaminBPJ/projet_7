@@ -45,10 +45,9 @@ async function sendWithImage(url, data) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "multipart/form-data;boundary=<calculated when request is sent>",
             'authorization': 'bearer ' + localStorage.getItem('token')
         },
-        body: JSON.stringify(data.post)
+        body: data
     });
     let res = await response.json()
     return res;
@@ -68,7 +67,7 @@ async function deleteMethod(url) {
     return res;
 };
 
-async function update(url, data) {
+async function updateWithOutImage(url, data) {
     let response = await fetch(url, {
         method: "PUT",
         headers: {

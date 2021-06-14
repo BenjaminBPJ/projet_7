@@ -21,7 +21,6 @@ getPost = (value, comment) => {
                                 <p>${comment.length} commentaire` + (comment.length > 1 ? "s" : "");
         article.innerHTML += `</p></div>`
         getComment(comment, article);
-        commentAppear(value, comment);
     } else {
         article.innerHTML += `<div id="comment-appear${value.id}">
                                 <i class="fas fa-comments"></i>
@@ -39,7 +38,7 @@ getPost = (value, comment) => {
     let roleUser = localStorage.getItem('role');
     if (value.userId == currentUser || roleUser === 'administrateur') {
         article.innerHTML += `<i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
-                              <small id="small-delete-publication"></small>
+                              <small id="small-delete-publication">${value.userId} ${currentUser}</small>
                               <button type="submit" id="update-publication">Modifier</button>
                               <small id="small-update-publication"></small>`;
     };
@@ -79,8 +78,6 @@ commentAppear = (post, comment) => {
             button.classList.add('hidden-comment');
             commentaire.classList.remove('hidden-comment');
         });
-        console.log(commentaire)
-        console.log(button)
     }
 };
 
@@ -196,4 +193,3 @@ calcTime = (time) => {
             return undefined;
     };
 };
-
