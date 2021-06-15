@@ -82,3 +82,18 @@ async function updateWithOutImage(url, data) {
     }
     return res;
 };
+
+async function updateWithImage(url, data) {
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            'authorization': 'bearer ' + localStorage.getItem('token')
+        },
+        body: data
+    });
+    let res = await response.json();
+    if (!response.ok) {
+        throw res
+    }
+    return res;
+};

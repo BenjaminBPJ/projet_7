@@ -4,7 +4,6 @@ exports.insert = (userId, publiId, content) => {
     const sql = `INSERT INTO commentaires (userId, publiId, content, publiAt) VALUES ('${userId}', '${publiId}', '${content}',NOW()) `;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            console.log(error)
             if (result === undefined) {
                 reject(`Impossible de créer votre commentaire.`);
             } else if (content === ""){
@@ -47,7 +46,6 @@ exports.find = (id) => {
 };
 
 exports.modify = (content, id) => {
-    console.log(content)
     const sql = `UPDATE commentaires SET content='${content}' WHERE id='${id}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
@@ -61,13 +59,17 @@ exports.modify = (content, id) => {
 };
 
 exports.checkUserId = (id, userId) => {
-    const sql = `SELECT userId FROM commentaires WHERE id='${id}'`;
+    const sql = `SELECT userId, users.role FROM commentaires
+    INNER JOIN users ON users.id=commentaires.userId WHERE id='${id}'
+    UNION SELECT role from users INNER JOINS users ON users.id=commentaires.userId WHERE id='${userId}'
+                 `;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
+            console.log(result[1])
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver votre résultat.`);
             }
-            else if (result[0].userId === userId) {
+            else if (result[0].userId === userId || result[0].userId === "administrateur") {
                 resolve(`Utilisateur authentifié.`);
             } else {
                 reject(`Vous n'avez pas les droits pour effectuer des modifications.`);

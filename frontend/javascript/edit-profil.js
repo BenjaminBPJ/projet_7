@@ -2,7 +2,6 @@ editProfilPage = () => {
     let userId = localStorage.getItem('userId')
     let data = request(`http://localhost:3000/api/auth/` + userId);
     data.then(user => {
-        console.log(user.result)
         userEditProfil(user);
         backNetwork();
         deleteUser(user);
@@ -27,12 +26,22 @@ deleteUser = () => {
     });
 };
 
-updateUser = (newInfo) => {
+updateUserWithOutImage = (newInfo) => {
     let userId = localStorage.getItem('userId');
-    let data = update(`http://localhost:3000/api/auth/` + userId, newInfo);
+    let data = updateWithOutImage(`http://localhost:3000/api/auth/` + userId, newInfo);
     data.then(updateUser => {
-        console.log(updateUser)
         window.location = `profil.html`;
+    })
+        .catch((error) => {
+            console.log(error)
+        });
+};
+
+updateUserWithImage = (newInfo) => {
+    let userId = localStorage.getItem('userId');
+    let data = updateWithImage(`http://localhost:3000/api/auth/` + userId, newInfo);
+    data.then(updateUser => {
+        //window.location = `profil.html`;
     })
         .catch((error) => {
             console.log(error)
@@ -42,19 +51,29 @@ updateUser = (newInfo) => {
 getNewInfo = () => {
     let photoUser = document.getElementById("photo-user").files[0];
     let newDescription = document.getElementById("new-description").value;
-
-    if (photoUser) {
-        let avatar = document.getElementById('photo-user').files[0].name;
-        let newProfil = {
-            description: newDescription,
-            imageUrl: avatar,
-        };
-        updateUser(newProfil);
+    let oldDescription = document.getElementsByClassName(".ancienne-description");
+console.log(oldDescription)
+    if (photoUser && newDescription === "") {
+        let newProfil = JSON.stringify({
+            description: oldDescription[0],
+        });
+        const data = new FormData();
+        data.append('image', photoUser);
+        data.append('description', newProfil)
+        updateUserWithImage(newProfil);
+    } else if (photoUser) {
+            let newProfil = JSON.stringify({
+                description: newDescription,
+            });
+            const data = new FormData();
+            data.append('image', photoUser);
+            data.append('description', newProfil)
+            updateUserWithImage(newProfil);
     } else {
         let newProfil = {
             description: newDescription,
         };
-        updateUser(newProfil);
+        updateUserWithOutImage(newProfil);
     };
 };
 

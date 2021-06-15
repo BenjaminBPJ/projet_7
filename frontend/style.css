@@ -132,6 +132,10 @@ main{
     display: none;
 }*/
 
+.update-publication{
+    display: none;
+}
+
 @keyframes zoom{
     0%{
         transform: scale(1);

@@ -5,6 +5,9 @@ exports.createComment = (req, res, next) => {
     const userId = req.jwtToken.userId;
     const publiId = req.params.idPost;
     const content = req.body.comments;
+    const role = req.jwtToken
+
+    console.log(role)
 
     commentModel.insert(userId, publiId, content)
         .then(result => {

@@ -5,14 +5,28 @@ getPost = (value, comment) => {
 
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
-                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>
-                        </header>
-                        <div class="texte-image-publication">
-                            <h5>${value.titre}</h5>                           
-                            <p>${value.publication}</p>`;
+                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>`
+
+    let currentUser = localStorage.getItem('userId');
+    let roleUser = localStorage.getItem('role');
+    if (value.userId == currentUser || roleUser === 'administrateur') {
+        article.innerHTML += `<div>
+                            <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
+                            <small id="small-delete-publication"></small>
+                            <i class="fas fa-edit id="update-publication${value.id}"></i>
+                            <small id="small-update-publication"></small>
+                            </div>`;
+    };
+    article.innerHTML += `</header>
+                          <div class="texte-image-publication">
+                            <h5 class="titre-publication${value.id}">${value.titre}</h5>
+                            <input id="update-titre-publication${value.id}" placeholder="Votre nouveau titre" class="input-update-publication${value.id}"/>                           
+                            <p class="content-publication${value.id}">${value.publication}</p>
+                            <textarea id="update-content-publication${value.id}" placeholder="Votre nouvel article" class="input-update-publication${value.id}"></textarea>`;
 
     if (value.imageUrl) {
-        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication" alt="image illustrant l'article" />`;
+        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication${value.id}" alt="image illustrant l'article" />
+        <input type="file" name="image" id="update-image-publi${value.id}" value="nouvelle image" class="input-update-publication${value.id}" />`;
     };
 
     if (comment) {
@@ -28,20 +42,16 @@ getPost = (value, comment) => {
                               </div>`
     };
 
-    article.innerHTML += `</div>
-                        <div class="input-new-comment hidden-comment">
+    if (value.userId == currentUser || roleUser === 'administrateur') {
+        article.innerHTML += `</div>
+        <input type="submit" id="send-update-publication${value.id}" value="modifier votre publication" /><br>
+        <small id="small-update-publication${value.id}"></small>`;
+    };
+    article.innerHTML += `<div class="input-new-comment hidden-comment">
                         <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
                         <input type="submit" id="sending-comment${value.id}" value="commenter" />
                         </div>`;
 
-    let currentUser = localStorage.getItem('userId');
-    let roleUser = localStorage.getItem('role');
-    if (value.userId == currentUser || roleUser === 'administrateur') {
-        article.innerHTML += `<i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
-                              <small id="small-delete-publication">${value.userId} ${currentUser}</small>
-                              <button type="submit" id="update-publication">Modifier</button>
-                              <small id="small-update-publication"></small>`;
-    };
 };
 
 getComment = (value, article) => {
