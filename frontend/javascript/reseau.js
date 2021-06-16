@@ -1,4 +1,3 @@
-
 /* --------------------------- Creation et affichage des publications --------------------------- */
 getPosts = () => {
     let currentUser = localStorage.getItem('userId');
@@ -13,31 +12,27 @@ getPosts = () => {
             let idPost = onePublication.id;
             let urlForOnePost = urlPost + idPost;
             let urlCommentFromOnePost = urlComment + idPost;
+            getPost(onePublication);
+            if (onePublication.userId == currentUser || roleUser === 'administrateur') {
+                deleteUpdatePostIcon(onePublication)
+                postToDelete(urlForOnePost, onePublication);
+                sendPostToUpdate(urlForOnePost, onePublication);
+                makeInputUpdateAppear(onePublication);
+            };
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
                 let commentaire = comments.result
-                getPost(onePublication, commentaire)
+                console.log(commentaire)
                 createComment(urlCommentFromOnePost, onePublication)
-                if (onePublication.userId == currentUser || roleUser === 'administrateur') {
-                    postToDelete(urlForOnePost, onePublication);
-                    sendPostToUpdate(urlForOnePost, onePublication)
-                }
                 commentaire.forEach(oneComment => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
+                    getComment(oneComment, onePublication)
                     commentToUpdate(urlOneComment, oneComment);
                     commentToDelete(urlOneComment, oneComment);
                 })
             })
                 .catch((error) => {
-                    if (error.error) {
-                        getPost(onePublication)
-                        createComment(urlCommentFromOnePost, onePublication)
-                        if (onePublication.userId == currentUser || roleUser === 'administrateur') {
-                            postToDelete(urlForOnePost, onePublication)
-                            sendPostToUpdate(urlForOnePost, onePublication)
-                        }
-                    }
                 });
         });
     })
@@ -55,7 +50,7 @@ createPostWithImage = (post) => {
     let data = sendWithImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
         console.log(publication)
-        //window.location.reload()
+        window.location.reload()
     })
         .catch((error) => {
             console.log(error)
@@ -107,7 +102,8 @@ sendPost = () => {
     });
 };
 
-sendPost()
+sendPost();
+
 /* --------------------------- Modification d'une publication --------------------------- */
 updatePostWithImage = (url, postUpdate) => {
     let data = updateWithImage(url, postUpdate);
@@ -172,7 +168,7 @@ getPostInfoForUpdate = (url, post) => {
         data.append('image', imageValue);
         data.append('post', publication);
         updatePostWithImage(url, data);
-    }else if (!imageValueUpdate){
+    } else if (!imageValueUpdate) {
         let publication = JSON.stringify({
             titre: titreUpdate,
             publication: contentUpdate
@@ -182,7 +178,7 @@ getPostInfoForUpdate = (url, post) => {
         data.append('image', imageValue);
         data.append('post', publication);
         updatePostWithImage(url, data);
-    }else {
+    } else {
         let publication = JSON.stringify({
             titre: titreUpdate,
             publication: contentUpdate
@@ -206,9 +202,9 @@ sendPostToUpdate = (url, post) => {
 // apparition des inputs de modification
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
-    let input = document.querySelectorAll(`input-update-publication${post.id}`)
+    let input = document.querySelector(`input-update-publication${post.id}`)
     button.addEventListener('click', function () {
-        input.classList
+        input.classList.remove('update-publication')
     })
 }
 /* --------------------------- Suppression d'une publication --------------------------- */

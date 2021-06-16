@@ -2,25 +2,17 @@ getPost = (value, comment) => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
+    article.setAttribute('id', `post-${value.id}`)
 
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
-                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>`
+                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>
 
-    let currentUser = localStorage.getItem('userId');
-    let roleUser = localStorage.getItem('role');
-    if (value.userId == currentUser || roleUser === 'administrateur') {
-        article.innerHTML += `<div>
-                            <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
-                            <small id="small-delete-publication"></small>
-                            <i class="fas fa-edit" id="update-publication${value.id}"></i>
-                            <small id="small-update-publication"></small>
-                            </div>`;
-    };
-    article.innerHTML += `</header>
+                                                         
+                            </header>
                           <div class="texte-image-publication">
                             <h5 class="titre-publication${value.id}">${value.titre}</h5>
-                            <input id="update-titre-publication${value.id}" placeholder="Votre nouveau titre" class="input-update-publication${value.id}"/>                           
+                            <input id="update-titre-publication${value.id}" placeholder="Votre nouveau titre" class="input-update-publication${value.id} update-publication" aria-hidden="true"/>                           
                             <p class="content-publication${value.id}">${value.publication}</p>
                             <textarea id="update-content-publication${value.id}" placeholder="Votre nouvel article" class="input-update-publication${value.id}"></textarea>`;
 
@@ -29,7 +21,7 @@ getPost = (value, comment) => {
         <input type="file" name="image" id="update-image-publi${value.id}" value="nouvelle image" class="input-update-publication${value.id}" />`;
     };
 
-    if (comment) {
+    /*if (comment) {
         article.innerHTML += `<div id="comment-appear${value.id}">
                                 <i class="fas fa-comments"></i>
                                 <p>${comment.length} commentaire` + (comment.length > 1 ? "s" : "");
@@ -40,18 +32,44 @@ getPost = (value, comment) => {
                                 <i class="fas fa-comments"></i>
                                 <p>Aucun commentaire</p>
                               </div>`
-    };
+    };*/
 
-    if (value.userId == currentUser || roleUser === 'administrateur') {
+    /*if (value.userId == currentUser || roleUser === 'administrateur') {
         article.innerHTML += `</div>
         <input type="submit" id="send-update-publication${value.id}" value="modifier votre publication" /><br>
         <small id="small-update-publication${value.id}"></small>`;
-    };
+    };*/
     article.innerHTML += `<div class="input-new-comment hidden-comment">
                         <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
                         <input type="submit" id="sending-comment${value.id}" value="commenter" />
                         </div>`;
 
+};
+
+// partie du code qui se trouve dans la partie header d'un post ( = icone supprimer/update) avant le </header sous cette rubrique il manquera un article.innerHTML +=
+
+/*let currentUser = localStorage.getItem('userId');
+let roleUser = localStorage.getItem('role');
+if (value.userId == currentUser || roleUser === 'administrateur') {
+    article.innerHTML += <div>
+                        <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
+                        <small id="small-delete-publication"></small>
+                        <i class="fas fa-edit" id="update-publication${value.id}"></i>
+                        <small id="small-update-publication"></small>
+                        </div>;
+};*/
+       
+
+deleteUpdatePostIcon = (value) => {
+    let div = document.createElement('div');
+    document.querySelector('h4').appendChild(div)
+
+    div.innerHTML += `<div>
+                        <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
+                        <small id="small-delete-publication"></small>
+                        <i class="fas fa-edit" id="update-publication${value.id}"></i>
+                        <small id="small-update-publication"></small>
+                     </div>`;
 };
 
 getComment = (value, article) => {
