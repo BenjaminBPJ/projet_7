@@ -15,9 +15,9 @@ getPosts = () => {
             getPost(onePublication);
             if (onePublication.userId == currentUser || roleUser === 'administrateur') {
                 deleteUpdatePostIcon(onePublication)
-                postToDelete(urlForOnePost, onePublication);
-                sendPostToUpdate(urlForOnePost, onePublication);
-                makeInputUpdateAppear(onePublication);
+                //postToDelete(urlForOnePost, onePublication);
+                //sendPostToUpdate(urlForOnePost, onePublication);
+                //makeInputUpdateAppear(onePublication);
             };
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
@@ -219,6 +219,7 @@ deletePost = (url) => {
 
 postToDelete = (url, value) => {
     let button = document.getElementById(`delete-publication${value.id}`);
+    console.log(button)
     button.addEventListener('click', function (e) {
         e.preventDefault();
         deletePost(url);

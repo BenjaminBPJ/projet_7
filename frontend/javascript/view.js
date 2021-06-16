@@ -58,11 +58,11 @@ if (value.userId == currentUser || roleUser === 'administrateur') {
                         <small id="small-update-publication"></small>
                         </div>;
 };*/
-       
+
 
 deleteUpdatePostIcon = (value) => {
     let div = document.createElement('div');
-    document.querySelector('h4').appendChild(div)
+    document.querySelector('h4').appendChild(div);
 
     div.innerHTML += `<div>
                         <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
