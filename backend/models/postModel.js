@@ -17,13 +17,21 @@ exports.insert = (publi) => {
 };
 
 exports.checkUserId = (id, userId) => {
-    const sql = `SELECT userId FROM posts WHERE id='${id}'`;
+    const sql = `SELECT userId AS checkId
+    FROM posts
+    INNER JOIN users ON users.id=posts.userId 
+    WHERE posts.id='${id}'
+    UNION 
+    SELECT users.role 
+    FROM posts
+    INNER JOIN users ON users.id=posts.userId 
+    WHERE users.id='${userId}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver cette publication.`);
             }
-            else if (result[0].userId === userId) {
+            else if (result[0].checkId === userId || result[1].checkId === "administrateur") {
                 resolve(`Utilisateur authentifié.`);
             } else {
                 reject(`Vous n'avez pas les droits pour modifier cette publication.`);

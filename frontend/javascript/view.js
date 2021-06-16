@@ -13,7 +13,7 @@ getPost = (value, comment) => {
         article.innerHTML += `<div>
                             <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
                             <small id="small-delete-publication"></small>
-                            <i class="fas fa-edit id="update-publication${value.id}"></i>
+                            <i class="fas fa-edit" id="update-publication${value.id}"></i>
                             <small id="small-update-publication"></small>
                             </div>`;
     };

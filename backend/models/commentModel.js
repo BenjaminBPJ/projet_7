@@ -59,17 +59,21 @@ exports.modify = (content, id) => {
 };
 
 exports.checkUserId = (id, userId) => {
-    const sql = `SELECT userId, users.role FROM commentaires
-    INNER JOIN users ON users.id=commentaires.userId WHERE id='${id}'
-    UNION SELECT role from users INNER JOINS users ON users.id=commentaires.userId WHERE id='${userId}'
-                 `;
+    const sql = `SELECT userId AS checkId
+    FROM commentaires
+    INNER JOIN users ON users.id=commentaires.userId 
+    WHERE commentaires.id='${id}'
+    UNION 
+    SELECT users.role 
+    FROM commentaires
+    INNER JOIN users ON users.id=commentaires.userId 
+    WHERE users.id='${userId}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            console.log(result[1])
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver votre résultat.`);
             }
-            else if (result[0].userId === userId || result[0].userId === "administrateur") {
+            else if (result[0].checkId === userId || result[1].checkId === "administrateur") {
                 resolve(`Utilisateur authentifié.`);
             } else {
                 reject(`Vous n'avez pas les droits pour effectuer des modifications.`);
