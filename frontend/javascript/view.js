@@ -6,63 +6,28 @@ getPost = (value, comment) => {
 
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
-                            <h4 class="date-publication">Posté il y a ${calcTime(value.datePublication)}</h4>
-
-                                                         
-                            </header>
-                          <div class="texte-image-publication">
+                            <h4 id="date-publication${value.id}">Posté il y a ${calcTime(value.datePublication)}</h4>                                                     
+                        </header>
+                        <div class="texte-image-publication">
                             <h5 class="titre-publication${value.id}">${value.titre}</h5>
-                            <input id="update-titre-publication${value.id}" placeholder="Votre nouveau titre" class="input-update-publication${value.id} update-publication" aria-hidden="true"/>                           
-                            <p class="content-publication${value.id}">${value.publication}</p>
-                            <textarea id="update-content-publication${value.id}" placeholder="Votre nouvel article" class="input-update-publication${value.id}"></textarea>`;
+                            <p class="content-publication${value.id}">${value.publication}</p>`;
 
     if (value.imageUrl) {
-        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication${value.id}" alt="image illustrant l'article" />
-        <input type="file" name="image" id="update-image-publi${value.id}" value="nouvelle image" class="input-update-publication${value.id}" />`;
+        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication${value.id}" alt="image illustrant l'article" />`
     };
 
-    /*if (comment) {
-        article.innerHTML += `<div id="comment-appear${value.id}">
-                                <i class="fas fa-comments"></i>
-                                <p>${comment.length} commentaire` + (comment.length > 1 ? "s" : "");
-        article.innerHTML += `</p></div>`
-        getComment(comment, article);
-    } else {
-        article.innerHTML += `<div id="comment-appear${value.id}">
-                                <i class="fas fa-comments"></i>
-                                <p>Aucun commentaire</p>
-                              </div>`
-    };*/
-
-    /*if (value.userId == currentUser || roleUser === 'administrateur') {
-        article.innerHTML += `</div>
-        <input type="submit" id="send-update-publication${value.id}" value="modifier votre publication" /><br>
-        <small id="small-update-publication${value.id}"></small>`;
-    };*/
-    article.innerHTML += `<div class="input-new-comment hidden-comment">
-                        <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
-                        <input type="submit" id="sending-comment${value.id}" value="commenter" />
-                        </div>`;
+    article.innerHTML += `</div>
+                          <div class="input-new-comment">
+                             <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
+                             <input type="submit" id="sending-comment${value.id}" value="commenter" />
+                             <small id="small-send-comment${value.id}"></small>
+                         </div>`;
 
 };
 
-// partie du code qui se trouve dans la partie header d'un post ( = icone supprimer/update) avant le </header sous cette rubrique il manquera un article.innerHTML +=
-
-/*let currentUser = localStorage.getItem('userId');
-let roleUser = localStorage.getItem('role');
-if (value.userId == currentUser || roleUser === 'administrateur') {
-    article.innerHTML += <div>
-                        <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
-                        <small id="small-delete-publication"></small>
-                        <i class="fas fa-edit" id="update-publication${value.id}"></i>
-                        <small id="small-update-publication"></small>
-                        </div>;
-};*/
-
-
 deleteUpdatePostIcon = (value) => {
     let div = document.createElement('div');
-    document.querySelector('h4').appendChild(div);
+    document.getElementById(`date-publication${value.id}`).appendChild(div);
 
     div.innerHTML += `<div>
                         <i class="fas fa-trash-alt" id="delete-publication${value.id}"></i>
@@ -70,6 +35,33 @@ deleteUpdatePostIcon = (value) => {
                         <i class="fas fa-edit" id="update-publication${value.id}"></i>
                         <small id="small-update-publication"></small>
                      </div>`;
+};
+
+formUpdatePost = (value) => {
+    let form = document.createElement(`form`);
+    document.querySelector(".main-reseau").appendChild(form);
+    form.setAttribute('id', `form-modale-update${value.id}`)
+    form.classList.add('form-modale')
+
+    form.innerHTML = `<form>
+                            <label for="old-title">Ancien titre</label><br>
+                            <p id="old-tile">${value.titre}</p>
+                            <label for="new-title">Nouveau titre</label><br>
+                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" /><br>
+                            <label for="old-post">ancien article</label><br>
+                            <p id="old-post">${value.publication}</p>
+                            <label for="new-post">Nouvel article</label><br>
+                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article"></textarea><br>
+                            
+                            
+                            <label for="new-image">Nouvelle image</label><br>
+                            <input type="file" class="input-update-form" id="new-image"/><br>
+                            <button type="submit" id="close-form-update-post">Fermer</button>
+                            <button type="submit" id="send-form-update-post${value.id}">Modifier</button>
+                            <small id="small-form-update"></small>
+                        </form>`
+
+    // ` if (value.imageUrl) {form.innerHTML += `<label for="old-image">ancienne image partagée</label><br<img src="${value.imageUrl}" id="old-image" />`}                  form.innerHTML += `
 };
 
 getComment = (value, article) => {
@@ -98,17 +90,6 @@ getComment = (value, article) => {
     };
 };
 
-commentAppear = (post, comment) => {
-    for (i = 0; i < comment.length; i++) {
-        let button = document.getElementById(`comment-appear${post.id}`);
-        let commentaire = document.getElementById(`commentaire${comment[i].id}`);
-        button.addEventListener('click', function () {
-            button.classList.add('hidden-comment');
-            commentaire.classList.remove('hidden-comment');
-        });
-    }
-};
-
 noPost = () => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
@@ -123,63 +104,40 @@ userProfil = (value) => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
-    console.log(value)
 
     article.innerHTML = `   <img src= "${value.result[0].imageUrl}" class="photo-profil"/>
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <p class="profil-description"> Description : </p>
                             <p id="text-description" class="profil-description" rows="5">${value.result[0].description}</p><br>
                             <button id="goToEdit">Modification de votre profil</buttton>
+                            <button id="back-to-network">retour</buttton>
                         `;
-
-    let backNetwork = document.createElement(`button`);
-    document.querySelector("main").appendChild(backNetwork);
-    backNetwork.classList.add("back-network");
-    backNetwork.setAttribute("id", 'back-to-network');
-
-    backNetwork.textContent = 'Retour';
 };
 
 userEditProfil = (value) => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
-    article.classList.add("profil");
-    console.log(value)
+    article.setAttribute('id', 'form-update-user')
+    article.classList.add("profil-update");
 
     article.innerHTML = `   <form>
-                                <label for="image-user"></label> 
+                                <label for="image-user">Votre Photo de profil</label> 
                                 <img src= ${value.result[0].imageUrl} class="photo-profil" />
-                                <input type="file" name="imageUrl" id="photo-user" accept="image/*" />
-                                <small id="small-edit-photo"></small>
+                                <input type="file" name="image" id="image-user" accept="image/*" />
                             </form>
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <form>
-                            <label for="old-description-user"></label>
-                            <p class="profil-description"> Description : </p>
-                            <p class="ancienne-description">${value.result[0].description}</p>
-                            <label for="new-description-user"></label>
-                            <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea>
+                            <label for="old-description">Description : </label>
+                            <p id="old-description" >${value.result[0].description}</p>
+                            <label for="new-description"></label>
+                            <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea><br>
                             <button type="" id="send-profil">modifier</button>
+                            <button id="back-to-profil">retour</buttton>
                             </form>
-                            <button id="delete-account" class="delete-account">Suppression du compte</button>
+                            <button id="delete-account">Suppression du compte</button>    
+                            <small id="small-update-user"></small>                       
                         `;
-
-    let backNetwork = document.createElement(`button`);
-    document.querySelector("main").appendChild(backNetwork);
-    backNetwork.classList.add("back-network");
-    backNetwork.setAttribute("id", 'back-to-network');
-
-    backNetwork.textContent = 'Retour';
 };
-
-serverDown = () => {
-    let article = document.createElement(`article`);
-    document.querySelector("main").appendChild(article);
-    article.innerHTML = `Serveur momentanément indisponible, veuillez nous excuser.`;
-};
-
-
-
 
 calcTime = (time) => {
     const second = 1000;

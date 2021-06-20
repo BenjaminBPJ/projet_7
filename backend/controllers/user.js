@@ -138,11 +138,14 @@ exports.modifyUser = (req, res, next) => {
 
     userObject = { ...userObject, userId: userId };
 
+    console.log(userObject)
+    console.log(req.file)
+
     userModel.checkUserId(id, userId)
         .then(goodId => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
-                    if (oldPhoto[0].imageUrl !== null) {
+                    if (oldPhoto[0].imageUrl !== null || oldPhoto[0].imageUrl !== req.file) {
                         const filename = oldPhoto[0].imageUrl.split('/images/')[1];
                         fs.unlink(`images/${filename}`, () => {
                             userModel.update(userObject)

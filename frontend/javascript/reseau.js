@@ -13,21 +13,21 @@ getPosts = () => {
             let urlForOnePost = urlPost + idPost;
             let urlCommentFromOnePost = urlComment + idPost;
             getPost(onePublication);
+            createComment(urlCommentFromOnePost, onePublication);
             if (onePublication.userId == currentUser || roleUser === 'administrateur') {
                 deleteUpdatePostIcon(onePublication)
-                //postToDelete(urlForOnePost, onePublication);
-                //sendPostToUpdate(urlForOnePost, onePublication);
-                //makeInputUpdateAppear(onePublication);
+                postToDelete(urlForOnePost, onePublication);
+                formUpdatePost(onePublication);
+                makeInputUpdateAppear(onePublication);
+                //sendPostToUpdate(urlForOnePost, onePublication);       
             };
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
                 let commentaire = comments.result
-                console.log(commentaire)
-                createComment(urlCommentFromOnePost, onePublication)
                 commentaire.forEach(oneComment => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
-                    getComment(oneComment, onePublication)
+                    getComment(oneComment, onePublication);
                     commentToUpdate(urlOneComment, oneComment);
                     commentToDelete(urlOneComment, oneComment);
                 })
@@ -127,84 +127,47 @@ updatePostWithOutImage = (url, postUpdate) => {
         });
 };
 
-getPostInfoForUpdate = (url, post) => {
-    let titre = document.getElementById(`titre-publication${post.id}`);
-    let content = document.getElementById(`textarea-publi${post.id}`);
-    let imageValue = document.getElementById(`image-publication${post.id}`);
-    let titreUpdate = document.getElementById(`update-titre-publication${post.id}`).value;
-    let contentUpdate = document.getElementById(`update-content-publication${post.id}`).value;
-    let imageValueUpdate = document.getElementById(`update-image-publi${post.id}`).files[0];
-    console.log(titre, content, imageValue)
-    if (!imageValueUpdate && titreUpdate === "" && contentUpdate === "") {
-        let small = document.getElementById(`small-update-publication${post.id}`);
-        small.innerHTML = `Veuillez modifier un élément de votre publication avant de cliquer sur ce bouton.`;
-    } else if (imageValueUpdate && titreUpdate === "" && contentUpdate === "") {
-        let postContentUpdate = JSON.stringify({
+getPostInfoForUpdate = (url) => {
+    let titre = document.getElementById(`new-title`).value;
+    let content = document.getElementById(`new-post`).value;
+    let imageValue = document.getElementById(`new-image`).files[0];
+
+    if (imageValue && titre) {
+        let postContent = JSON.stringify({
             titre: titre,
             publication: content
         });
-        console.log(postContentUpdate)
         const data = new FormData();
-        data.append('image', imageValueUpdate);
-        data.append('post', postContentUpdate);
+        data.append('image', imageValue);
+        data.append('post', postContent);
         updatePostWithImage(url, data);
-    } else if (!imageValueUpdate && titreUpdate === "") {
-        let publication = JSON.stringify({
+    } else if (titre !== "" && content !== "") {
+        let publication = {
             titre: titre,
-            publication: contentUpdate
-        });
-        console.log(publication)
-        const data = new FormData();
-        data.append('image', imageValue);
-        data.append('post', publication);
-        updatePostWithImage(url, data);
-    } else if (!imageValueUpdate && contentUpdate === "") {
-        let publication = JSON.stringify({
-            titre: titreUpdate,
             publication: content
-        });
-        console.log(publication)
-        const data = new FormData();
-        data.append('image', imageValue);
-        data.append('post', publication);
-        updatePostWithImage(url, data);
-    } else if (!imageValueUpdate) {
-        let publication = JSON.stringify({
-            titre: titreUpdate,
-            publication: contentUpdate
-        });
-        console.log(publication)
-        const data = new FormData();
-        data.append('image', imageValue);
-        data.append('post', publication);
-        updatePostWithImage(url, data);
+        };
+        updatePostWithOutImage(url, publication);
     } else {
-        let publication = JSON.stringify({
-            titre: titreUpdate,
-            publication: contentUpdate
-        });
-        console.log(publication)
-        const data = new FormData();
-        data.append('image', imageValueUpdate);
-        data.append('post', publication);
-        updatePostWithImage(url, data);
+        let small = document.getElementById('small-form-update');
+        small.innerHTML = `Veuillez écrire un titre à votre publication et y insérer un article ou une image.`;
     };
 };
 
 sendPostToUpdate = (url, post) => {
-    let button = document.getElementById(`send-update-publication${post.id}`);
+    let button = document.getElementById(`send-form-update-post${post.id}`);
     button.addEventListener('click', function (e) {
-        e.preventDefault();
-        getPostInfoForUpdate(url, post);
+        //e.preventDefault();
+        getPostInfoForUpdate(url);
     });
 };
 
 // apparition des inputs de modification
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
-    let input = document.querySelector(`input-update-publication${post.id}`)
-    button.addEventListener('click', function () {
-        input.classList.remove('update-publication')
+    let form = document.getElementById(`form-modale-update${post.id}`)
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        form.classList.add('show');
     })
 }
 /* --------------------------- Suppression d'une publication --------------------------- */
@@ -219,7 +182,6 @@ deletePost = (url) => {
 
 postToDelete = (url, value) => {
     let button = document.getElementById(`delete-publication${value.id}`);
-    console.log(button)
     button.addEventListener('click', function (e) {
         e.preventDefault();
         deletePost(url);
@@ -230,7 +192,7 @@ postToDelete = (url, value) => {
 sendCommentToApi = (url, comment) => {
     let data = sendWithOutImage(url, comment);
     data.then(commentaire => {
-        window.location.reload();
+        //window.location.reload();
     })
         .catch((error) => {
             console.log(error)
@@ -239,11 +201,17 @@ sendCommentToApi = (url, comment) => {
 
 newCommentCreate = (url, post) => {
     let comment = document.getElementById(`send-comment${post.id}`).value;
+    let small = document.getElementById(`small-send-comment${post.id}`);
+
     console.log(comment)
-    let newCommentaire = {
-        comments: comment
+    if (comment === "") {
+        small.innerHTML = `Veuillez écrire un commentaire.`;
+    } else {
+        let newCommentaire = {
+            comments: comment
+        };
+        sendCommentToApi(url, newCommentaire);
     };
-    sendCommentToApi(url, newCommentaire);
 };
 
 createComment = (url, post) => {

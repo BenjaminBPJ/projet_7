@@ -11,20 +11,7 @@ editProfilPage = () => {
         })
 };
 
-deleteUser = () => {
-    let button = document.getElementById('delete-account');
-    button.addEventListener('click', function () {
-        let userId = localStorage.getItem('userId');
 
-        alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
-
-        let data = deleteMethod(`http://localhost:3000/api/auth` + userId);
-        data.then(userDelete => {
-            window.location = `inscription.html`;
-        })
-            .catch((err) => ({ err }));
-    });
-};
 
 updateUserWithOutImage = (newInfo) => {
     let userId = localStorage.getItem('userId');

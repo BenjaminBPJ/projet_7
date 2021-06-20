@@ -31,7 +31,7 @@ exports.checkUserId = (id, userId) => {
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver cette publication.`);
             }
-            else if (result[0].checkId === userId || result[1].checkId === "administrateur") {
+            else if (result[0].checkId == userId || result[1].checkId === "administrateur") {
                 resolve(`Utilisateur authentifié.`);
             } else {
                 reject(`Vous n'avez pas les droits pour modifier cette publication.`);

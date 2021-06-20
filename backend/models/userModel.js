@@ -72,7 +72,7 @@ exports.update = (user) => {
     let value = [user.description, user.imageUrl, user.userId]
     if (user.imageUrl === null){
         sql = `UPDATE users SET description=? WHERE id=?`;
-        value = [user.description, user.userId]
+        value = [user.description, user.userId];
     };
     return updateUser(sql, value);
 };
