@@ -19,7 +19,7 @@ getPosts = () => {
                 postToDelete(urlForOnePost, onePublication);
                 formUpdatePost(onePublication);
                 makeInputUpdateAppear(onePublication);
-                //sendPostToUpdate(urlForOnePost, onePublication);       
+                sendPostToUpdate(urlForOnePost, onePublication);
             };
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
@@ -127,12 +127,15 @@ updatePostWithOutImage = (url, postUpdate) => {
         });
 };
 
-getPostInfoForUpdate = (url) => {
+getPostInfoForUpdate = (url, postValue) => {
     let titre = document.getElementById(`new-title`).value;
     let content = document.getElementById(`new-post`).value;
     let imageValue = document.getElementById(`new-image`).files[0];
+    let oldContent = postValue.publication;
+    let oldTitle = postValue.titre;
 
-    if (imageValue && titre) {
+    // Si il y a tout de remplis dans le formulaire
+    if (imageValue && titre && content) {
         let postContent = JSON.stringify({
             titre: titre,
             publication: content
@@ -141,23 +144,76 @@ getPostInfoForUpdate = (url) => {
         data.append('image', imageValue);
         data.append('post', postContent);
         updatePostWithImage(url, data);
-    } else if (titre !== "" && content !== "") {
+
+        // Si juste l'image est changée
+    } else if (imageValue && titre === "" && content === "") {
+        let postContent = JSON.stringify({
+            titre: oldTitle,
+            publication: oldContent
+        });
+        const data = new FormData();
+        data.append('image', imageValue);
+        data.append('post', postContent);
+        updatePostWithImage(url, data);
+
+        // Si tout est changé sauf le message de publication
+    } else if (imageValue && titre !== "" && content === "") {
+        let postContent = JSON.stringify({
+            titre: titre,
+            publication: oldContent
+        });
+        const data = new FormData();
+        data.append('image', imageValue);
+        data.append('post', postContent);
+        updatePostWithImage(url, data);
+
+        // Si tout est changé sauf le titre
+    } else if (imageValue && titre === "" && content !== "") {
+        let postContent = JSON.stringify({
+            titre: oldTitle,
+            publication: content
+        });
+        const data = new FormData();
+        data.append('image', imageValue);
+        data.append('post', postContent);
+        updatePostWithImage(url, data);
+
+        // Si le titre et l'article sont modifiés
+    } else if (!imageValue && titre !== "" && content !== "") {
         let publication = {
             titre: titre,
             publication: content
         };
         updatePostWithOutImage(url, publication);
+
+        // Si juste l'article est modifié
+    } else if (!imageValue && titre === "" && content !== "") {
+        let publication = {
+            titre: oldTitle,
+            publication: content
+        };
+        updatePostWithOutImage(url, publication);
+
+        // Si juste le titre est modifié
+    } else if (!imageValue && titre !== "" && content === "") {
+        let publication = {
+            titre: titre,
+            publication: oldContent
+        };
+        updatePostWithOutImage(url, publication);
+
+        // Si rien n'a été modifié on envois un message d'erreur à l'utilisateur
     } else {
         let small = document.getElementById('small-form-update');
-        small.innerHTML = `Veuillez écrire un titre à votre publication et y insérer un article ou une image.`;
+        small.innerHTML = `Veuillez écrire un titre à votre publication et y insérer un article ou une image avant de cliquer sur modifier.`;
     };
 };
 
 sendPostToUpdate = (url, post) => {
     let button = document.getElementById(`send-form-update-post${post.id}`);
     button.addEventListener('click', function (e) {
-        //e.preventDefault();
-        getPostInfoForUpdate(url);
+        e.preventDefault();
+        getPostInfoForUpdate(url, post);
     });
 };
 

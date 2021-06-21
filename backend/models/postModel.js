@@ -98,7 +98,6 @@ exports.find = (id) => {
 const updatePost = (sql, params) => {
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, params, (error, result, fields) => {
-            console.log(error)
             if (result === undefined || result == "") {
                 reject(`Impossible de modifier la publication.`);
             } else {
@@ -109,7 +108,6 @@ const updatePost = (sql, params) => {
 };
 
 exports.update = (publi) => {
-    console.log(publi)
     let sql = `UPDATE posts SET datePublication=NOW(), titre=?, publication=?, imageUrl=? WHERE id=?`;
     let value = [publi.titre, publi.publication, publi.imageUrl, publi.postId]
     if (publi.imageUrl === null){

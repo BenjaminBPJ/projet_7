@@ -56,8 +56,8 @@ formUpdatePost = (value) => {
                             
                             <label for="new-image">Nouvelle image</label><br>
                             <input type="file" class="input-update-form" id="new-image"/><br>
-                            <button type="submit" id="close-form-update-post">Fermer</button>
-                            <button type="submit" id="send-form-update-post${value.id}">Modifier</button>
+                            <button  id="close-form-update-post">Fermer</button>
+                            <button  id="send-form-update-post${value.id}">Modifier</button>
                             <small id="small-form-update"></small>
                         </form>`
 

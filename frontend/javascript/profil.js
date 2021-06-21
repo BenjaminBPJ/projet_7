@@ -56,25 +56,24 @@ getNewInfo = (user) => {
     let newDescription = document.getElementById("new-description").value;
     let oldDescription = user.result[0].description;  // je recupere les anciennes données pour les envoyer afin de réussir un bon "PUT"
 
-    // l'utilisateur modifie juste sa photo de profil, on envoie le fichier mais en data on prend son ancienne description
+        // l'utilisateur modifie juste sa photo de profil, on envoie le fichier mais en data on prend son ancienne description
     if (photoUser && newDescription === "") {
         let newProfil = JSON.stringify({
             description: oldDescription,
         });
-        console.log(oldDescription)
         const data = new FormData();
         data.append('image', photoUser);
         data.append('description', newProfil);
         updateUserWithImage(data);
 
-    // l'utilisateur modifie que sa description 
+        // l'utilisateur modifie que sa description 
     } else if (!photoUser && newDescription !== "") {
-            let newProfil = {
-                description: newDescription,
-            };
-            updateUserWithOutImage(newProfil);
+        let newProfil = {
+            description: newDescription,
+        };
+        updateUserWithOutImage(newProfil);
 
-    // l'utilisateur modifie sa photo et sa description
+        // l'utilisateur modifie sa photo et sa description
     } else if (photoUser && newDescription !== "") {
         let newProfil = JSON.stringify({
             description: newDescription,
@@ -84,7 +83,7 @@ getNewInfo = (user) => {
         data.append('description', newProfil);
         updateUserWithImage(data);
 
-    // Si il envoie un formulaire vide on renvoie une erreur
+        // Si il envoie un formulaire vide on renvoie une erreur
     } else {
         let small = document.getElementById('small-update-user');
         small.innerHTML = `Veuillez écrire une nouvelle description, envoyer une photo pour modifier votre profil ou cliquer sur retour.`;
@@ -96,8 +95,8 @@ sendUpdateUser = (user) => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getNewInfo(user);
-    })
-}
+    });
+};
 
 //////////// Suppression du compte de l'utilisateur ////////////
 deleteUser = () => {

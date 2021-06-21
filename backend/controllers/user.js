@@ -138,9 +138,6 @@ exports.modifyUser = (req, res, next) => {
 
     userObject = { ...userObject, userId: userId };
 
-    console.log(userObject)
-    console.log(req.file)
-
     userModel.checkUserId(id, userId)
         .then(goodId => {
             userModel.findPhoto(id)
