@@ -2,7 +2,7 @@ getPost = (value) => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
-    article.setAttribute('id', `post-${value.id}`)
+    article.setAttribute('id', `post-${value.id}`);
 
     article.innerHTML = `<header class ="header-publication">
                             <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
@@ -13,7 +13,7 @@ getPost = (value) => {
                             <p class="content-publication${value.id}">${value.publication}</p>`;
 
     if (value.imageUrl) {
-        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication${value.id}" alt="image illustrant l'article" />`
+        article.innerHTML += `<img src="${value.imageUrl}" class="image-publication${value.id}" alt="image illustrant l'article" />`;
     };
 
     article.innerHTML += `</div>
@@ -40,8 +40,8 @@ deleteUpdatePostIcon = (value) => {
 formUpdatePost = (value) => {
     let form = document.createElement(`form`);
     document.querySelector(".main-reseau").appendChild(form);
-    form.setAttribute('id', `form-modale-update${value.id}`)
-    form.classList.add('form-modale')
+    form.setAttribute('id', `form-modale-update${value.id}`);
+    form.classList.add('form-modale');
 
     form.innerHTML = `<form>
                             <label for="old-title">Ancien titre</label><br>
@@ -59,13 +59,13 @@ formUpdatePost = (value) => {
                             <button  id="close-form-update-post">Fermer</button>
                             <button  id="send-form-update-post${value.id}">Modifier</button>
                             <small id="small-form-update"></small>
-                        </form>`
+                        </form>`;
 
     // ` if (value.imageUrl) {form.innerHTML += `<label for="old-image">ancienne image partagée</label><br<img src="${value.imageUrl}" id="old-image" />`}                  form.innerHTML += `
 };
 
 getComment = (value) => {
-    let article = document.getElementById(`post-${value.publiId}`)
+    let article = document.getElementById(`post-${value.publiId}`);
     let comment = document.createElement(`div`);
     article.appendChild(comment);
     comment.setAttribute(`id`, `commentaire${value.id}`);
@@ -96,7 +96,7 @@ noPost = () => {
 
     article.innerHTML = `<div class="texte-image-publication">
                             <p>Aucune publication pour le moment</p>
-                        </div>`
+                        </div>`;
 };
 
 userProfil = (value) => {
@@ -116,7 +116,7 @@ userProfil = (value) => {
 userEditProfil = (value) => {
     let article = document.createElement(`article`);
     document.querySelector("main").appendChild(article);
-    article.setAttribute('id', 'form-update-user')
+    article.setAttribute('id', 'form-update-user');
     article.classList.add("profil-update");
 
     article.innerHTML = `   <form>
@@ -147,10 +147,10 @@ calcTime = (time) => {
     const month = week * 4;
     const year = month * 12;
 
-    const dateCreation = new Date(time)
-    const dateNow = new Date()
+    const dateCreation = new Date(time);
+    const dateNow = new Date();
 
-    const timeDiff = dateNow - dateCreation
+    const timeDiff = dateNow - dateCreation;
     let value = 0;
     if (isNaN(timeDiff)) return NaN;
     switch (true) {

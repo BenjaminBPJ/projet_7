@@ -66,7 +66,7 @@ main{
     padding-left: 5em;
 }
 
-.lien-deco{
+.lien-nav-header{
     text-decoration: none;
     color: black;
 }
@@ -86,6 +86,7 @@ main{
     animation-duration: 0.9s;
     animation-fill-mode: forwards;
     transform: scale(1);
+    cursor: pointer;
 }
 
 .publication{

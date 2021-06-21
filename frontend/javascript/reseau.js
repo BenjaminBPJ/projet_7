@@ -2,13 +2,11 @@
 getPosts = () => {
     let currentUser = localStorage.getItem('userId');
     let roleUser = localStorage.getItem('role');
-    console.log(roleUser)
     let urlPost = `http://localhost:3000/api/posts/`;
     let urlComment = `http://localhost:3000/api/comments/`;
     let dataPost = request(urlPost);
     dataPost.then(posts => {
         let publication = posts.result;
-        console.log(publication)
         publication.forEach(onePublication => {
             let idPost = onePublication.id;
             let urlForOnePost = urlPost + idPost;
@@ -16,7 +14,7 @@ getPosts = () => {
             getPost(onePublication);
             createComment(urlCommentFromOnePost, onePublication);
             if (onePublication.userId == currentUser || roleUser === 'administrateur') {
-                deleteUpdatePostIcon(onePublication)
+                deleteUpdatePostIcon(onePublication);
                 postToDelete(urlForOnePost, onePublication);
                 formUpdatePost(onePublication);
                 makeInputUpdateAppear(onePublication);
@@ -24,14 +22,14 @@ getPosts = () => {
             };
             let dataComment = request(urlComment + idPost);
             dataComment.then(comments => {
-                let commentaire = comments.result
+                let commentaire = comments.result;
                 commentaire.forEach(oneComment => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
                     getComment(oneComment);
                     commentToUpdate(urlOneComment, oneComment);
                     commentToDelete(urlOneComment, oneComment);
-                })
+                });
             })
                 .catch((error) => {
                 });
@@ -39,9 +37,9 @@ getPosts = () => {
     })
         .catch((error) => {
             if (error.error) {
-                noPost()
-            }
-        })
+                noPost();
+            };
+        });
 };
 
 getPosts();
@@ -50,8 +48,7 @@ getPosts();
 createPostWithImage = (post) => {
     let data = sendWithImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
-        console.log(publication)
-        window.location.reload()
+        window.location.reload();
     })
         .catch((error) => {
             console.log(error)
@@ -61,11 +58,9 @@ createPostWithImage = (post) => {
 createPostWithOutImage = (post) => {
     let data = sendWithOutImage(`http://localhost:3000/api/posts/`, post);
     data.then(publication => {
-        console.log('ici publication', publication)
-        window.location.reload()
+        window.location.reload();
     })
         .catch((error) => {
-            console.log('ici error', error)
         });
 };
 
@@ -106,25 +101,25 @@ sendPost = () => {
 sendPost();
 
 /* --------------------------- Modification d'une publication --------------------------- */
+// fetch = envois d'un FormData ( car il y a un file ) au back pour modifier la publication 
 updatePostWithImage = (url, postUpdate) => {
     let data = updateWithImage(url, postUpdate);
     data.then(publication => {
         console.log(publication)
-        //window.location.reload()
+        window.location.reload()
     })
         .catch((error) => {
             console.log(error)
         });
 };
 
+// fecth = envois de données sous format JSON au back pour faire la modification
 updatePostWithOutImage = (url, postUpdate) => {
     let data = updateWithOutImage(url, postUpdate);
     data.then(publication => {
-        console.log('ici publication', publication)
-        //window.location.reload()
+        window.location.reload()
     })
         .catch((error) => {
-            console.log('ici error', error)
         });
 };
 
@@ -221,12 +216,12 @@ sendPostToUpdate = (url, post) => {
 // apparition des inputs de modification
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
-    let form = document.getElementById(`form-modale-update${post.id}`)
+    let form = document.getElementById(`form-modale-update${post.id}`);
     button.addEventListener('click', function (e) {
         e.preventDefault();
         form.classList.add('show');
-    })
-}
+    });
+};
 /* --------------------------- Suppression d'une publication --------------------------- */
 deletePost = (url) => {
     let data = deleteMethod(url);
@@ -249,7 +244,7 @@ postToDelete = (url, value) => {
 sendCommentToApi = (url, comment) => {
     let data = sendWithOutImage(url, comment);
     data.then(commentaire => {
-        //window.location.reload();
+        window.location.reload();
     })
         .catch((error) => {
             console.log(error)
@@ -260,7 +255,7 @@ newCommentCreate = (url, post) => {
     let comment = document.getElementById(`send-comment${post.id}`).value;
     let small = document.getElementById(`small-send-comment${post.id}`);
 
-    console.log(comment)
+    // envois d'une erreur si rien n'est écris
     if (comment === "") {
         small.innerHTML = `Veuillez écrire un commentaire.`;
     } else {
@@ -290,7 +285,6 @@ updateComment = (url, value) => {
 
 newCommentUpdate = (url, commentaire) => {
     let comment = document.getElementById(`comment-to-update${commentaire.id}`).value;
-    console.log(comment)
     let newCommentaire = {
         comments: comment
     };
@@ -300,7 +294,7 @@ newCommentUpdate = (url, commentaire) => {
 commentToUpdate = (url, commentaire) => {
     let button = document.getElementById(`update-comment-done${commentaire.id}`);
     button.addEventListener('click', function (e) {
-        //e.preventDefault();
+        e.preventDefault();
         newCommentUpdate(url, commentaire);
     });
 };
