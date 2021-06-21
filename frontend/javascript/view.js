@@ -1,4 +1,4 @@
-getPost = (value, comment) => {
+getPost = (value) => {
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
@@ -64,29 +64,28 @@ formUpdatePost = (value) => {
     // ` if (value.imageUrl) {form.innerHTML += `<label for="old-image">ancienne image partagée</label><br<img src="${value.imageUrl}" id="old-image" />`}                  form.innerHTML += `
 };
 
-getComment = (value, article) => {
-    for (i = 0; i < value.length; i++) {
-        let comment = document.createElement(`div`);
-        article.appendChild(comment);
-        comment.setAttribute(`id`, `commentaire${value[i].id}`);
-        comment.classList.add("hidden-comment", "commentaire");
+getComment = (value) => {
+    let article = document.getElementById(`post-${value.publiId}`)
+    let comment = document.createElement(`div`);
+    article.appendChild(comment);
+    comment.setAttribute(`id`, `commentaire${value.id}`);
+    comment.classList.add("commentaire");
 
-        comment.innerHTML = `<header class ="header-commentaire">
-                                <h3 class="auteur-commentaire">${value[i].firstName} ${value[i].lastName}</h3>
-                                <h4 class="date-commentaire">Il y a ${calcTime(value[i].publiAt)}</h4>
+    comment.innerHTML = `<header class ="header-commentaire">
+                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
+                                <h4 class="date-commentaire">Il y a ${calcTime(value.publiAt)}</h4>
                             </header>
-                            <p>${value[i].content}</p>`;
+                            <p>${value.content}</p>`;
 
-        let currentUser = localStorage.getItem('userId');
-        let roleUser = localStorage.getItem('role');
-        if (value[i].userId == currentUser || roleUser === 'administrateur') {
-            comment.innerHTML += `<button type="submit" id="delete-comment${value[i].id}">Supprimer</button>
+    let currentUser = localStorage.getItem('userId');
+    let roleUser = localStorage.getItem('role');
+    if (value.userId == currentUser || roleUser === 'administrateur') {
+        comment.innerHTML += `<button type="submit" id="delete-comment${value.id}">Supprimer</button>
                                   <small id="small-delete-comment"></small><br>
                                   <button type="submit" id="update-comment">Modifier</button><br>
-                                  <input  id="comment-to-update${value[i].id}" />
-                                  <input type="submit" id="update-comment-done${value[i].id}" value="Modifier commentaire"/>
+                                  <input  id="comment-to-update${value.id}" />
+                                  <input type="submit" id="update-comment-done${value.id}" value="Modifier commentaire"/>
                                   <small id="small-update-comment"></small>`;
-        };
     };
 };
 

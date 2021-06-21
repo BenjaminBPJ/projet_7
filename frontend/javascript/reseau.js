@@ -8,6 +8,7 @@ getPosts = () => {
     let dataPost = request(urlPost);
     dataPost.then(posts => {
         let publication = posts.result;
+        console.log(publication)
         publication.forEach(onePublication => {
             let idPost = onePublication.id;
             let urlForOnePost = urlPost + idPost;
@@ -27,7 +28,7 @@ getPosts = () => {
                 commentaire.forEach(oneComment => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
-                    getComment(oneComment, onePublication);
+                    getComment(oneComment);
                     commentToUpdate(urlOneComment, oneComment);
                     commentToDelete(urlOneComment, oneComment);
                 })
