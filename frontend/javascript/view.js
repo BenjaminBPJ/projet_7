@@ -82,10 +82,9 @@ getComment = (value) => {
     if (value.userId == currentUser || roleUser === 'administrateur') {
         comment.innerHTML += `<button type="submit" id="delete-comment${value.id}">Supprimer</button>
                                   <small id="small-delete-comment"></small><br>
-                                  <button type="submit" id="update-comment">Modifier</button><br>
                                   <input  id="comment-to-update${value.id}" />
                                   <input type="submit" id="update-comment-done${value.id}" value="Modifier commentaire"/>
-                                  <small id="small-update-comment"></small>`;
+                                  <small id="small-update-comment${value.id}"></small>`;
     };
 };
 
@@ -108,8 +107,8 @@ userProfil = (value) => {
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <p class="profil-description"> Description : </p>
                             <p id="text-description" class="profil-description" rows="5">${value.result[0].description}</p><br>
-                            <button id="goToEdit">Modification de votre profil</buttton>
-                            <button id="back-to-network">retour</buttton>
+                            <button type="submit" id="goToEdit">Modification de votre profil</buttton>
+                            <button type="submit" id="back-to-network">retour</buttton>
                         `;
 };
 
@@ -130,7 +129,7 @@ userEditProfil = (value) => {
                             <p id="old-description" >${value.result[0].description}</p>
                             <label for="new-description"></label>
                             <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea><br>
-                            <button type="" id="send-profil">modifier</button>
+                            <button type="submit" id="send-profil">modifier</button>
                             <button id="back-to-profil">retour</buttton>
                             </form>
                             <button id="delete-account">Suppression du compte</button>    
@@ -174,6 +173,9 @@ calcTime = (time) => {
         case timeDiff > second:
             value = Math.floor(timeDiff / second);
             return value + " seconde" + (value > 1 ? "s" : "");
+        case timeDiff < second:
+            value = Math.floor(timeDiff / second);
+            return "moins d'une seconde";
         default:
             return undefined;
     };

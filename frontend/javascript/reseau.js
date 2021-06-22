@@ -80,7 +80,7 @@ getPostInfo = () => {
         createPostWithImage(data);
     } else if (titre !== "" && content !== "") {
         let publication = {
-            titre: titre,
+            titre: encodeURIComponent(titre),
             publication: content
         };
         createPostWithOutImage(publication);
@@ -105,7 +105,6 @@ sendPost();
 updatePostWithImage = (url, postUpdate) => {
     let data = updateWithImage(url, postUpdate);
     data.then(publication => {
-        console.log(publication)
         window.location.reload()
     })
         .catch((error) => {
@@ -285,10 +284,15 @@ updateComment = (url, value) => {
 
 newCommentUpdate = (url, commentaire) => {
     let comment = document.getElementById(`comment-to-update${commentaire.id}`).value;
-    let newCommentaire = {
-        comments: comment
-    };
-    updateComment(url, newCommentaire);
+    if (comment === "") {
+        let small = document.getElementById(`small-update-comment${commentaire.id}`);
+        small.innerHTML = `Veuillez écrire un commentaire pour le modifier.`;
+    } else {
+        let newCommentaire = {
+            comments: comment
+        };
+        updateComment(url, newCommentaire);
+    }
 };
 
 commentToUpdate = (url, commentaire) => {

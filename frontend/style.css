@@ -129,9 +129,9 @@ main{
     display: flex;
 }
 
-/*.hidden-comment{
-    display: none;
-}*/
+.input-new-comment{
+    order: 1;
+}
 
 .update-publication{
     display: none;
