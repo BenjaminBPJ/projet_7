@@ -1,42 +1,63 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 @font-face{
     font-family: '612';
     src:url('police/B612-Regular.ttf');  
 }
 
 /* ---- Mise en page des pages d'inscriptions ---- */
-body{
-    margin: 0;
+.body-login{
     font-family: '612';
+    background-image: url(logos/icon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.main-login{
     display: flex;
     flex-direction: column;
-}
-
-.logo-login{
-    height: 15em;
-}
-
-main{
-    margin: auto;
+    text-align: center;
+    font-size: 1.3em;
+    padding:2%;
 }
 
 .principal-title{
-    margin : auto;
-    margin-bottom: 1em;
+    margin-top: 10%;
+    margin-bottom: 5%;
 }
 
 .inscription-form{
-    border: 0.5px solid grey;
+    font-size: 0.8em;
+    border: solid grey 1px;
+    border-radius: 5px;
+    padding: 1em;
+    width: 70%;
     margin: auto;
-    margin-bottom: 0.8em;
-    text-align: center;
-    padding: 0.5em;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
 .value-input-inscription{
-    margin: 1em;
-    padding: 0.5em;
+    padding: 0.4em;
+    margin: 0.5em;
 }
 
+#go-to-network{
+    font-size: 1em;
+    background:rgb(175, 20, 20);
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+    padding: 0.2em 0.5em;
+}
+
+.have-account{
+    margin-top: 2em;
+}
 
 /* ---- Mise en page de la page d'accueil ---- */
 .header-groupomania{
@@ -137,11 +158,12 @@ main{
     display: none;
 }
 
-.fa-trash-alt, .fa-edit{ /* = icone delete et update */
+/* affichage souris sur les icones delete et update */
+.fa-trash-alt, .fa-edit{ 
     cursor: pointer;
 }
 
-/* ---- Apparition du formulaire pour faire un update visibility: hidden; opacity: 0;---- */
+/* ---- Apparition du formulaire pour faire un update  ----*/
 .form-modale, .profil-update{
     display: flex;
     flex-direction: column;
@@ -176,7 +198,7 @@ main{
 }
 
 
-/* ---- Animation desicones sur la page d'accueil pour aller sur le profil et/ou se deconnecter ---- */
+/* ---- Animation des icones sur la page d'accueil pour aller sur le profil et/ou se deconnecter ---- */
 @keyframes zoom{
     0%{
         transform: scale(1);
