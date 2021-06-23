@@ -103,13 +103,38 @@ userProfil = (value) => {
     document.querySelector("main").appendChild(article);
     article.classList.add("profil");
 
-    article.innerHTML = `   <img src= "${value.result[0].imageUrl}" class="photo-profil"/>
-                            <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
+    article.innerHTML = `   <div class="profil-card">
+                                <div class="image-and-name-user">
+                                    <div class="image-user-profil"></div>
+                                    <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
+                                </div>
                             <p class="profil-description"> Description : </p>
-                            <p id="text-description" class="profil-description" rows="5">${value.result[0].description}</p><br>
-                            <button type="submit" id="goToEdit">Modification de votre profil</buttton>
+                            <input type="submit" id="go-to-edit" value="Modification de votre profil" /><br>
                             <button type="submit" id="back-to-network">retour</buttton>
+                            </div>
                         `;
+    noUserImage(value)
+    noUserDescription(value)
+};
+
+noUserImage = (value) => {
+    let image = document.createElement('span');
+    document.querySelector('.image-user-profil').appendChild(image);
+    if (value.result[0].imageUrl === null) {
+        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil"/>`;
+    } else {
+        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" />`;
+    };
+};
+
+noUserDescription = (value) => {
+    let article = document.createElement('p');
+    document.querySelector('.profil-description').appendChild(article);
+    if (value.result[0].description === null) {
+        article.innerHTML = `<p>Aucune description pour le moment.</p>`;
+    } else {
+        article.innerHTML = `<p>${value.result[0].description}</p>`;
+    };
 };
 
 userEditProfil = (value) => {
@@ -118,23 +143,44 @@ userEditProfil = (value) => {
     article.setAttribute('id', 'form-update-user');
     article.classList.add("profil-update");
 
-    article.innerHTML = `   <form>
-                                <label for="image-user">Votre Photo de profil</label> 
-                                <img src= ${value.result[0].imageUrl} class="photo-profil" />
-                                <input type="file" name="image" id="image-user" accept="image/*" />
-                            </form>
+    article.innerHTML = `  <div class="image-for-update">
+                            <p class="user-image-edit-profil">Choississez un fichier si vous voulez modifier votre image</p>
+                            <input type="file" name="image" id="image-user" accept="image/*" />   
+                            </div>                            
                             <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                             <form>
                             <label for="old-description">Description : </label>
                             <p id="old-description" >${value.result[0].description}</p>
                             <label for="new-description"></label>
-                            <textarea id="new-description" type="text" placeholder="Veuillez renseigner votre description ..." class=""></textarea><br>
-                            <button type="submit" id="send-profil">modifier</button>
-                            <button id="back-to-profil">retour</buttton>
+                            <textarea id="new-description" type="text" rows="5" placeholder="Veuillez renseigner votre nouvelle description ..."></textarea><br>
+                            <button type="submit" id="send-profil">Valider</button>
                             </form>
-                            <button id="delete-account">Suppression du compte</button>    
-                            <small id="small-update-user"></small>                       
+                            <small id="small-update-user"></small>   
+                            <div class="div-button-update-user">
+                            <button id="delete-account" class="button-update-user">Suppression du compte</button><br>     
+                            <button id="back-to-profil" class="button-update-user">Retour au profil</buttton>  
+                            </div>                 
                         `;
+                        noImageUpdateUser(value)
+};
+
+noImageUpdateUser = (value) => {
+    let image = document.createElement('div');
+    document.querySelector('.user-image-edit-profil').appendChild(image);
+    image.classList.add('photo-user-before-edit')
+    if (value.result[0].imageUrl === null) {
+        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil"/>`;
+    } else {
+        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" />`;
+    };
+};
+
+noProfil = () => {
+    let article = document.createElement(`div`);
+    document.querySelector("main").appendChild(article);
+
+    article.innerHTML = `<p class="no-server">Impossible de charger votre profil,<br>
+                            veuillez réessayer ultérieurement.</p>`;
 };
 
 calcTime = (time) => {
@@ -180,3 +226,12 @@ calcTime = (time) => {
             return undefined;
     };
 };
+
+/*<div class="profil-card">
+                            <img src= "${value.result[0].imageUrl}" class="photo-profil"/>
+                            <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
+                            <p class="profil-description"> Description : </p>
+                            <p id="text-description" class="profil-description" rows="5">${value.result[0].description}</p><br>
+                            <button type="submit" id="goToEdit">Modification de votre profil</buttton>
+                            <button type="submit" id="back-to-network">retour</buttton>
+                            </div>*/

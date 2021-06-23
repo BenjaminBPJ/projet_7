@@ -142,7 +142,15 @@ exports.modifyUser = (req, res, next) => {
         .then(goodId => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
-                    if (oldPhoto[0].imageUrl !== null || oldPhoto[0].imageUrl !== req.file) {
+                    if (userObject.imageUrl === null || oldPhoto[0].imageUrl === null) {
+                        userModel.update(userObject)
+                            .then(result => {
+                                res.status(200).json({ result });
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
+                    } else {
                         const filename = oldPhoto[0].imageUrl.split('/images/')[1];
                         fs.unlink(`images/${filename}`, () => {
                             userModel.update(userObject)
@@ -153,14 +161,6 @@ exports.modifyUser = (req, res, next) => {
                                     res.status(404).json({ error: errorMessage });
                                 });
                         });
-                    } else {
-                        userModel.update(userObject)
-                            .then(result => {
-                                res.status(200).json({ result });
-                            })
-                            .catch(errorMessage => {
-                                res.status(404).json({ error: errorMessage });
-                            });
                     };
                 })
                 .catch(errorMessage => {

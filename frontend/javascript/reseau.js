@@ -36,9 +36,7 @@ getPosts = () => {
         });
     })
         .catch((error) => {
-            if (error.error) {
                 noPost();
-            };
         });
 };
 
@@ -216,9 +214,11 @@ sendPostToUpdate = (url, post) => {
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
     let form = document.getElementById(`form-modale-update${post.id}`);
+    let body = document.getElementById(`main-profil`);
     button.addEventListener('click', function (e) {
         e.preventDefault();
         form.classList.add('show');
+        body.classList.add('show')
     });
 };
 /* --------------------------- Suppression d'une publication --------------------------- */

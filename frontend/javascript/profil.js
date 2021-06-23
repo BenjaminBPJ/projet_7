@@ -11,14 +11,14 @@ profilPage = () => {
         sendUpdateUser(user);
     })
         .catch((error) => {
-            console.log(error)
+            noProfil()
         })
 };
 
 
 //////////// Fait apparaitre le formulaire pour modifier l'utilisateur ////////////
 goToEditProfil = () => {
-    let button = document.getElementById('goToEdit');
+    let button = document.getElementById('go-to-edit');
     let form = document.getElementById(`form-update-user`);
 
     // au click on va faire apparaitre le formulaire
@@ -86,7 +86,7 @@ getNewInfo = (user) => {
         // Si il envoie un formulaire vide on renvoie une erreur
     } else {
         let small = document.getElementById('small-update-user');
-        small.innerHTML = `Veuillez écrire une nouvelle description, envoyer une photo pour modifier votre profil ou cliquer sur retour.`;
+        small.innerHTML = `Veuillez changer votre image ou écrire une nouvelle description avant d'appuyer sur le bouton modifier, ou cliquer sur le bouton retour.`;
     };
 };
 
@@ -106,7 +106,7 @@ deleteUser = () => {
 
         alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
 
-        let data = deleteMethod(`http://localhost:3000/api/auth` + userId);
+        let data = deleteMethod(`http://localhost:3000/api/auth/` + userId);
         data.then(userDelete => {
             window.location = `inscription.html`;
         })
