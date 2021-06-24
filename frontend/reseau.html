@@ -10,7 +10,7 @@
     <title>Réseau social Groupomania</title>
 </head>
 
-<body>
+<body class="body-reseau">
     <header class="header-groupomania">
         <img src="logos/icon-left-font-monochrome-black.svg" class="logo-header"
             alt="logo de l'entreprise groupomania" />
@@ -30,19 +30,19 @@
         </nav>
     </header>
     <main class="main-reseau">
-        <article class="publication-home">
+        <article class="publication-home interface-form-publication">
             <h2>Créer une publication</h2>
             <form class="form-publication" method="post" enctype="multipart/form-data">
-                <label for="titre-publication">Titre</label>
-                <input placeholder="votre titre" id="titre-publication" /><br>
-                <label for="textarea-publi">Que souhaitez-vous partager ?</label>
+                <label for="titre-publication" class="label-form-publication">Titre</label>
+                <input placeholder="votre titre" id="titre-publication" class="input-form-publication"/><br>
+                <label for="textarea-publi" class="label-form-publication">Que souhaitez-vous partager ?</label><br>
                 <textarea placeholder="Exprimez-vous ..." rows="5" id="textarea-publi"></textarea>
                 <div>
-                    <label for="image-publi">Votre image</label>
-                    <input type="file" name="image" id="image-publi" />
+                    <label for="image-publi" class="label-form-publication">Votre image :</label>
+                    <input type="file" name="image" id="image-publi" class="input-form-publication"/><br>
                     <button type="submit" id="send-post">Partagez</button>
                 </div>
-                <small id="small-form-publication"></small><br>
+                <small id="small-form-publication" class="small"></small><br>
             </form>
         </article>
         <article class="publication-home">
