@@ -19,7 +19,7 @@ getPost = (value) => {
     article.innerHTML += `</div>
                           <div class="input-new-comment">
                              <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
-                             <input type="submit" id="sending-comment${value.id}" value="commenter" />
+                             <input type="submit" id="sending-comment${value.id}" class="pointer-input" value="commenter" />
                              <small id="small-send-comment${value.id}" class="small"></small>
                          </div>`;
 };
@@ -42,19 +42,15 @@ formUpdatePost = (value) => {
     form.setAttribute('id', `form-modale-update${value.id}`);
     form.classList.add('form-modale');
 
-    form.innerHTML =    `<form aria-hidden="true">
-                            <label for="old-title">Ancien titre</label><br>
-                            <p id="old-tile">${value.titre}</p>
+    form.innerHTML = `<form aria-hidden="true">
                             <label for="new-title">Nouveau titre</label><br>
-                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" /><br>
-                            <label for="old-post">ancien article</label><br>
-                            <p id="old-post">${value.publication}</p>
+                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/><br>
                             <label for="new-post">Nouvel article</label><br>
-                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article"></textarea><br>                            
+                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article">${value.publication}</textarea><br>                            
                             <label for="new-image">Nouvelle image</label><br>
                             <input type="file" class="input-update-form" id="new-image"/><br>
-                            <button  id="close-form-update-post">Fermer</button>
-                            <button  id="send-form-update-post${value.id}">Modifier</button>
+                            <button  id="close-form-update-post" class="pointer-input">Fermer</button>
+                            <button  id="send-form-update-post${value.id}" class="pointer-input">Modifier</button>
                             <small id="small-form-update" class="small"></small>
                         </form>`;
 };
@@ -66,20 +62,31 @@ getComment = (value) => {
     comment.setAttribute(`id`, `commentaire${value.id}`);
     comment.classList.add("commentaire");
 
-    comment.innerHTML =     `<header class ="header-commentaire">
-                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
-                                <h4 class="date-commentaire">Il y a ${calcTime(value.publiAt)}</h4>
-                            </header>
-                            <p class="comment-content">${value.content}</p>`;
-
     let currentUser = localStorage.getItem('userId');
     let roleUser = localStorage.getItem('role');
     if (value.userId == currentUser || roleUser === 'administrateur') {
-        comment.innerHTML += `<button type="submit" id="delete-comment${value.id}">Supprimer</button>
-                                  <small id="small-delete-comment"></small><br>
-                                  <input  id="comment-to-update${value.id}" />
-                                  <input type="submit" id="update-comment-done${value.id}" value="Modifier commentaire"/>
-                                  <small id="small-update-comment${value.id}" class="small"></small>`;
+        comment.innerHTML = `<header class="header-commentaire">
+                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
+                                <h4 class="date-commentaire">Il y a ${calcTime(value.publiAt)}</h4>
+                            </header>
+                            <div class="content-commentaire${value.id} showCommentaire">
+                                <i class="fas fa-trash-alt" id="delete-comment${value.id}"></i>
+                                <i class="fas fa-edit" id="update-comment${value.id}"></i>
+                                <p>${value.content}</p>
+                            </div>
+                            <div class="modifCom${value.id} hideCommentaire">           
+                                <input id="comment-to-update${value.id}" value="${value.content}">
+                                <input type="submit" id="update-comment-done${value.id}" value="Modifier commentaire">
+                                <small id="small-update-comment${value.id}"></small>
+                            </div>`;
+    } else {
+        comment.innerHTML = `<header class="header-commentaire">
+                                <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
+                                <h4 class="date-commentaire">Il y a ${calcTime(value.publiAt)}</h4>
+                            </header>
+                            <div class="commentaire${value.id}">
+                                <p>${value.content}</p>
+                            </div>`;
     };
 };
 
@@ -104,8 +111,8 @@ userProfil = (value) => {
                                     <h2 class="profil-title">${value.result[0].firstName} ${value.result[0].lastName}</h2>
                                 </div>
                             <p class="profil-description"> Description : </p>
-                            <input type="submit" id="go-to-edit" value="Modification de votre profil" /><br>
-                            <button type="submit" id="back-to-network">retour</buttton>
+                            <input type="submit" id="go-to-edit" value="Modification de votre profil" class="pointer-input" /><br>
+                            <button type="submit" id="back-to-network" class="pointer-input">retour</buttton>
                             </div>
                         `;
     noUserImage(value)
@@ -156,7 +163,7 @@ userEditProfil = (value) => {
                                 <button id="back-to-profil" class="button-update-user">Retour au profil</buttton>  
                             </div>                 
                         `;
-                        noImageUpdateUser(value)
+    noImageUpdateUser(value)
 };
 
 noImageUpdateUser = (value) => {

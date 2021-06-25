@@ -33,6 +33,9 @@ a:hover{
     color: red;
 }
 
+.pointer-input{
+    cursor: pointer;
+}
 /* --------------------------- Mise en page des pages d'inscriptions --------------------------- */
 .body-login{
     background-image: url(logos/icon.svg);
@@ -135,6 +138,7 @@ a:hover{
 /* ---- Mise en place des publications ---- */
 .body-reseau, .body-profil{
     background-color: gainsboro;
+    width: 100%;
 }
 
 .main-reseau{
@@ -204,24 +208,6 @@ a:hover{
     text-align: left;
 }
 
-.commentaire{
-    font-size: 0.6em;
-    display: flex;
-    flex-direction: column;
-    background: gainsboro;
-    border-radius: 5px;
-    margin : 0.7em 0;
-    padding: 0.5em;
-}
-
-.comment-content{
-    font-weight: lighter;
-}
-
-.input-new-comment{
-    order: 1;
-}
-
 .update-publication{
     display: none;
 }
@@ -263,6 +249,29 @@ a:hover{
 .input-update-form{
     width: 50%;
     margin: auto;
+}
+
+.commentaire{
+    font-size: 0.6em;
+    display: flex;
+    flex-direction: column;
+    background: gainsboro;
+    border-radius: 5px;
+    margin : 0.7em 0;
+    padding: 0.5em;
+}
+
+.comment-content{
+    font-weight: lighter;
+}
+
+.input-new-comment{
+    order: 1;
+}
+
+/* affichage input modif d'un commentaire */
+.hideCommentaire{
+    display: none;
 }
 /* --------------------------- Mise en page de la page de profil --------------------------- */
 .main-profil{

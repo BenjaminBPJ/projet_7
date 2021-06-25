@@ -29,6 +29,7 @@ getPosts = () => {
                     getComment(oneComment);
                     commentToUpdate(urlOneComment, oneComment);
                     commentToDelete(urlOneComment, oneComment);
+                    makeInputCommentUpdateAppear(oneComment)
                 });
             })
                 .catch((error) => {
@@ -218,7 +219,6 @@ makeInputUpdateAppear = (post) => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         form.classList.add('show');
-        body.classList.add('show')
     });
 };
 /* --------------------------- Suppression d'une publication --------------------------- */
@@ -300,6 +300,18 @@ commentToUpdate = (url, commentaire) => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
         newCommentUpdate(url, commentaire);
+    });
+};
+
+// apparition input modif commentaire
+makeInputCommentUpdateAppear = (commentaire) => {
+    let button = document.getElementById(`update-comment${commentaire.id}`);
+    let input = document.querySelector(`.modifCom${commentaire.id}`);
+    let oldComment = document.querySelector(`content-commentaire${commentaire.id}`);
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        input.classList.remove('hideCommentaire');
+        oldComment.classList.add('hideCommentaire')
     });
 };
 
