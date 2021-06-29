@@ -70,8 +70,8 @@ getPostInfo = () => {
 
     if (imageValue && titre) {
         let postContent = JSON.stringify({
-            titre: titre,
-            publication: content
+            titre: escapeHtml(titre),
+            publication: escapeHtml(content)
         });
         const data = new FormData();
         data.append('image', imageValue);
@@ -79,8 +79,8 @@ getPostInfo = () => {
         createPostWithImage(data);
     } else if (titre !== "" && content !== "") {
         let publication = {
-            titre: encodeURIComponent(titre),
-            publication: content
+            titre: escapeHtml(titre),
+            publication: escapeHtml(content)
         };
         createPostWithOutImage(publication);
     } else {
@@ -91,9 +91,11 @@ getPostInfo = () => {
 
 sendPost = () => {
     let button = document.getElementById("send-post");
+    let form = document.querySelector(".form-publication")
     button.addEventListener('click', function (e) {
         e.preventDefault();
         getPostInfo();
+        form.reset()
     });
 };
 
@@ -131,8 +133,8 @@ getPostInfoForUpdate = (url, postValue) => {
     // Si il y a tout de remplis dans le formulaire
     if (imageValue && titre && content) {
         let postContent = JSON.stringify({
-            titre: titre,
-            publication: content
+            titre: escapeHtml(titre),
+            publication: escapeHtml(content)
         });
         const data = new FormData();
         data.append('image', imageValue);
@@ -153,7 +155,7 @@ getPostInfoForUpdate = (url, postValue) => {
         // Si tout est changé sauf le message de publication
     } else if (imageValue && titre !== "" && content === "") {
         let postContent = JSON.stringify({
-            titre: titre,
+            titre: escapeHtml(titre),
             publication: oldContent
         });
         const data = new FormData();
@@ -165,7 +167,7 @@ getPostInfoForUpdate = (url, postValue) => {
     } else if (imageValue && titre === "" && content !== "") {
         let postContent = JSON.stringify({
             titre: oldTitle,
-            publication: content
+            publication: escapeHtml(content)
         });
         const data = new FormData();
         data.append('image', imageValue);
@@ -175,8 +177,8 @@ getPostInfoForUpdate = (url, postValue) => {
         // Si le titre et l'article sont modifiés
     } else if (!imageValue && titre !== "" && content !== "") {
         let publication = {
-            titre: titre,
-            publication: content
+            titre: escapeHtml(titre),
+            publication: escapeHtml(content)
         };
         updatePostWithOutImage(url, publication);
 
@@ -184,14 +186,14 @@ getPostInfoForUpdate = (url, postValue) => {
     } else if (!imageValue && titre === "" && content !== "") {
         let publication = {
             titre: oldTitle,
-            publication: content
+            publication: escapeHtml(content)
         };
         updatePostWithOutImage(url, publication);
 
         // Si juste le titre est modifié
     } else if (!imageValue && titre !== "" && content === "") {
         let publication = {
-            titre: titre,
+            titre: escapeHtml(titre),
             publication: oldContent
         };
         updatePostWithOutImage(url, publication);
@@ -215,7 +217,6 @@ sendPostToUpdate = (url, post) => {
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
     let form = document.getElementById(`form-modale-update${post.id}`);
-    let body = document.getElementById(`main-profil`);
     button.addEventListener('click', function (e) {
         e.preventDefault();
         form.classList.add('show');
@@ -259,7 +260,7 @@ newCommentCreate = (url, post) => {
         small.innerHTML = `Veuillez écrire un commentaire.`;
     } else {
         let newCommentaire = {
-            comments: comment
+            comments: escapeHtml(comment)
         };
         sendCommentToApi(url, newCommentaire);
     };
@@ -289,7 +290,7 @@ newCommentUpdate = (url, commentaire) => {
         small.innerHTML = `Veuillez écrire un commentaire pour le modifier.`;
     } else {
         let newCommentaire = {
-            comments: comment
+            comments: escapeHtml(comment)
         };
         updateComment(url, newCommentaire);
     }

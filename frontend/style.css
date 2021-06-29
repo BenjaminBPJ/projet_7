@@ -29,11 +29,11 @@ a:hover{
 }
 
 .small{
-    font-size: 1.1;
+    font-size: 1em;
     color: red;
 }
 
-.pointer-input{
+.pointer-input, #emote-profil{ /* emote-profil = emote avatar + mot profil */
     cursor: pointer;
 }
 /* --------------------------- Mise en page des pages d'inscriptions --------------------------- */
@@ -71,7 +71,7 @@ a:hover{
     margin: 0.5em;
 }
 
-#go-to-network, #send-post{
+#go-to-network, #send-post, .button-comment-post{
     font-size: 1em;
     background:rgb(175, 20, 20);
     color: white;
@@ -90,7 +90,6 @@ a:hover{
 /* ---- Bannière Groupomania ---- */
 .header-groupomania{
     display: flex;
-    height: 7em;
     background-color: #ffd7d7;
     border-bottom: 0.5em solid #fd2d01;
     justify-content: space-between;
@@ -104,20 +103,20 @@ a:hover{
 .ul-home{
     display: flex;
     padding: 1.5em;
-    margin-right: 4em;
+    margin-right: 2em;
 }
 
 .li-home{
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding-left: 5em;
-}
-/* ---- Animation des icones sur la page d'accueil pour aller sur le profil et/ou se deconnecter ---- */
-.emote-nav-home{
-    margin: 0.3em;
+    padding-left: 2em;
 }
 
+.text-nav{
+    margin-top: 0.8em;
+}
+/* ---- Animation des icones sur la page d'accueil pour aller sur le profil et/ou se deconnecter ---- */
 .emote-nav-home:hover {
     animation-name : zoom;
     animation-duration: 0.9s;
@@ -138,7 +137,6 @@ a:hover{
 /* ---- Mise en place des publications ---- */
 .body-reseau, .body-profil{
     background-color: gainsboro;
-    width: 100%;
 }
 
 .main-reseau{
@@ -197,10 +195,6 @@ a:hover{
     width: 100%;
 }
 
-.date-publication{
-    padding-right: 2em;
-}
-
 .content-publication{
     font-size: 0.8em;
     font-weight: lighter;
@@ -223,15 +217,16 @@ a:hover{
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    background-color: white;
+    background-image: linear-gradient(135deg, rgba(159, 159, 159, 0.46) 0%, rgba(159, 159, 159, 0.46) 14.286%,rgba(165, 165, 165, 0.46) 14.286%, rgba(165, 165, 165, 0.46) 28.572%,rgba(171, 171, 171, 0.46) 28.572%, rgba(171, 171, 171, 0.46) 42.858%,rgba(178, 178, 178, 0.46) 42.858%, rgba(178, 178, 178, 0.46) 57.144%,rgba(184, 184, 184, 0.46) 57.144%, rgba(184, 184, 184, 0.46) 71.43%,rgba(190, 190, 190, 0.46) 71.43%, rgba(190, 190, 190, 0.46) 85.716%,rgba(196, 196, 196, 0.46) 85.716%, rgba(196, 196, 196, 0.46) 100.002%),linear-gradient(45deg, rgb(252, 252, 252) 0%, rgb(252, 252, 252) 14.286%,rgb(246, 246, 246) 14.286%, rgb(246, 246, 246) 28.572%,rgb(241, 241, 241) 28.572%, rgb(241, 241, 241) 42.858%,rgb(235, 235, 235) 42.858%, rgb(235, 235, 235) 57.144%,rgb(229, 229, 229) 57.144%, rgb(229, 229, 229) 71.43%,rgb(224, 224, 224) 71.43%, rgb(224, 224, 224) 85.716%,rgb(218, 218, 218) 85.716%, rgb(218, 218, 218) 100.002%);
     position: fixed;
+    font-weight: bold;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
     margin : 2em;
     z-index: 1;
-    padding:2em;
+    padding:3em;
     visibility: hidden;
     opacity: 0;
 }
@@ -251,6 +246,16 @@ a:hover{
     margin: auto;
 }
 
+.image-publication-modale{
+    width: 20em;
+    height: 20em;
+}
+
+.ask-image{
+    margin: auto;
+}
+
+/* -- Mise en place commentaire --*/
 .commentaire{
     font-size: 0.6em;
     display: flex;
@@ -266,13 +271,28 @@ a:hover{
 }
 
 .input-new-comment{
-    order: 1;
+    display: flex;
+    justify-content: center;
+    order: 1;    /* Order 1 car avec la dispotion du HTML l'input apparait avant l'apparition des commentaires */
+    margin: 1em;
 }
 
+.input-commentaire{
+    width: 50%;
+}
+ .small-input-new-comment{
+    order :2;
+ }
+
+ .button-comment-post{
+     font-size: 0.8em;
+     margin-left: 1em;
+ }
 /* affichage input modif d'un commentaire */
 .hideCommentaire{
     display: none;
 }
+
 /* --------------------------- Mise en page de la page de profil --------------------------- */
 .main-profil{
     font-size: 1.2em;
@@ -321,8 +341,8 @@ a:hover{
     padding: 0.2em 0.7em;
 }
 
-.button-update-user{
-    font-size: 0.9em;
+.button-update-user, .button-modale-update-post{
+    font-size: 1em;
     background:#fd2d01;
     color: white;
     cursor: pointer;
@@ -332,6 +352,48 @@ a:hover{
     padding: 0.2em 0.7em;
 }
 
+@media screen and (max-width: 900px){
+    .main-reseau{
+        width: 100%;
+    }
+    .publication-home{
+        margin: 2em;
+    }
+}
 
+@media screen and (max-width: 650px){
+    .header-groupomania{
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .ul-home{
+        flex-direction: column;
+    }
+    .li-home{
+        font-weight: bold;
+        flex-direction: row;
+        margin: auto;
+        align-items: center;
+        font-size: 1.1em;
+        padding-left: 0; /* il est a 5 en grand ecran */
+    }
+    .li-home-top{
+        margin-bottom: 1.1em;
+    }
+    .emote-nav-home{
+        padding-right: 1em;
+    }
+    .date-publication-post{
+        font-size: 0.75em;
+    }
+    .main-profil{
+        height: auto;
+        margin: 1.8em;
+    }
+    .profil-update{
+        font-size: 0.8em;
+    }
+}
 
 

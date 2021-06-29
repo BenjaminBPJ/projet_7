@@ -18,10 +18,10 @@ getPost = (value) => {
 
     article.innerHTML += `</div>
                           <div class="input-new-comment">
-                             <input type="text" placeholder="ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}" />
-                             <input type="submit" id="sending-comment${value.id}" class="pointer-input" value="commenter" />
-                             <small id="small-send-comment${value.id}" class="small"></small>
-                         </div>`;
+                             <textarea type="text" placeholder="Ecrivez votre commentaire" class="input-commentaire" id="send-comment${value.id}"></textarea>
+                             <input type="submit" id="sending-comment${value.id}" class="button-comment-post" value="Commenter" />
+                         </div>
+                         <small id="small-send-comment${value.id}" class="small small-input-new-comment"></small>`;
 };
 
 deleteUpdatePostIcon = (value) => {
@@ -43,17 +43,30 @@ formUpdatePost = (value) => {
     form.classList.add('form-modale');
 
     form.innerHTML = `<form aria-hidden="true">
-                            <label for="new-title">Nouveau titre</label><br>
+                            <label for="new-title">Titre</label><br>
                             <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/><br>
-                            <label for="new-post">Nouvel article</label><br>
-                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article">${value.publication}</textarea><br>                            
-                            <label for="new-image">Nouvelle image</label><br>
-                            <input type="file" class="input-update-form" id="new-image"/><br>
-                            <button  id="close-form-update-post" class="pointer-input">Fermer</button>
-                            <button  id="send-form-update-post${value.id}" class="pointer-input">Modifier</button>
+                            <label for="new-post">Article</label><br>
+                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article">${value.publication}</textarea><br>
+                            <div class="ask-image">
+                                <label for="new-image">Vous vous changer votre image de plublication ?</label>
+                                <input type="file" class="input-update-form" id="new-image"/><br>
+                            </div>
+                            <div id="old-image-publication"></div>  
+                            <div class="button-form-update-post">
+                                <button  id="close-form-update-post" class="pointer-input button-modale-update-post">Annuler</button>
+                                <button  id="send-form-update-post${value.id}" class="pointer-input button-modale-update-post">Valider</button>
+                            </div>
                             <small id="small-form-update" class="small"></small>
-                        </form>`;
+                      </form>`;
 };
+
+/*noPostImage = (value) => {
+    let image = document.createElement('span');
+    document.querySelector('.old-image-publication').appendChild(image);
+    console.log(image)
+    image.innerHTML = ` <img src="${value.imageUrl}" class="image-publication-modale" />`;
+};*/
+
 
 getComment = (value) => {
     let article = document.getElementById(`post-${value.publiId}`);
@@ -227,4 +240,13 @@ calcTime = (time) => {
         default:
             return undefined;
     };
+};
+
+escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 };

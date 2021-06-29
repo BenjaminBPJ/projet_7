@@ -69,14 +69,14 @@ getNewInfo = (user) => {
         // l'utilisateur modifie que sa description 
     } else if (!photoUser && newDescription !== "") {
         let newProfil = {
-            description: newDescription,
+            description: escapeHtml(newDescription),
         };
         updateUserWithOutImage(newProfil);
 
         // l'utilisateur modifie sa photo et sa description
     } else if (photoUser && newDescription !== "") {
         let newProfil = JSON.stringify({
-            description: newDescription,
+            description: escapeHtml(newDescription),
         });
         const data = new FormData();
         data.append('image', photoUser);
