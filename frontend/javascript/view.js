@@ -53,8 +53,8 @@ formUpdatePost = (value) => {
                             </div>
                             <div id="old-image-publication"></div>  
                             <div class="button-form-update-post">
-                                <button  id="close-form-update-post" class="pointer-input button-modale-update-post">Annuler</button>
-                                <button  id="send-form-update-post${value.id}" class="pointer-input button-modale-update-post">Valider</button>
+                                <button type="submit" id="close-form-update-post" class="pointer-input button-modale-update-post">Annuler</button>
+                                <button type="submit" id="send-form-update-post${value.id}" class="pointer-input button-modale-update-post">Valider</button>
                             </div>
                             <small id="small-form-update" class="small"></small>
                       </form>`;
@@ -88,7 +88,7 @@ getComment = (value) => {
                                 <p>${value.content}</p>
                             </div>
                             <div class="modifCom${value.id} hideCommentaire">           
-                                <input id="comment-to-update${value.id}" value="${value.content}">
+                                <textarea id="comment-to-update${value.id}">${value.content}</textarea>
                                 <input type="submit" id="update-comment-done${value.id}" value="Modifier commentaire">
                                 <small id="small-update-comment${value.id}"></small>
                             </div>`;
@@ -136,9 +136,9 @@ noUserImage = (value) => {
     let image = document.createElement('span');
     document.querySelector('.image-user-profil').appendChild(image);
     if (value.result[0].imageUrl === null) {
-        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil"/>`;
+        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil" alt="image illustrant l'utilisateur"/>`;
     } else {
-        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" />`;
+        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" alt="image illustrant l'utilisateur" />`;
     };
 };
 
@@ -172,8 +172,8 @@ userEditProfil = (value) => {
                             </form>
                             <small id="small-update-user" class="small"></small>   
                             <div class="div-button-update-user">
-                                <button id="delete-account" class="button-update-user">Suppression du compte</button><br>     
-                                <button id="back-to-profil" class="button-update-user">Retour au profil</buttton>  
+                                <button type="submit" id="delete-account" class="button-update-user">Suppression du compte</button><br>     
+                                <button type="submit" id="back-to-profil" class="button-update-user">Retour au profil</buttton>  
                             </div>                 
                         `;
     noImageUpdateUser(value)
@@ -184,9 +184,9 @@ noImageUpdateUser = (value) => {
     document.querySelector('.user-image-edit-profil').appendChild(image);
     image.classList.add('photo-user-before-edit')
     if (value.result[0].imageUrl === null) {
-        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil"/>`;
+        image.innerHTML = `<img src="logos/icon.svg" class="photo-profil" alt="image illustrant l'utilisateur" />`;
     } else {
-        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" />`;
+        image.innerHTML = ` <img src="${value.result[0].imageUrl}" class="photo-profil" alt="image illustrant l'utilisateur"/>`;
     };
 };
 

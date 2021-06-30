@@ -11,6 +11,8 @@
 </head>
 
 <body class="body-reseau">
+
+    <!-- bannière groupomania avec les emoticones -->
     <header class="header-groupomania">
         <img src="logos/icon-left-font-monochrome-black.svg" class="logo-header"
             alt="logo de l'entreprise groupomania" />
@@ -18,25 +20,29 @@
             <ul class="ul-home">
                 <li class="li-home li-home-top" id="emote-profil">
                     <i class="fas fa-user-tie fa-2x emote-nav-home"></i>
-                    <p  class="text-nav">PROFIL</p>
+                    <p class="text-nav">PROFIL</p>
                 </li>
                 <li class="li-home">
                     <a href="index.html" class="lien-nav-header li-home">
                         <i class="fas fa-power-off fa-2x emote-nav-home"></i>
-                        <p  class="text-nav">DÉCONNEXION</p>
+                        <p class="text-nav">DÉCONNEXION</p>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
+
+
     <main class="main-reseau">
+
+        <!-- Formulaire d'envoie d'une publication -->
         <article class="publication-home interface-form-publication">
             <h2>Créer une publication</h2>
             <form class="form-publication" method="post" enctype="multipart/form-data">
                 <label for="titre-publication" class="label-form-publication">Titre</label>
-                <input placeholder="Votre titre" id="titre-publication" class="input-form-publication"/><br>
+                <input type="text" placeholder="Votre titre" id="titre-publication" class="input-form-publication" /><br>
                 <label for="textarea-publi" class="label-form-publication">Que souhaitez-vous partager ?</label><br>
-                <textarea placeholder="Exprimez-vous ..." rows="5" id="textarea-publi"></textarea>
+                <textarea type="text" placeholder="Exprimez-vous ..." rows="5" id="textarea-publi"></textarea>
                 <div>
                     <label for="image-publi" class="label-form-publication">Votre image :</label>
                     <input type="file" name="image" id="image-publi" class="input-form-publication" /><br>
@@ -45,6 +51,8 @@
                 <small id="small-form-publication" class="small"></small><br>
             </form>
         </article>
+
+        <!-- Affichage dynamique des publications via le javascript (après le h3)-->
         <article class="publication-home">
             <h3 class="titre-derniere-publi">actualités</h3>
         </article>

@@ -28,6 +28,10 @@ a:hover{
     opacity: 1;
 }
 
+a:focus{
+    border:.2em solid #000
+}
+
 .small{
     font-size: 1em;
     color: red;
