@@ -1,11 +1,14 @@
 getPost = (value) => {
+    console.log(value)
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");
     article.setAttribute('id', `post-${value.id}`);
 
     article.innerHTML = `<header class ="header-publication">
-                            <h3 class="auteur-publication">${value.firstName} ${value.lastName}</h3>
+                            <h3 class="auteur-publication${value.id} auteur-publication">
+                                <p class="name-auteur">${value.firstName} ${value.lastName}</p>
+                            </h3>
                             <h4 id="date-publication${value.id}" class="date-publication-post">Posté il y a ${calcTime(value.datePublication)}</h4>                                                     
                         </header>
                         <div class="texte-image-publication">
@@ -22,6 +25,8 @@ getPost = (value) => {
                              <input type="submit" id="sending-comment${value.id}" class="button-comment-post" value="Commenter" />
                          </div>
                          <small id="small-send-comment${value.id}" class="small small-input-new-comment"></small>`;
+
+                         imageUser(value)
 };
 
 deleteUpdatePostIcon = (value) => {
@@ -36,6 +41,16 @@ deleteUpdatePostIcon = (value) => {
                      </div>`;
 };
 
+imageUser = (value) => {
+    let imageUser = document.createElement('div')
+    document.querySelector(`.auteur-publication${value.id}`).appendChild(imageUser)
+    if (value.usersimageUrl !== null){
+        imageUser.innerHTML = `<img src="${value.usersimageUrl}" class="photo-user-publication" />`
+    }else{
+        imageUser.innerHTML = `<img src="logos/icon.svg"  class="photo-user-publication"/>`
+    }
+}
+
 formUpdatePost = (value) => {
     let form = document.createElement(`form`);
     document.querySelector(".main-reseau").appendChild(form);
@@ -43,29 +58,34 @@ formUpdatePost = (value) => {
     form.classList.add('form-modale');
 
     form.innerHTML = `<form aria-hidden="true">
-                            <label for="new-title">Titre</label><br>
-                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/><br>
-                            <label for="new-post">Article</label><br>
-                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article">${value.publication}</textarea><br>
+                            <label for="new-title" class="label-form-modale">Titre</label>
+                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/>
+                            <label for="new-post" class="label-form-modale">Article</label>
+                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article" rows="5">${value.publication}</textarea>
                             <div class="ask-image">
                                 <label for="new-image">Vous vous changer votre image de plublication ?</label>
-                                <input type="file" class="input-update-form" id="new-image"/><br>
+                                <input type="file" class="input-update-form input-file-modale" id="new-image"/><br>
                             </div>
-                            <div id="old-image-publication"></div>  
+                            <div class="old-image-publication${value.id}"></div>  
                             <div class="button-form-update-post">
                                 <button type="submit" id="close-form-update-post" class="pointer-input button-modale-update-post">Annuler</button>
                                 <button type="submit" id="send-form-update-post${value.id}" class="pointer-input button-modale-update-post">Valider</button>
                             </div>
                             <small id="small-form-update" class="small"></small>
                       </form>`;
+
+                      postImage(value)
 };
 
-/*noPostImage = (value) => {
-    let image = document.createElement('span');
-    document.querySelector('.old-image-publication').appendChild(image);
-    console.log(image)
-    image.innerHTML = ` <img src="${value.imageUrl}" class="image-publication-modale" />`;
-};*/
+postImage = (value) => {
+    let image = document.createElement('div')
+    document.querySelector(`.old-image-publication${value.id}`).appendChild(image);
+    if (value.imageUrl !== null) {
+        image.innerHTML = ` <img src="${value.imageUrl}" class="image-publication-modale" alt="image de publication de l'utilisateur" />`;
+    }else{
+        image.innerHTML = ` <img src="logos/icon.svg" class="image-publication-modale" alt="logo de l'entreprise Groupomania car l'utilisateur n'a pas utilisé d'image pour sa publication"/>`;
+    }
+};
 
 
 getComment = (value) => {

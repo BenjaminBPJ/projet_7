@@ -308,11 +308,11 @@ commentToUpdate = (url, commentaire) => {
 makeInputCommentUpdateAppear = (commentaire) => {
     let button = document.getElementById(`update-comment${commentaire.id}`);
     let input = document.querySelector(`.modifCom${commentaire.id}`);
-    let oldComment = document.querySelector(`content-commentaire${commentaire.id}`);
-    button.addEventListener('click', function (e) {
+    let oldComment = document.querySelector(`.content-commentaire${commentaire.id}`);
+    button.addEventListener('click',  (e) => {
         e.preventDefault();
         input.classList.remove('hideCommentaire');
-        oldComment.classList.add('hideCommentaire')
+        oldComment.classList.add('hideCommentaire');
     });
 };
 
