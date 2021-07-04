@@ -5,4 +5,4 @@ Le projet consiste à construire un réseau social interne pour les employés de
 Ici notre application permet aux employés de Groupomania d'écrire des publications, et ils peuvent les commenter. 
 
 LE PROJET SE TROUVE SUR LA BRANCH "master"
-Pour lancer le back-end du projet il faudra avoir un serveur nodeJs. Et le lancer en réalisant la commande "node server" ou "nodemon". Pour la partie front aucune spécification nécessaire. 
+Pour lancer le back-end du projet il faudra avoir un serveur nodeJs et une base de donnée MySql. Et le lancer en réalisant la commande "node server" ou "nodemon". Pour la partie front aucune spécification nécessaire. 
