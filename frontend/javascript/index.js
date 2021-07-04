@@ -2,7 +2,6 @@ login = (form) => {
     let data = sendLog(`http://localhost:3000/api/auth/login`, form)
     data.then(user => {
         if (user.userId) {
-            console.log(user)
             let userId = user.userId;
             window.location = `reseau.html`;
 
@@ -38,7 +37,7 @@ getUserLogin = () => {
 
 goNetwork = () => {
     let button = document.getElementById("go-to-network");
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         getUserLogin();
     });

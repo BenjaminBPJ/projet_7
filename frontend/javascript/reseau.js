@@ -92,7 +92,7 @@ getPostInfo = () => {
 sendPost = () => {
     let button = document.getElementById("send-post");
     let form = document.querySelector(".form-publication")
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         e.preventDefault();
         getPostInfo();
         form.reset()
@@ -207,7 +207,7 @@ getPostInfoForUpdate = (url, postValue) => {
 
 sendPostToUpdate = (url, post) => {
     let button = document.getElementById(`send-form-update-post${post.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         e.preventDefault();
         getPostInfoForUpdate(url, post);
     });
@@ -217,7 +217,7 @@ sendPostToUpdate = (url, post) => {
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
     let form = document.getElementById(`form-modale-update${post.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         e.preventDefault();
         form.classList.add('show');
     });
@@ -234,7 +234,7 @@ deletePost = (url) => {
 
 postToDelete = (url, value) => {
     let button = document.getElementById(`delete-publication${value.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         deletePost(url);
     });
@@ -268,7 +268,7 @@ newCommentCreate = (url, post) => {
 
 createComment = (url, post) => {
     let button = document.getElementById(`sending-comment${post.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         newCommentCreate(url, post);
     });
 };
@@ -298,7 +298,7 @@ newCommentUpdate = (url, commentaire) => {
 
 commentToUpdate = (url, commentaire) => {
     let button = document.getElementById(`update-comment-done${commentaire.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         e.preventDefault();
         newCommentUpdate(url, commentaire);
     });
@@ -327,7 +327,7 @@ deleteComment = (url) => {
 
 commentToDelete = (url, value) => {
     let button = document.getElementById(`delete-comment${value.id}`);
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) =>  {
         e.preventDefault();
         deleteComment(url);
     });
@@ -336,7 +336,7 @@ commentToDelete = (url, value) => {
 /* --------------------------- Aller sur la page profil --------------------------- */
 goToProfil = () => {
     let profil = document.getElementById('emote-profil');
-    profil.addEventListener('click', function () {
+    profil.addEventListener('click', () => {
         window.location = `profil.html`
     });
 };

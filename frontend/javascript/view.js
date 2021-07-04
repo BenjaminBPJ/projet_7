@@ -1,5 +1,4 @@
 getPost = (value) => {
-    console.log(value)
     let article = document.createElement(`div`);
     document.querySelector("h3").appendChild(article);
     article.classList.add("publication");

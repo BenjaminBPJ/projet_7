@@ -84,9 +84,7 @@ passwordValide = (inputPassword) => {
 
 confirmPassword = () => {
     let mdp = document.getElementById('password').value;
-    console.log(mdp)
     let confirmMdp = document.getElementById('confirmPassword').value;
-    console.log(confirmMdp)
     let small = document.getElementById(`small-confirmPassword`);
 
     if (mdp !== confirmMdp) {
@@ -122,7 +120,7 @@ goNetwork = () => {
     let form = document.getElementById("sign-up-form");
     let button = document.getElementById("go-to-network");
 
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         if (emailValide(form.email) && lastNameValide(form.lastName) && firstNameValide(form.firstName) && passwordValide(form.password) && confirmPassword(form.confirmPassword)) {
             getUserSignup();

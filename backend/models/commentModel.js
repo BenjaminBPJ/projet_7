@@ -70,7 +70,6 @@ exports.checkUserId = (id, userId) => {
     WHERE users.id='${userId}'`;
     return new Promise((resolve, reject) => {
         connectionDb.query(sql, (error, result, fields) => {
-            console.log(result[0].checkId, userId)
             if (result === undefined || result == "") {
                 reject(`Impossible de trouver votre résultat.`);
             }

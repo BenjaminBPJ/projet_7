@@ -108,15 +108,13 @@ exports.deleteUser = (req, res, next) => {
                                 });
                         });
                     } else {
-                        fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
-                            userModel.delete(id)
-                                .then(deleteUser => {
-                                    res.status(200).json({ message: deleteUser });
-                                })
-                                .catch(errorMessage => {
-                                    res.status(404).json({ error: errorMessage });
-                                });
-                        });
+                        userModel.delete(id)
+                            .then(deleteUser => {
+                                res.status(200).json({ message: deleteUser });
+                            })
+                            .catch(errorMessage => {
+                                res.status(404).json({ error: errorMessage });
+                            });
                     };
                 })
                 .catch(errorMessage => {

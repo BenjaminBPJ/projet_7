@@ -34,7 +34,6 @@ async function sendWithOutImage(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json()
-    console.log('ici', response.ok, response.status, res)
     if (!response.ok) {
         throw res
     }

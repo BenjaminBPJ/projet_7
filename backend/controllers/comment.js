@@ -7,8 +7,6 @@ exports.createComment = (req, res, next) => {
     const content = req.body.comments;
     const role = req.jwtToken
 
-    console.log(role)
-
     commentModel.insert(userId, publiId, content)
         .then(result => {
             res.status(200).json({ message: result });
@@ -41,8 +39,6 @@ exports.modifyComment = (req, res, next) => {
     const commentId = req.params.id;
     const content = req.body.comments;
     const userId = req.jwtToken.userId;
-
-    console.log(content)
 
     commentModel.checkUserId(commentId, userId)
         .then(goodId => {

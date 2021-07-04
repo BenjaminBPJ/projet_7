@@ -88,8 +88,6 @@ exports.modifyPost = (req, res, next) => {
 
     postObject = { ...postObject, userId: userId, postId: id };
 
-    console.log(postObject.imageUrl)
-
     postModel.checkUserId(id, userId)
         .then(goodId => {
             postModel.findPhoto(id)
@@ -97,7 +95,6 @@ exports.modifyPost = (req, res, next) => {
                     if (oldPhoto[0].imageUrl !== null && postObject.imageUrl !== null) {
                         const filename = oldPhoto[0].imageUrl.split('/images/')[1];
                         fs.unlink(`images/${filename}`, () => {
-                            console.log('tatarar')
                             postModel.update(postObject)
                                 .then(result => {
                                     res.status(200).json({ result });

@@ -22,7 +22,7 @@ goToEditProfil = () => {
     let form = document.getElementById(`form-update-user`);
 
     // au click on va faire apparaitre le formulaire
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
         e.preventDefault()
         form.classList.add('show')
     });
@@ -92,7 +92,7 @@ getNewInfo = (user) => {
 
 sendUpdateUser = (user) => {
     let button = document.getElementById('send-profil');
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         getNewInfo(user);
     });
@@ -101,7 +101,7 @@ sendUpdateUser = (user) => {
 //////////// Suppression du compte de l'utilisateur ////////////
 deleteUser = () => {
     let button = document.getElementById('delete-account');
-    button.addEventListener('click', function () {
+    button.addEventListener('click', () => {
         let userId = localStorage.getItem('userId');
 
         alert(`Votre compte a bien été supprimé. Vous êtes redirigé vers la page d'inscription.`);
@@ -118,14 +118,14 @@ deleteUser = () => {
 //////////// retour en arrière sur le réseau ou la page actuelle ////////////
 backNetwork = () => {
     let button = document.getElementById('back-to-network');
-    button.addEventListener('click', function () {
+    button.addEventListener('click', () => {
         window.location = `reseau.html`;
     });
 };
 
 backToProfil = () => {
     let button = document.getElementById('back-to-profil');
-    button.addEventListener('click', function () {
+    button.addEventListener('click', () => {
         window.location.reload();
     });
 };
