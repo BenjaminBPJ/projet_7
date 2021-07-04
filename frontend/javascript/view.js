@@ -25,7 +25,7 @@ getPost = (value) => {
                          </div>
                          <small id="small-send-comment${value.id}" class="small small-input-new-comment"></small>`;
 
-                         imageUser(value)
+    imageUser(value);
 };
 
 deleteUpdatePostIcon = (value) => {
@@ -41,14 +41,14 @@ deleteUpdatePostIcon = (value) => {
 };
 
 imageUser = (value) => {
-    let imageUser = document.createElement('div')
-    document.querySelector(`.auteur-publication${value.id}`).appendChild(imageUser)
-    if (value.usersimageUrl !== null){
-        imageUser.innerHTML = `<img src="${value.usersimageUrl}" class="photo-user-publication" />`
-    }else{
-        imageUser.innerHTML = `<img src="logos/icon.svg"  class="photo-user-publication"/>`
-    }
-}
+    let imageUser = document.createElement('div');
+    document.querySelector(`.auteur-publication${value.id}`).appendChild(imageUser);
+    if (value.usersimageUrl !== null) {
+        imageUser.innerHTML = `<img src="${value.usersimageUrl}" class="photo-user-publication" />`;
+    } else {
+        imageUser.innerHTML = `<img src="logos/icon.svg"  class="photo-user-publication"/>`;
+    };
+};
 
 formUpdatePost = (value) => {
     let form = document.createElement(`form`);
@@ -73,17 +73,17 @@ formUpdatePost = (value) => {
                             <small id="small-form-update" class="small"></small>
                       </form>`;
 
-                      postImage(value)
+    postImage(value);
 };
 
 postImage = (value) => {
-    let image = document.createElement('div')
+    let image = document.createElement('div');
     document.querySelector(`.old-image-publication${value.id}`).appendChild(image);
     if (value.imageUrl !== null) {
         image.innerHTML = ` <img src="${value.imageUrl}" class="image-publication-modale" alt="image de publication de l'utilisateur" />`;
-    }else{
+    } else {
         image.innerHTML = ` <img src="logos/icon.svg" class="image-publication-modale" alt="logo de l'entreprise Groupomania car l'utilisateur n'a pas utilisé d'image pour sa publication"/>`;
-    }
+    };
 };
 
 
@@ -147,8 +147,8 @@ userProfil = (value) => {
                             <button type="submit" id="back-to-network" class="pointer-input">retour</buttton>
                             </div>
                         `;
-    noUserImage(value)
-    noUserDescription(value)
+    noUserImage(value);
+    noUserDescription(value);
 };
 
 noUserImage = (value) => {
@@ -195,13 +195,13 @@ userEditProfil = (value) => {
                                 <button type="submit" id="back-to-profil" class="button-update-user">Retour au profil</buttton>  
                             </div>                 
                         `;
-    noImageUpdateUser(value)
+    noImageUpdateUser(value);
 };
 
 noImageUpdateUser = (value) => {
     let image = document.createElement('div');
     document.querySelector('.user-image-edit-profil').appendChild(image);
-    image.classList.add('photo-user-before-edit')
+    image.classList.add('photo-user-before-edit');
     if (value.result[0].imageUrl === null) {
         image.innerHTML = `<img src="logos/icon.svg" class="photo-profil" alt="image illustrant l'utilisateur" />`;
     } else {

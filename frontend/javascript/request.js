@@ -9,7 +9,7 @@ async function request(url) {
     if (!response.ok) {
         throw res
     };
-    return res;
+    return res
 };
 
 async function sendLog(url, data) {
@@ -21,7 +21,7 @@ async function sendLog(url, data) {
         body: JSON.stringify(data)
     });
     let res = await response.json()
-    return res;
+    return res
 };
 
 async function sendWithOutImage(url, data) {
@@ -36,8 +36,8 @@ async function sendWithOutImage(url, data) {
     let res = await response.json()
     if (!response.ok) {
         throw res
-    }
-    return res;
+    };
+    return res
 };
 
 async function sendWithImage(url, data) {
@@ -49,7 +49,7 @@ async function sendWithImage(url, data) {
         body: data
     });
     let res = await response.json()
-    return res;
+    return res
 };
 
 async function deleteMethod(url) {
@@ -62,8 +62,8 @@ async function deleteMethod(url) {
     let res = await response.json();
     if (!response.ok) {
         throw res
-    }
-    return res;
+    };
+    return res
 };
 
 async function updateWithOutImage(url, data) {
@@ -78,8 +78,8 @@ async function updateWithOutImage(url, data) {
     let res = await response.json();
     if (!response.ok) {
         throw res
-    }
-    return res;
+    };
+    return res
 };
 
 async function updateWithImage(url, data) {
@@ -93,6 +93,6 @@ async function updateWithImage(url, data) {
     let res = await response.json();
     if (!response.ok) {
         throw res
-    }
+    };
     return res;
 };

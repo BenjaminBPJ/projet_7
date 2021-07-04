@@ -37,7 +37,7 @@ getPosts = () => {
         });
     })
         .catch((error) => {
-                noPost();
+            noPost();
         });
 };
 
@@ -50,7 +50,7 @@ createPostWithImage = (post) => {
         window.location.reload();
     })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
         });
 };
 
@@ -92,10 +92,10 @@ getPostInfo = () => {
 sendPost = () => {
     let button = document.getElementById("send-post");
     let form = document.querySelector(".form-publication")
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         getPostInfo();
-        form.reset()
+        form.reset();
     });
 };
 
@@ -106,10 +106,10 @@ sendPost();
 updatePostWithImage = (url, postUpdate) => {
     let data = updateWithImage(url, postUpdate);
     data.then(publication => {
-        window.location.reload()
+        window.location.reload();
     })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
         });
 };
 
@@ -117,7 +117,7 @@ updatePostWithImage = (url, postUpdate) => {
 updatePostWithOutImage = (url, postUpdate) => {
     let data = updateWithOutImage(url, postUpdate);
     data.then(publication => {
-        window.location.reload()
+        window.location.reload();
     })
         .catch((error) => {
         });
@@ -207,7 +207,7 @@ getPostInfoForUpdate = (url, postValue) => {
 
 sendPostToUpdate = (url, post) => {
     let button = document.getElementById(`send-form-update-post${post.id}`);
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         getPostInfoForUpdate(url, post);
     });
@@ -217,7 +217,7 @@ sendPostToUpdate = (url, post) => {
 makeInputUpdateAppear = (post) => {
     let button = document.getElementById(`update-publication${post.id}`);
     let form = document.getElementById(`form-modale-update${post.id}`);
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         form.classList.add('show');
     });
@@ -247,7 +247,7 @@ sendCommentToApi = (url, comment) => {
         window.location.reload();
     })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
         });
 };
 
@@ -268,7 +268,7 @@ newCommentCreate = (url, post) => {
 
 createComment = (url, post) => {
     let button = document.getElementById(`sending-comment${post.id}`);
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         newCommentCreate(url, post);
     });
 };
@@ -293,12 +293,12 @@ newCommentUpdate = (url, commentaire) => {
             comments: escapeHtml(comment)
         };
         updateComment(url, newCommentaire);
-    }
+    };
 };
 
 commentToUpdate = (url, commentaire) => {
     let button = document.getElementById(`update-comment-done${commentaire.id}`);
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         newCommentUpdate(url, commentaire);
     });
@@ -309,7 +309,7 @@ makeInputCommentUpdateAppear = (commentaire) => {
     let button = document.getElementById(`update-comment${commentaire.id}`);
     let input = document.querySelector(`.modifCom${commentaire.id}`);
     let oldComment = document.querySelector(`.content-commentaire${commentaire.id}`);
-    button.addEventListener('click',  (e) => {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         input.classList.remove('hideCommentaire');
         oldComment.classList.add('hideCommentaire');
@@ -327,7 +327,7 @@ deleteComment = (url) => {
 
 commentToDelete = (url, value) => {
     let button = document.getElementById(`delete-comment${value.id}`);
-    button.addEventListener('click', (e) =>  {
+    button.addEventListener('click', (e) => {
         e.preventDefault();
         deleteComment(url);
     });
@@ -337,7 +337,7 @@ commentToDelete = (url, value) => {
 goToProfil = () => {
     let profil = document.getElementById('emote-profil');
     profil.addEventListener('click', () => {
-        window.location = `profil.html`
+        window.location = `profil.html`;
     });
 };
 

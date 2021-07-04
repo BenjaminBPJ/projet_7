@@ -56,7 +56,7 @@ getNewInfo = (user) => {
     let newDescription = document.getElementById("new-description").value;
     let oldDescription = user.result[0].description;  // je recupere les anciennes données pour les envoyer afin de réussir un bon "PUT"
 
-        // l'utilisateur modifie juste sa photo de profil, on envoie le fichier mais en data on prend son ancienne description
+    // l'utilisateur modifie juste sa photo de profil, on envoie le fichier mais en data on prend son ancienne description
     if (photoUser && newDescription === "") {
         let newProfil = JSON.stringify({
             description: oldDescription,

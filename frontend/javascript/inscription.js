@@ -49,10 +49,10 @@ lastNameValide = (inputName) => {
     let small = document.getElementById(`small-lastName`);
     if (testName) {
         small.innerHTML = `Nom valide.`;
-        return true;
+        return true
     } else {
         small.innerHTML = `Merci d'écrire votre nom en toutes lettres.`;
-        return false;
+        return false
     };
 };
 
@@ -62,10 +62,10 @@ firstNameValide = (inputName) => {
     let small = document.getElementById(`small-firstName`);
     if (testName) {
         small.innerHTML = `Prénom valide.`;
-        return true;
+        return true
     } else {
         small.innerHTML = `Merci d'écrire votre prénom en toutes lettres.`;
-        return false;
+        return false
     };
 };
 
@@ -75,10 +75,10 @@ passwordValide = (inputPassword) => {
     let small = document.getElementById(`small-password`);
     if (testPassword) {
         small.innerHTML = `Mot de passe valide.`;
-        return true;
+        return true
     } else {
         small.innerHTML = `Votre mot de passe doit contenir au moins un chiffre, une minuscule, une majuscule et être composé de 8 caractères minimum !`;
-        return false;
+        return false
     };
 };
 
@@ -89,10 +89,10 @@ confirmPassword = () => {
 
     if (mdp !== confirmMdp) {
         small.innerHTML = `Votre mot de passe n'est pas le même.`;
-        return false;
+        return false
     } else {
         small.innerHTML = `Votre mot de passe est correct.`;
-        return true;
+        return true
     };
 };
 
