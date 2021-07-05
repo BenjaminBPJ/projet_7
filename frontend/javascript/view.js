@@ -116,7 +116,7 @@ getComment = (value) => {
                                 <h3 class="auteur-commentaire">${value.firstName} ${value.lastName}</h3>
                                 <h4 class="date-commentaire">Il y a ${calcTime(value.publiAt)}</h4>
                             </header>
-                            <div class="commentaire${value.id}">
+                            <div class="content-commentaire${value.id}">
                                 <p>${value.content}</p>
                             </div>`;
     };

@@ -27,9 +27,11 @@ getPosts = () => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
                     getComment(oneComment);
-                    commentToUpdate(urlOneComment, oneComment);
-                    commentToDelete(urlOneComment, oneComment);
-                    makeInputCommentUpdateAppear(oneComment)
+                    if (onePublication.userId == currentUser || roleUser === 'administrateur') {
+                        commentToUpdate(urlOneComment, oneComment);
+                        commentToDelete(urlOneComment, oneComment);
+                        makeInputCommentUpdateAppear(oneComment);
+                    };
                 });
             })
                 .catch((error) => {

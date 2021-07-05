@@ -199,6 +199,7 @@ a:focus{
 .photo-user-publication{
     height: 3em;
     width: 3em;
+    object-fit: cover;
     border-radius: 50%; 
     margin-right: 1em;
     border: solid #fd2d01 3px;
@@ -342,11 +343,13 @@ a:focus{
 .photo-profil{
     height:7em;
     width: 7em;
+    object-fit: cover;
     border: solid #fd2d01 4px;
     border-radius: 50%;
 }
 
 .photo-user-before-edit{
+    object-fit: cover;
     margin-top: 0.5em;
 }
 
