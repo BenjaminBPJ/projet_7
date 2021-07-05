@@ -422,6 +422,23 @@ a:focus{
         padding-right: 1em;
     }
 
+    .publication{
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+    .header-publication{
+        margin-bottom: 1em;
+    }
+
+    .photo-user-publication{
+        height: 2em;
+        width: 2em;
+        margin-right: 0.5em;
+    }
+    .auteur-publication{
+        font-size: 0.9em;
+        padding-left: 0;
+    }
     .date-publication-post{
         font-size: 0.75em;
     }
