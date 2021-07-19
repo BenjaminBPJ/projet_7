@@ -98,7 +98,8 @@ exports.deleteUser = (req, res, next) => {
             userModel.findPhoto(id)
                 .then(oldPhoto => {
                     if (oldPhoto[0].imageUrl !== null) {
-                        fs.unlink(`images/${oldPhoto[0].imageUrl}`, () => {
+                        const filename = oldPhoto[0].imageUrl.split('/images/')[1];
+                        fs.unlink(`images/${filename}`, () => {
                             userModel.delete(id)
                                 .then(deleteUser => {
                                     res.status(200).json({ message: deleteUser });

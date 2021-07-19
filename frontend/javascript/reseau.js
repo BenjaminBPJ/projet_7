@@ -27,7 +27,7 @@ getPosts = () => {
                     let idComment = oneComment.id;
                     let urlOneComment = urlComment + idComment;
                     getComment(oneComment);
-                    if (onePublication.userId == currentUser || roleUser === 'administrateur') {
+                    if (oneComment.userId == currentUser || roleUser === 'administrateur') {
                         commentToUpdate(urlOneComment, oneComment);
                         commentToDelete(urlOneComment, oneComment);
                         makeInputCommentUpdateAppear(oneComment);
@@ -126,9 +126,9 @@ updatePostWithOutImage = (url, postUpdate) => {
 };
 
 getPostInfoForUpdate = (url, postValue) => {
-    let titre = document.getElementById(`new-title`).value;
-    let content = document.getElementById(`new-post`).value;
-    let imageValue = document.getElementById(`new-image`).files[0];
+    let titre = document.getElementById(`new-title${postValue.id}`).value;
+    let content = document.getElementById(`new-post${postValue.id}`).value;
+    let imageValue = document.getElementById(`new-image${postValue.id}`).files[0];
     let oldContent = postValue.publication;
     let oldTitle = postValue.titre;
 

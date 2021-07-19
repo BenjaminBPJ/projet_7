@@ -58,12 +58,12 @@ formUpdatePost = (value) => {
 
     form.innerHTML = `<form aria-hidden="true">
                             <label for="new-title" class="label-form-modale">Titre</label>
-                            <input id="new-title" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/>
+                            <input id="new-title${value.id}" class="input-update-form" placeholder="écrivez votre nouveau titre" value="${value.titre}"/>
                             <label for="new-post" class="label-form-modale">Article</label>
-                            <textarea id="new-post" class="input-update-form" placeholder="écrivez votre nouvel article" rows="5">${value.publication}</textarea>
+                            <textarea id="new-post${value.id}" class="input-update-form" placeholder="écrivez votre nouvel article" rows="5">${value.publication}</textarea>
                             <div class="ask-image">
                                 <label for="new-image">Vous vous changer votre image de plublication ?</label>
-                                <input type="file" class="input-update-form input-file-modale" id="new-image"/><br>
+                                <input type="file" class="input-update-form input-file-modale" id="new-image${value.id}"/><br>
                             </div>
                             <div class="old-image-publication${value.id}"></div>  
                             <div class="button-form-update-post">
